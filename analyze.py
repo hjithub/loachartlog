@@ -1,27 +1,57 @@
 """
-Lost Ark KR Gold Price Analysis
-Correlates game patches with price movements, builds prediction model.
+Lost Ark KR Gold Price Analysis v2
+Content-based categorization + Gold flow analysis + Inflation index model.
 
 Usage: python analyze.py
-Outputs: charts (PNG) + console summary
 """
 
 import pandas as pd
 import json
 import numpy as np
+import re
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from datetime import timedelta
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
+from sklearn.tree import DecisionTreeClassifier, export_text
+from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import cross_val_score
+from sklearn.preprocessing import StandardScaler
 
-ECONOMY_KEYWORDS = [
-    '골드', '크리스탈', '거래소', '재련', '보상', '교환', '골드 획득', '골드 소모',
-    '경매', '시세', '수수료', '귀속', '거래 가능', '거래 불가', '재화', '실링', '보석', '각인서',
+# ============= GOLD FLOW PHRASES =============
+GOLD_SOURCE_PHRASES = [
+    '골드 획득', '골드를 획득', '골드 보상', '클리어 보상', '골드 지급', '골드가 지급',
+    '추가 보상', '보상 추가', '보상이 추가', '보상 증가', '보상이 증가',
 ]
+GOLD_SINK_PHRASES = [
+    '골드 소모', '골드가 소모', '골드를 소모', '수수료', '재련 비용', '강화 비용',
+    '제작 비용', '귀속', '거래 불가', '골드 차감', '비용이 증가', '비용 증가',
+]
+GOLD_SRC_REDUCTION = ['보상 감소', '보상이 감소', '획득량.*감소']
+GOLD_SNK_REDUCTION = ['비용 감소', '비용이 감소', '수수료.*감소', '수수료.*인하']
+
+# ============= CONTENT CATEGORIES =============
+CATEGORIES = {
+    'new_raid': ['신규 레이드', '군단장', '카제로스', '어비스 던전', '가디언 토벌', '에피소드'],
+    'honing_change': ['재련 확률', '재련 비용', '재련 시스템', '강화 확률', '상한 돌파', '재련 단계',
+                      '재련', '강화'],
+    'new_tier': ['시즌', '티어', '아이템 레벨', '신규 장비'],
+    'event_reward': ['이벤트', '출석 보상', '접속 보상', '기간 한정', '특별 보상'],
+    'gem_engraving': ['보석', '각인', '젬'],
+    'market_system': ['거래소', '경매', '시세'],
+}
+
+
+def count_phrases(content, phrases):
+    total = 0
+    for phrase in phrases:
+        if '.*' in phrase:
+            total += len(re.findall(phrase, content))
+        else:
+            total += content.count(phrase)
+    return total
 
 
 def load_data():
@@ -35,7 +65,6 @@ def load_data():
         patches = json.load(f)
 
     notices = pd.read_csv("lostark_patch_notices.csv", parse_dates=["date"])
-
     inflation = pd.read_csv("inflation_index.csv", parse_dates=["date"])
 
     return daily, patches, notices, inflation
@@ -43,193 +72,119 @@ def load_data():
 
 def get_price_window(daily, date, days_before=0, days_after=0):
     d = pd.to_datetime(date)
-    start = d - timedelta(days=days_before)
-    end = d + timedelta(days=days_after)
-    mask = (daily.date >= start) & (daily.date <= end)
-    vals = daily[mask]
-    return vals.price.mean() if len(vals) > 0 else None
+    mask = (daily.date >= d - timedelta(days=days_before)) & (daily.date <= d + timedelta(days=days_after))
+    v = daily[mask]
+    return v.price.mean() if len(v) > 0 else None
 
 
-def build_feature_matrix(daily, patches, notices):
+def build_features(daily, patches, notices, inflation):
     rows = []
     for i, p in enumerate(patches):
-        content = p['content']
-        size = len(content)
+        content = p['content']; size = len(content)
         pdate = pd.to_datetime(p['date'].replace('.', '-'))
-
         if pdate < daily.date.min() or pdate > daily.date.max() - timedelta(days=7):
             continue
 
-        pre_price = get_price_window(daily, pdate, days_before=3, days_after=0)
-        post_1w = get_price_window(daily, pdate, days_before=0, days_after=7)
-        post_1m = get_price_window(daily, pdate, days_before=0, days_after=30)
-
-        if pre_price is None or post_1w is None:
+        pre = get_price_window(daily, pdate, days_before=3)
+        post1w = get_price_window(daily, pdate, days_after=7)
+        post1m = get_price_window(daily, pdate, days_after=30)
+        if pre is None or post1w is None:
             continue
 
-        delta_1w = (post_1w - pre_price) / pre_price * 100
-        delta_1m = ((post_1m - pre_price) / pre_price * 100) if post_1m else None
+        d1w = (post1w - pre) / pre * 100
+        d1m = ((post1m - pre) / pre * 100) if post1m else None
+        dsl = (pdate - pd.to_datetime(patches[i - 1]['date'].replace('.', '-'))).days if i > 0 else 30
 
-        # Days since last patch
-        if i > 0:
-            prev_date = pd.to_datetime(patches[i - 1]['date'].replace('.', '-'))
-            days_since_last = (pdate - prev_date).days
-        else:
-            days_since_last = 30
+        # Gold flow
+        src = count_phrases(content, GOLD_SOURCE_PHRASES)
+        snk = count_phrases(content, GOLD_SINK_PHRASES)
+        src_red = count_phrases(content, GOLD_SRC_REDUCTION)
+        snk_red = count_phrases(content, GOLD_SNK_REDUCTION)
+        gold_flow = (src + snk_red) - (snk + src_red)
 
-        # Keyword features
-        total_kw = sum(content.count(kw) for kw in ECONOMY_KEYWORDS)
-        gold_count = content.count('골드')
-        trade_count = sum(content.count(kw) for kw in ['거래소', '경매', '거래 가능', '거래 불가', '시세'])
-        mat_count = sum(content.count(kw) for kw in ['재련', '재화', '보석', '각인서', '융화'])
+        # Content categories
+        cat_scores = {cat: count_phrases(content, kws) for cat, kws in CATEGORIES.items()}
+        primary_cat = max(cat_scores, key=cat_scores.get) if any(cat_scores.values()) else 'other'
 
-        # Maintenance frequency (30 days prior)
-        d_ts = pdate
-        maint_mask = (notices.date >= d_ts - timedelta(days=30)) & (notices.date < d_ts) & (notices.badge == '점검')
-        maint_count_30d = maint_mask.sum()
-
-        # Pre-patch trend
-        pre_7d = get_price_window(daily, pdate, days_before=10, days_after=3)
-        pre_trend = ((pre_price - pre_7d) / pre_7d * 100) if pre_7d else 0
+        # Macro
+        mm = ((notices.date >= pdate - timedelta(days=30)) & (notices.date < pdate) & (notices.badge == '점검')).sum()
+        pre7 = get_price_window(daily, pdate, days_before=10, days_after=3)
+        pt = ((pre - pre7) / pre7 * 100) if pre7 else 0
 
         rows.append({
-            'date': pdate,
-            'title': p['title'][:40],
-            'patch_size': size,
-            'log_patch_size': np.log(size),
-            'days_since_last': days_since_last,
-            'total_kw_hits': total_kw,
-            'gold_mentions': gold_count,
-            'trade_mentions': trade_count,
-            'material_mentions': mat_count,
-            'kw_density': total_kw / (size / 1000),
-            'maint_30d': maint_count_30d,
-            'pre_price': pre_price,
-            'pre_trend': pre_trend,
-            'delta_1w': delta_1w,
-            'delta_1m': delta_1m,
-            'direction_1w': 1 if delta_1w > 0 else 0,
+            'date': pdate, 'title': p['title'][:40],
+            'patch_size': size, 'log_size': np.log(size), 'days_since_last': dsl,
+            'gold_source': src, 'gold_sink': snk, 'gold_flow': gold_flow,
+            'cat_raid': cat_scores['new_raid'], 'cat_honing': cat_scores['honing_change'],
+            'cat_new_tier': cat_scores['new_tier'], 'cat_event': cat_scores['event_reward'],
+            'cat_gem': cat_scores['gem_engraving'], 'cat_market': cat_scores['market_system'],
+            'is_new_tier': 1 if cat_scores['new_tier'] >= 3 else 0,
+            'primary_cat': primary_cat,
+            'maint_30d': mm, 'pre_price': pre, 'pre_trend': pt,
+            'delta_1w': d1w, 'delta_1m': d1m,
+            'direction_1w': 1 if d1w > 0 else 0,
         })
 
     return pd.DataFrame(rows)
 
 
-def run_model(df):
-    features = ['patch_size', 'log_patch_size', 'days_since_last', 'total_kw_hits',
-                'gold_mentions', 'trade_mentions', 'material_mentions', 'kw_density',
-                'maint_30d', 'pre_trend']
-    X = df[features].values
+FEATURES = [
+    'log_size', 'days_since_last',
+    'gold_flow', 'gold_source', 'gold_sink',
+    'cat_raid', 'cat_honing', 'cat_new_tier', 'cat_event', 'cat_gem', 'cat_market',
+    'is_new_tier',
+    'maint_30d', 'pre_trend',
+]
+
+
+def run_analysis(df):
+    X = df[FEATURES].values
     y = df['direction_1w'].values
 
-    print("=" * 80)
-    print("PREDICTION MODEL")
-    print("=" * 80)
-    print(f"Samples: {len(df)} | UP: {y.sum()} | DOWN: {len(y) - y.sum()}")
+    # Content-based
+    print("=" * 90)
+    print("CONTENT-BASED ANALYSIS (patch type → price direction)")
+    print("=" * 90)
+    cat_stats = df.groupby('primary_cat').agg(
+        count=('delta_1w', 'count'), avg_delta=('delta_1w', 'mean'),
+        std_delta=('delta_1w', 'std'), pct_up=('direction_1w', 'mean')
+    ).sort_values('avg_delta')
+    for cat, row in cat_stats.iterrows():
+        sign = "+" if row.avg_delta > 0 else ""
+        print(f"  {cat:20s} n={int(row['count']):>2} | avg={sign}{row.avg_delta:.1f}% ±{row.std_delta:.1f}% | UP={row.pct_up:.0%}")
 
-    # Decision Tree
-    dt = DecisionTreeClassifier(max_depth=3, random_state=42)
-    dt.fit(X, y)
-    dt_cv = cross_val_score(dt, X, y, cv=10, scoring='accuracy')
-    print(f"\nDecision Tree (depth=3): train={dt.score(X, y):.1%}, CV={dt_cv.mean():.1%} (±{dt_cv.std():.1%})")
+    # Gold flow
+    print(f"\nGold flow correlation with Δ1w: {df.gold_flow.corr(df.delta_1w):+.3f}")
+    print(f"Gold source correlation: {df.gold_source.corr(df.delta_1w):+.3f}")
+    print(f"Gold sink correlation: {df.gold_sink.corr(df.delta_1w):+.3f}")
 
-    importances = pd.Series(dt.feature_importances_, index=features).sort_values(ascending=False)
-    print("  Top features:", ", ".join(f"{f}={v:.3f}" for f, v in importances.items() if v > 0))
-
-    # Random Forest
+    # Model
+    print("\n" + "=" * 90)
+    print("COMBINED MODEL")
+    print("=" * 90)
     rf = RandomForestClassifier(n_estimators=100, max_depth=3, random_state=42)
+    cv = cross_val_score(rf, X, y, cv=10, scoring='accuracy')
     rf.fit(X, y)
-    rf_cv = cross_val_score(rf, X, y, cv=10, scoring='accuracy')
-    print(f"\nRandom Forest: train={rf.score(X, y):.1%}, CV={rf_cv.mean():.1%} (±{rf_cv.std():.1%})")
+    print(f"Baseline (always UP): {y.mean():.1%}")
+    print(f"Random Forest CV: {cv.mean():.1%} ±{cv.std():.1%}")
 
-    rf_imp = pd.Series(rf.feature_importances_, index=features).sort_values(ascending=False)
-    print("  Top features:", ", ".join(f"{f}={v:.3f}" for f, v in rf_imp.head(5).items()))
+    imp = pd.Series(rf.feature_importances_, index=FEATURES).sort_values(ascending=False)
+    print("\nFeature Importance:")
+    for f, v in imp.items():
+        bar = "█" * int(v * 50)
+        print(f"  {f:20s} {v:.3f} {bar}")
 
-    # Correlations
-    print("\nCorrelations with 1-week Δ%:")
-    for feat in features:
-        corr = df[feat].corr(df['delta_1w'])
-        if abs(corr) > 0.1:
-            print(f"  {feat:25s} r={corr:+.3f}")
-
-    return rf, features
-
-
-def print_key_findings(df):
-    print("\n" + "=" * 80)
-    print("KEY FINDINGS")
-    print("=" * 80)
-
-    large = df[df.patch_size >= 30000]
-    small = df[df.patch_size < 30000]
-    print(f"\nLarge patches (≥30K chars): avg Δ1w = {large.delta_1w.mean():+.1f}% (n={len(large)})")
-    print(f"Small patches (<30K chars): avg Δ1w = {small.delta_1w.mean():+.1f}% (n={len(small)})")
-
-    high_gold = df[df.gold_mentions >= 20]
-    low_gold = df[df.gold_mentions < 20]
-    print(f"\nHigh gold mentions (≥20): avg Δ1w = {high_gold.delta_1w.mean():+.1f}% (n={len(high_gold)})")
-    print(f"Low gold mentions (<20):  avg Δ1w = {low_gold.delta_1w.mean():+.1f}% (n={len(low_gold)})")
-
-    high_trade = df[df.trade_mentions >= 5]
-    low_trade = df[df.trade_mentions < 5]
-    print(f"\nHigh trade keywords (≥5): avg Δ1w = {high_trade.delta_1w.mean():+.1f}% (n={len(high_trade)})")
-    print(f"Low trade keywords (<5):  avg Δ1w = {low_trade.delta_1w.mean():+.1f}% (n={len(low_trade)})")
-
-
-def generate_charts(daily, patches, df, inflation):
-    # Chart 1: Price timeline with major patches
-    fig, ax = plt.subplots(figsize=(16, 6))
-    ax.plot(daily.date, daily.price, linewidth=0.8, color='#2196F3')
-    major = [(p['date'].replace('.', '-'), len(p['content'])) for p in patches if len(p['content']) >= 30000]
-    for pdate, size in major:
-        d = pd.to_datetime(pdate)
-        if d >= daily.date.min() and d <= daily.date.max():
-            ax.axvline(d, color='red', alpha=0.4, linewidth=0.8, linestyle='--')
-            nearest = daily.iloc[(daily.date - d).abs().argsort()[:1]]
-            ax.annotate(f'{pdate}\n({size // 1000}K)', xy=(d, nearest.price.values[0]),
-                        fontsize=5.5, rotation=90, va='bottom', ha='right', color='red', alpha=0.7)
-    ax.set_title('Abidos Fusion Material Price + Major Patches (>30K chars)')
-    ax.set_ylabel('Price (Gold)')
-    ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))
-    ax.xaxis.set_major_locator(mdates.MonthLocator(interval=2))
-    plt.xticks(rotation=45)
-    plt.tight_layout()
-    plt.savefig('chart_price_patches.png', dpi=150)
-    plt.close()
-
-    # Chart 2: Patch size vs 1-week delta
-    fig, ax = plt.subplots(figsize=(10, 6))
-    colors = ['red' if d < 0 else 'green' for d in df.delta_1w]
-    sizes_s = [max(20, min(200, s / 200)) for s in df.total_kw_hits]
-    ax.scatter(df.patch_size / 1000, df.delta_1w, c=colors, s=sizes_s, alpha=0.6,
-               edgecolors='black', linewidth=0.5)
-    ax.axhline(0, color='gray', linewidth=0.5, linestyle='--')
-    ax.set_xlabel('Patch Size (K chars)')
-    ax.set_ylabel('Price Change 1-week (%)')
-    ax.set_title('Patch Size vs 1-Week Price Change\n(dot size = economy keyword count)')
-    plt.tight_layout()
-    plt.savefig('chart_size_vs_delta.png', dpi=150)
-    plt.close()
-
-    # Chart 3: Inflation index
-    fig, ax = plt.subplots(figsize=(12, 5))
-    ax.plot(inflation.date, inflation['index'], linewidth=1.5, color='#FF5722')
-    ax.axhline(100, color='gray', linewidth=0.5, linestyle='--')
-    ax.fill_between(inflation.date, 100, inflation['index'], alpha=0.2, color='#FF5722')
-    ax.set_title('Lost Ark KR Inflation Index (9-item basket, normalized to 100)')
-    ax.set_ylabel('Index')
-    ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
-    ax.xaxis.set_major_locator(mdates.WeekdayLocator(interval=2))
-    plt.xticks(rotation=45)
-    plt.tight_layout()
-    plt.savefig('chart_inflation_index.png', dpi=150)
-    plt.close()
-
-    print("Charts saved: chart_price_patches.png, chart_size_vs_delta.png, chart_inflation_index.png")
+    # Walk-forward
+    correct = sum(
+        1 for split in range(30, len(df))
+        if RandomForestClassifier(n_estimators=100, max_depth=3, random_state=42)
+        .fit(X[:split], y[:split]).predict(X[split:split + 1])[0] == y[split]
+    )
+    total = len(df) - 30
+    print(f"\nWalk-forward: {correct / total:.1%} ({correct}/{total})")
 
 
 if __name__ == "__main__":
     daily, patches, notices, inflation = load_data()
-    df = build_feature_matrix(daily, patches, notices)
-    run_model(df)
-    print_key_findings(df)
-    generate_charts(daily, patches, df, inflation)
+    df = build_features(daily, patches, notices, inflation)
+    run_analysis(df)
