@@ -1,0 +1,119 @@
+{
+  "meta": {
+    "source": "https://loatool.taeu.kr/calculator/craft",
+    "captured_at": "2026-03-25 16:07:32",
+    "auction_house_tax": 0.05,
+    "notes": "5% tax applied on auction house sales (reflected in 판매단위 당 수수료)"
+  },
+  "recipes": [
+    {
+      "name": "상급 아비도스 융화 재료(고고학)",
+      "name_en": "Superior Abidos Fusion Material (Archaeology)",
+      "craft_info": {
+        "craft_batch_size": 10,
+        "energy_cost": 360,
+        "craft_time_seconds": 4500,
+        "exp": 720,
+        "cost_per_sell_unit": 121.37,
+        "cost_per_craft_batch": 1213.7
+      },
+      "sell_info": {
+        "sell_unit": 1,
+        "market_price": 124,
+        "tax_per_unit": 7,
+        "cost_per_unit_with_tax": 128.37,
+        "profit_per_unit": -4.38,
+        "profit_margin_pct": -3.41,
+        "energy_profit_margin_pct": -12.14
+      },
+      "materials": [
+        { "name": "고대 유물", "quantity": 112, "sell_unit": 100, "market_price": 101, "unit_price": 1.01, "total_cost": 113.12 },
+        { "name": "아비도스 유물", "quantity": 43, "sell_unit": 100, "market_price": 1280, "unit_price": 12.8, "total_cost": 550.4 },
+        { "name": "희귀한 유물", "quantity": 59, "sell_unit": 100, "market_price": 202, "unit_price": 2.02, "total_cost": 119.18 },
+        { "name": "골드", "quantity": 520, "sell_unit": 1, "market_price": 1, "unit_price": 1, "total_cost": 431 }
+      ]
+    },
+    {
+      "name": "아비도스 융화 재료(벌목)",
+      "name_en": "Abidos Fusion Material (Logging)",
+      "craft_info": {
+        "craft_batch_size": 10,
+        "energy_cost": 288,
+        "craft_time_seconds": 3600,
+        "exp": 576,
+        "cost_per_sell_unit": 92.38,
+        "cost_per_craft_batch": 923.81
+      },
+      "sell_info": {
+        "sell_unit": 1,
+        "market_price": 97,
+        "tax_per_unit": 5,
+        "cost_per_unit_with_tax": 97.38,
+        "profit_per_unit": -0.39,
+        "profit_margin_pct": -0.4,
+        "energy_profit_margin_pct": -1.33
+      },
+      "materials": [
+        { "name": "목재", "quantity": 86, "sell_unit": 100, "market_price": 99, "unit_price": 0.99, "total_cost": 85.14 },
+        { "name": "부드러운 목재", "quantity": 45, "sell_unit": 100, "market_price": 199, "unit_price": 1.99, "total_cost": 89.55 },
+        { "name": "아비도스 목재", "quantity": 33, "sell_unit": 100, "market_price": 1264, "unit_price": 12.64, "total_cost": 417.12 },
+        { "name": "골드", "quantity": 400, "sell_unit": 1, "market_price": 1, "unit_price": 1, "total_cost": 332 }
+      ]
+    },
+    {
+      "name": "아비도스 융화 재료(고고학)",
+      "name_en": "Abidos Fusion Material (Archaeology)",
+      "craft_info": {
+        "craft_batch_size": 10,
+        "energy_cost": 288,
+        "craft_time_seconds": 3600,
+        "exp": 576,
+        "cost_per_sell_unit": 93.34,
+        "cost_per_craft_batch": 933.47
+      },
+      "sell_info": {
+        "sell_unit": 1,
+        "market_price": 97,
+        "tax_per_unit": 5,
+        "cost_per_unit_with_tax": 98.34,
+        "profit_per_unit": -1.35,
+        "profit_margin_pct": -1.37,
+        "energy_profit_margin_pct": -4.68
+      },
+      "materials": [
+        { "name": "고대 유물", "quantity": 86, "sell_unit": 100, "market_price": 102, "unit_price": 1.02, "total_cost": 87.72 },
+        { "name": "아비도스 유물", "quantity": 33, "sell_unit": 100, "market_price": 1280, "unit_price": 12.8, "total_cost": 422.4 },
+        { "name": "희귀한 유물", "quantity": 45, "sell_unit": 100, "market_price": 203, "unit_price": 2.02, "total_cost": 91.35 },
+        { "name": "골드", "quantity": 400, "sell_unit": 1, "market_price": 1, "unit_price": 1, "total_cost": 332 }
+      ]
+    },
+    {
+      "name": "아드로핀 물약",
+      "name_en": "Adrophin Potion",
+      "craft_info": {
+        "craft_batch_size": 3,
+        "energy_cost": 288,
+        "craft_time_seconds": 3600,
+        "exp": 576,
+        "cost_per_sell_unit": 56.02,
+        "cost_per_craft_batch": 168.07
+      },
+      "sell_info": {
+        "sell_unit": 1,
+        "market_price": 71,
+        "tax_per_unit": 4,
+        "cost_per_unit_with_tax": 60.02,
+        "profit_per_unit": 10.97,
+        "profit_margin_pct": 18.28,
+        "energy_profit_margin_pct": 11.43
+      },
+      "materials": [
+        { "name": "고대 유물", "quantity": 75, "sell_unit": 100, "market_price": 102, "unit_price": 1.02, "total_cost": 76.5 },
+        { "name": "수줍은 들꽃", "quantity": 8, "sell_unit": 100, "market_price": 444, "unit_price": 4.44, "total_cost": 35.52 },
+        { "name": "진귀한 유물", "quantity": 6, "sell_unit": 100, "market_price": 9, "unit_price": 0.09, "total_cost": 0.54 },
+        { "name": "희귀한 유물", "quantity": 17, "sell_unit": 100, "market_price": 203, "unit_price": 2.02, "total_cost": 34.51 },
+        { "name": "골드", "quantity": 30, "sell_unit": 1, "market_price": 1, "unit_price": 1, "total_cost": 21 }
+      ]
+    }
+  ]
+}
