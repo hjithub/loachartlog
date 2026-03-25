@@ -357,9 +357,23 @@
     }
 
     async function main() {
-      const res = await fetch('prices.json');
-      const data = await res.json();
+      let data;
+      try {
+        const res = await fetch('prices.json');
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        data = await res.json();
+      } catch(e) {
+        document.getElementById('recommendation').innerHTML =
+          `<h2>Error loading prices</h2><div class="breakdown">${e.message}<br>Check browser console (F12)</div>`;
+        console.error('Failed to load prices.json:', e);
+        return;
+      }
       const prices = data.prices;
+      if (!prices || Object.keys(prices).length === 0) {
+        document.getElementById('recommendation').innerHTML =
+          `<h2>No price data</h2><div class="breakdown">prices.json is empty. Run the GitHub Action to populate it.</div>`;
+        return;
+      }
 
       document.getElementById('updated').textContent = `Updated: ${data.updated_at}`;
 
