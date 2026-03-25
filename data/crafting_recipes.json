@@ -5,6 +5,13 @@
     "auction_house_tax": 0.05,
     "notes": "5% tax applied on auction house sales (reflected in 판매단위 당 수수료)"
   },
+  "energy": {
+    "regen_rate": 150,
+    "regen_interval_minutes": 10,
+    "per_hour": 900,
+    "per_day": 21600,
+    "per_week": 151200
+  },
   "weekly_gathering": {
     "notes": "4T 고고학 만생기 기준, base × 3.024 multiplier",
     "profession": "고고학",
