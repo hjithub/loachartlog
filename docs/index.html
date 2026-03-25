@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoA Craft Calculator</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', sans-serif; background: #1a1a2e; color: #e0e0e0; padding: 16px; }
+    h1 { text-align: center; color: #e8b445; margin-bottom: 4px; font-size: 1.5em; }
+    .updated { text-align: center; color: #888; font-size: 0.8em; margin-bottom: 16px; }
+    .recommendation {
+      background: #16213e; border: 2px solid #e8b445; border-radius: 12px;
+      padding: 16px; margin-bottom: 16px; text-align: center;
+    }
+    .recommendation h2 { color: #e8b445; margin-bottom: 8px; }
+    .recommendation .profit { font-size: 2em; color: #4ecca3; font-weight: bold; }
+    .recommendation .breakdown { color: #aaa; margin-top: 8px; font-size: 0.9em; }
+    .strategy-toggle { display: flex; gap: 8px; margin-bottom: 16px; justify-content: center; }
+    .strategy-toggle button {
+      padding: 8px 16px; border: 1px solid #e8b445; background: #16213e;
+      color: #e8b445; border-radius: 8px; cursor: pointer; font-size: 0.9em;
+    }
+    .strategy-toggle button.active { background: #e8b445; color: #1a1a2e; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 16px; }
+    th { background: #16213e; color: #e8b445; padding: 8px; text-align: left; font-size: 0.85em; }
+    td { padding: 6px 8px; border-bottom: 1px solid #2a2a4a; font-size: 0.85em; }
+    tr.profitable td { color: #4ecca3; }
+    tr.loss td { color: #e74c3c; }
+    .section { background: #16213e; border-radius: 8px; padding: 12px; margin-bottom: 12px; }
+    .section h3 { color: #e8b445; margin-bottom: 8px; font-size: 1em; }
+    .mat-list { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+    .mat-item { display: flex; justify-content: space-between; font-size: 0.85em; padding: 2px 0; }
+    .mat-item .name { color: #ccc; }
+    .mat-item .qty { color: #4ecca3; }
+    .sell-mats .qty { color: #e8b445; }
+    .config { background: #0f3460; border-radius: 8px; padding: 12px; margin-bottom: 12px; }
+    .config label { display: block; margin-bottom: 6px; font-size: 0.85em; }
+    .config input { width: 80px; background: #1a1a2e; border: 1px solid #444; color: #e0e0e0; padding: 4px; border-radius: 4px; }
+    .price-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; }
+    .price-card {
+      background: #0f3460; border-radius: 8px; padding: 8px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .price-card img { width: 32px; height: 32px; }
+    .price-card .info { flex: 1; }
+    .price-card .name { font-size: 0.8em; color: #aaa; }
+    .price-card .price { font-size: 1.1em; color: #e8b445; font-weight: bold; }
+    .price-card .yday { font-size: 0.7em; color: #666; }
+  </style>
+</head>
+<body>
+  <h1>LoA Craft Calculator</h1>
+  <div class="updated" id="updated"></div>
+
+  <div class="config">
+    <label>Weekly Energy (활동력): <input type="number" id="weeklyEnergy" value="151200"></label>
+    <label>Gathering Multiplier: <input type="number" id="gatherMultiplier" value="3.024" step="0.001"></label>
+  </div>
+
+  <div class="recommendation" id="recommendation">
+    <h2>Loading...</h2>
+  </div>
+
+  <div class="section" id="recipeTable">
+    <h3>Recipe Profitability (live)</h3>
+    <table>
+      <thead><tr><th>Recipe</th><th>Cost</th><th>Sell</th><th>Profit</th><th>%</th><th>g/energy</th></tr></thead>
+      <tbody id="recipeBody"></tbody>
+    </table>
+  </div>
+
+  <div class="section" id="planSection">
+    <h3>Optimal Craft Plan</h3>
+    <div id="planDetails"></div>
+  </div>
+
+  <div class="section">
+    <h3>Buy These Mats</h3>
+    <div class="mat-list" id="buyMats"></div>
+  </div>
+
+  <div class="section sell-mats">
+    <h3>Sell These Gathered Mats</h3>
+    <div class="mat-list" id="sellMats"></div>
+  </div>
+
+  <div class="section">
+    <h3>Current Market Prices</h3>
+    <div class="price-grid" id="priceGrid"></div>
+  </div>
+
+  <script>
+    const RECIPES = [
+      {
+        name: "정령의 회복약", batchSize: 3, energy: 288,
+        product: "정령의 회복약",
+        materials: [
+          { name: "들꽃", qty: 33, bundle: 100 },
+          { name: "수줍은 들꽃", qty: 25, bundle: 100 },
+          { name: "화사한 들꽃", qty: 8, bundle: 100 },
+          { name: "골드", qty: 30, bundle: 1, fixed: true }
+        ]
+      },
+      {
+        name: "아드로핀 물약", batchSize: 3, energy: 288,
+        product: "아드로핀 물약",
+        materials: [
+          { name: "고대 유물", qty: 75, bundle: 100, gathered: true },
+          { name: "수줍은 들꽃", qty: 8, bundle: 100 },
+          { name: "진귀한 유물", qty: 6, bundle: 100, gathered: true },
+          { name: "희귀한 유물", qty: 17, bundle: 100, gathered: true },
+          { name: "골드", qty: 30, bundle: 1, fixed: true }
+        ]
+      },
+      {
+        name: "빛나는 성스러운 부적", batchSize: 2, energy: 216,
+        product: "빛나는 성스러운 부적",
+        materials: [
+          { name: "단단한 철광석", qty: 4, bundle: 100 },
+          { name: "성스러운 부적", qty: 3, bundle: 1 },
+          { name: "골드", qty: 15, bundle: 1, fixed: true }
+        ]
+      },
+      {
+        name: "회오리 수류탄", batchSize: 3, energy: 144,
+        product: "회오리 수류탄",
+        materials: [
+          { name: "목재", qty: 17, bundle: 100 },
+          { name: "부드러운 목재", qty: 12, bundle: 100 },
+          { name: "튼튼한 목재", qty: 4, bundle: 100 },
+          { name: "골드", qty: 15, bundle: 1, fixed: true }
+        ]
+      },
+      {
+        name: "암흑 수류탄", batchSize: 3, energy: 144,
+        product: "암흑 수류탄",
+        materials: [
+          { name: "목재", qty: 17, bundle: 100 },
+          { name: "부드러운 목재", qty: 12, bundle: 100 },
+          { name: "튼튼한 목재", qty: 4, bundle: 100 },
+          { name: "골드", qty: 15, bundle: 1, fixed: true }
+        ]
+      },
+      {
+        name: "상급 아비도스 융화 재료(고고학)", batchSize: 10, energy: 360,
+        product: "상급 아비도스 융화 재료",
+        materials: [
+          { name: "고대 유물", qty: 112, bundle: 100, gathered: true },
+          { name: "아비도스 유물", qty: 43, bundle: 100, gathered: true },
+          { name: "희귀한 유물", qty: 59, bundle: 100, gathered: true },
+          { name: "골드", qty: 520, bundle: 1, fixed: true }
+        ]
+      },
+      {
+        name: "아비도스 융화 재료(고고학)", batchSize: 10, energy: 288,
+        product: "아비도스 융화 재료",
+        materials: [
+          { name: "고대 유물", qty: 86, bundle: 100, gathered: true },
+          { name: "아비도스 유물", qty: 33, bundle: 100, gathered: true },
+          { name: "희귀한 유물", qty: 45, bundle: 100, gathered: true },
+          { name: "골드", qty: 400, bundle: 1, fixed: true }
+        ]
+      },
+      {
+        name: "아비도스 융화 재료(벌목)", batchSize: 10, energy: 288,
+        product: "아비도스 융화 재료",
+        materials: [
+          { name: "목재", qty: 86, bundle: 100 },
+          { name: "부드러운 목재", qty: 45, bundle: 100 },
+          { name: "아비도스 목재", qty: 33, bundle: 100 },
+          { name: "골드", qty: 400, bundle: 1, fixed: true }
+        ]
+      },
+      {
+        name: "성스러운 부적", batchSize: 3, energy: 144,
+        product: "성스러운 부적",
+        materials: [
+          { name: "단단한 철광석", qty: 4, bundle: 100 },
+          { name: "묵직한 철광석", qty: 14, bundle: 100 },
+          { name: "철광석", qty: 28, bundle: 100 },
+          { name: "골드", qty: 15, bundle: 1, fixed: true }
+        ]
+      }
+    ];
+
+    const BASE_GATHERING = {
+      "고대 유물": 2784,
+      "희귀한 유물": 1641,
+      "진귀한 유물": 382,
+      "아비도스 유물": 382
+    };
+
+    const TAX_RATE = 0.05;
+
+    function getUnitPrice(prices, name) {
+      const p = prices[name];
+      if (!p) return 0;
+      return p.currentMinPrice / p.bundleCount;
+    }
+
+    function calcRecipe(recipe, prices, gatheredMats) {
+      const sellPrice = prices[recipe.product]?.currentMinPrice || 0;
+      const tax = Math.ceil(sellPrice * TAX_RATE);
+      const netSell = sellPrice - tax;
+
+      let costPerBatch = 0;
+      let costPerBatchFree = 0; // cost when using free gathered mats
+      for (const mat of recipe.materials) {
+        if (mat.fixed) {
+          // Gold cost - the "total_cost" from screenshots shows less than qty
+          // It seems there's a discount. Use qty * 0.7 as approximation based on data
+          const goldCost = Math.ceil(mat.qty * 0.83);
+          costPerBatch += goldCost;
+          costPerBatchFree += goldCost;
+        } else {
+          const unitPrice = getUnitPrice(prices, mat.name);
+          const matCost = mat.qty * unitPrice;
+          costPerBatch += matCost;
+          if (!mat.gathered) {
+            costPerBatchFree += matCost;
+          }
+        }
+      }
+
+      const costPerUnit = costPerBatch / recipe.batchSize;
+      const profitPerUnit = netSell - costPerUnit;
+      const profitPerBatch = profitPerUnit * recipe.batchSize;
+      const profitPerEnergy = profitPerBatch / recipe.energy;
+
+      // With free gathered mats
+      const costPerUnitFree = costPerBatchFree / recipe.batchSize;
+      const profitPerUnitFree = netSell - costPerUnitFree;
+      const profitPerBatchFree2 = profitPerUnitFree * recipe.batchSize;
+      const profitPerEnergyFree = profitPerBatchFree2 / recipe.energy;
+
+      return {
+        name: recipe.name,
+        sellPrice, tax, netSell,
+        costPerUnit: costPerUnit.toFixed(1),
+        profitPerUnit: profitPerUnit.toFixed(1),
+        marginPct: ((profitPerUnit / costPerUnit) * 100).toFixed(1),
+        profitPerEnergy: profitPerEnergy.toFixed(4),
+        profitPerEnergyFree: profitPerEnergyFree.toFixed(4),
+        profitPerBatch,
+        profitPerBatchFree: profitPerBatchFree2,
+        energy: recipe.energy,
+        batchSize: recipe.batchSize,
+        materials: recipe.materials,
+        hasGathered: recipe.materials.some(m => m.gathered)
+      };
+    }
+
+    function optimizePlan(recipes, prices, weeklyEnergy, multiplier) {
+      const gathered = {};
+      for (const [k, v] of Object.entries(BASE_GATHERING)) {
+        gathered[k] = Math.floor(v * multiplier);
+      }
+
+      // Calculate value of selling all gathered mats
+      let sellGatheredValue = 0;
+      for (const [name, qty] of Object.entries(gathered)) {
+        const unitPrice = getUnitPrice(prices, name);
+        sellGatheredValue += qty * unitPrice * (1 - TAX_RATE);
+      }
+
+      // Strategy A: All energy on best non-gathered recipe + sell mats
+      const calcs = recipes.map(r => calcRecipe(r, prices, gathered));
+      const bestNonGathered = calcs
+        .filter(c => parseFloat(c.profitPerEnergy) > 0)
+        .sort((a, b) => parseFloat(b.profitPerEnergy) - parseFloat(a.profitPerEnergy))[0];
+
+      let stratA = 0;
+      let stratAPlan = [];
+      if (bestNonGathered) {
+        const recipe = recipes.find(r => r.name === bestNonGathered.name);
+        const batches = Math.floor(weeklyEnergy / recipe.energy);
+        const profit = batches * bestNonGathered.profitPerBatch;
+        stratA = profit + sellGatheredValue;
+        stratAPlan = [{ name: recipe.name, batches, units: batches * recipe.batchSize, energy: batches * recipe.energy, profit }];
+      }
+
+      // Strategy B: Use gathered mats for best gathered recipe, then fill with best non-gathered
+      const gatheredRecipes = calcs.filter(c => c.hasGathered && parseFloat(c.profitPerEnergyFree) > 0);
+      gatheredRecipes.sort((a, b) => parseFloat(b.profitPerEnergyFree) - parseFloat(a.profitPerEnergyFree));
+
+      let stratB = 0;
+      let stratBPlan = [];
+      let remainEnergy = weeklyEnergy;
+      const remainMats = { ...gathered };
+
+      for (const gc of gatheredRecipes) {
+        const recipe = recipes.find(r => r.name === gc.name);
+        let maxBatches = Math.floor(remainEnergy / recipe.energy);
+
+        for (const mat of recipe.materials) {
+          if (mat.gathered && remainMats[mat.name] !== undefined) {
+            maxBatches = Math.min(maxBatches, Math.floor(remainMats[mat.name] / mat.qty));
+          }
+        }
+
+        if (maxBatches > 0) {
+          for (const mat of recipe.materials) {
+            if (mat.gathered && remainMats[mat.name] !== undefined) {
+              remainMats[mat.name] -= maxBatches * mat.qty;
+            }
+          }
+          remainEnergy -= maxBatches * recipe.energy;
+          const profit = maxBatches * gc.profitPerBatchFree;
+          stratB += profit;
+          stratBPlan.push({ name: recipe.name, batches: maxBatches, units: maxBatches * recipe.batchSize, energy: maxBatches * recipe.energy, profit });
+        }
+      }
+
+      // Sell leftover gathered mats
+      let leftoverValue = 0;
+      for (const [name, qty] of Object.entries(remainMats)) {
+        if (qty > 0) {
+          const unitPrice = getUnitPrice(prices, name);
+          leftoverValue += qty * unitPrice * (1 - TAX_RATE);
+        }
+      }
+      stratB += leftoverValue;
+
+      // Fill remaining energy with best non-gathered
+      if (bestNonGathered && remainEnergy > 0) {
+        const recipe = recipes.find(r => r.name === bestNonGathered.name);
+        const batches = Math.floor(remainEnergy / recipe.energy);
+        if (batches > 0) {
+          const profit = batches * bestNonGathered.profitPerBatch;
+          stratB += profit;
+          remainEnergy -= batches * recipe.energy;
+          stratBPlan.push({ name: recipe.name, batches, units: batches * recipe.batchSize, energy: batches * recipe.energy, profit });
+        }
+      }
+
+      const winner = stratA >= stratB ? 'A' : 'B';
+      return {
+        stratA: { total: stratA, plan: stratAPlan, sellGathered: sellGatheredValue },
+        stratB: { total: stratB, plan: stratBPlan, leftoverSell: leftoverValue },
+        winner, calcs
+      };
+    }
+
+    function getMatsNeeded(plan, recipes, prices) {
+      const mats = {};
+      for (const item of plan) {
+        const recipe = recipes.find(r => r.name === item.name);
+        for (const mat of recipe.materials) {
+          if (mat.fixed) continue;
+          if (mat.gathered) continue;
+          const key = mat.name;
+          const qty = mat.qty * item.batches;
+          mats[key] = (mats[key] || 0) + qty;
+        }
+      }
+      return mats;
+    }
+
+    async function main() {
+      const res = await fetch('prices.json');
+      const data = await res.json();
+      const prices = data.prices;
+
+      document.getElementById('updated').textContent = `Updated: ${data.updated_at}`;
+
+      const weeklyEnergy = parseInt(document.getElementById('weeklyEnergy').value) || 151200;
+      const multiplier = parseFloat(document.getElementById('gatherMultiplier').value) || 3.024;
+
+      const result = optimizePlan(RECIPES, prices, weeklyEnergy, multiplier);
+
+      // Recommendation
+      const rec = document.getElementById('recommendation');
+      const winPlan = result.winner === 'A' ? result.stratA : result.stratB;
+      const losePlan = result.winner === 'A' ? result.stratB : result.stratA;
+      rec.innerHTML = `
+        <h2>Strategy ${result.winner} Wins</h2>
+        <div class="profit">${Math.round(winPlan.total).toLocaleString()}g / week</div>
+        <div class="breakdown">
+          vs ${Math.round(losePlan.total).toLocaleString()}g (${result.winner === 'A' ? 'B' : 'A'})
+          &mdash; difference: ${Math.round(winPlan.total - losePlan.total).toLocaleString()}g
+        </div>
+      `;
+
+      // Recipe table
+      const tbody = document.getElementById('recipeBody');
+      tbody.innerHTML = '';
+      const sorted = result.calcs.sort((a, b) => parseFloat(b.profitPerEnergy) - parseFloat(a.profitPerEnergy));
+      for (const c of sorted) {
+        const cls = parseFloat(c.profitPerUnit) > 0 ? 'profitable' : 'loss';
+        tbody.innerHTML += `<tr class="${cls}">
+          <td>${c.name}</td>
+          <td>${c.costPerUnit}</td>
+          <td>${c.netSell}</td>
+          <td>${c.profitPerUnit}</td>
+          <td>${c.marginPct}%</td>
+          <td>${c.profitPerEnergy}</td>
+        </tr>`;
+      }
+
+      // Plan details
+      const plan = winPlan.plan;
+      const planDiv = document.getElementById('planDetails');
+      let planHTML = '<table><thead><tr><th>Recipe</th><th>Batches</th><th>Units</th><th>Energy</th><th>Profit</th></tr></thead><tbody>';
+      let totalEnergy = 0;
+      for (const p of plan) {
+        planHTML += `<tr><td>${p.name}</td><td>${p.batches}</td><td>${p.units}</td><td>${p.energy.toLocaleString()}</td><td>${Math.round(p.profit).toLocaleString()}g</td></tr>`;
+        totalEnergy += p.energy;
+      }
+      if (result.winner === 'A') {
+        planHTML += `<tr><td colspan="4">Sell gathered mats</td><td>${Math.round(winPlan.sellGathered).toLocaleString()}g</td></tr>`;
+      } else if (winPlan.leftoverSell > 0) {
+        planHTML += `<tr><td colspan="4">Sell leftover mats</td><td>${Math.round(winPlan.leftoverSell).toLocaleString()}g</td></tr>`;
+      }
+      planHTML += '</tbody></table>';
+      planDiv.innerHTML = planHTML;
+
+      // Buy mats
+      const buyDiv = document.getElementById('buyMats');
+      const matsNeeded = getMatsNeeded(plan, RECIPES, prices);
+      let buyHTML = '';
+      for (const [name, qty] of Object.entries(matsNeeded).sort((a, b) => a[0].localeCompare(b[0]))) {
+        const unitPrice = getUnitPrice(prices, name);
+        const totalCost = Math.round(qty * unitPrice);
+        buyHTML += `<div class="mat-item"><span class="name">${name}</span><span class="qty">${qty.toLocaleString()} (${totalCost.toLocaleString()}g)</span></div>`;
+      }
+      buyDiv.innerHTML = buyHTML || '<div>No mats to buy</div>';
+
+      // Sell mats
+      const sellDiv = document.getElementById('sellMats');
+      const gathered = {};
+      for (const [k, v] of Object.entries(BASE_GATHERING)) {
+        gathered[k] = Math.floor(v * multiplier);
+      }
+      if (result.winner === 'A') {
+        let sellHTML = '';
+        for (const [name, qty] of Object.entries(gathered)) {
+          const unitPrice = getUnitPrice(prices, name);
+          const value = Math.round(qty * unitPrice * 0.95);
+          sellHTML += `<div class="mat-item"><span class="name">${name}</span><span class="qty">${qty.toLocaleString()} (${value.toLocaleString()}g)</span></div>`;
+        }
+        sellDiv.innerHTML = sellHTML;
+      } else {
+        sellDiv.innerHTML = '<div>Using gathered mats for crafting (sell leftovers)</div>';
+      }
+
+      // Price grid
+      const grid = document.getElementById('priceGrid');
+      let gridHTML = '';
+      for (const [name, info] of Object.entries(prices).sort((a, b) => a[0].localeCompare(b[0]))) {
+        const priceDisplay = info.bundleCount > 1
+          ? `${info.currentMinPrice}g <span style="color:#666">/ ${info.bundleCount}</span>`
+          : `${info.currentMinPrice}g`;
+        gridHTML += `<div class="price-card">
+          <img src="${info.icon}" alt="${name}">
+          <div class="info">
+            <div class="name">${name}</div>
+            <div class="price">${priceDisplay}</div>
+            <div class="yday">avg: ${info.yDayAvgPrice}g</div>
+          </div>
+        </div>`;
+      }
+      grid.innerHTML = gridHTML;
+    }
+
+    document.getElementById('weeklyEnergy').addEventListener('change', main);
+    document.getElementById('gatherMultiplier').addEventListener('change', main);
+    main();
+  </script>
+</body>
+</html>
