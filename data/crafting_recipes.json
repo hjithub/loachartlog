@@ -5,6 +5,24 @@
     "auction_house_tax": 0.05,
     "notes": "5% tax applied on auction house sales (reflected in 판매단위 당 수수료)"
   },
+  "weekly_gathering": {
+    "notes": "4T 고고학 만생기 기준, base × 3.024 multiplier",
+    "profession": "고고학",
+    "tier": "4T",
+    "multiplier": 3.024,
+    "base_yields": {
+      "고대 유물": 2784,
+      "희귀한 유물": 1641,
+      "진귀한 유물": 382,
+      "아비도스 유물": 382
+    },
+    "weekly_yields": {
+      "고대 유물": 8419,
+      "희귀한 유물": 4962,
+      "진귀한 유물": 1155,
+      "아비도스 유물": 1155
+    }
+  },
   "recipes": [
     {
       "name": "상급 아비도스 융화 재료(고고학)",
