@@ -208,9 +208,8 @@
       let costPerBatchFree = 0; // cost when using free gathered mats
       for (const mat of recipe.materials) {
         if (mat.fixed) {
-          // Gold cost - the "total_cost" from screenshots shows less than qty
-          // It seems there's a discount. Use qty * 0.7 as approximation based on data
-          const goldCost = Math.ceil(mat.qty * 0.83);
+          // Gold cost has a stronghold crafting discount applied
+          const goldCost = Math.ceil(mat.qty * 0.7);
           costPerBatch += goldCost;
           costPerBatchFree += goldCost;
         } else {
