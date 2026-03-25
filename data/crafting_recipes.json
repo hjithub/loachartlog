@@ -114,6 +114,140 @@
         { "name": "희귀한 유물", "quantity": 17, "sell_unit": 100, "market_price": 203, "unit_price": 2.02, "total_cost": 34.51 },
         { "name": "골드", "quantity": 30, "sell_unit": 1, "market_price": 1, "unit_price": 1, "total_cost": 21 }
       ]
+    },
+    {
+      "name": "암흑 수류탄",
+      "name_en": "Dark Grenade",
+      "craft_info": {
+        "craft_batch_size": 3,
+        "energy_cost": 144,
+        "craft_time_seconds": 1800,
+        "exp": 288,
+        "cost_per_sell_unit": 30.23,
+        "cost_per_craft_batch": 90.71
+      },
+      "sell_info": {
+        "sell_unit": 1,
+        "market_price": 36,
+        "tax_per_unit": 2,
+        "cost_per_unit_with_tax": 32.23,
+        "profit_per_unit": 3.76,
+        "profit_margin_pct": 11.67,
+        "energy_profit_margin_pct": 7.84
+      },
+      "materials": [
+        { "name": "목재", "quantity": 17, "sell_unit": 100, "market_price": 99, "unit_price": 0.99, "total_cost": 16.82 },
+        { "name": "부드러운 목재", "quantity": 12, "sell_unit": 100, "market_price": 199, "unit_price": 1.99, "total_cost": 23.88 },
+        { "name": "튼튼한 목재", "quantity": 4, "sell_unit": 100, "market_price": 1000, "unit_price": 10, "total_cost": 40 },
+        { "name": "골드", "quantity": 15, "sell_unit": 1, "market_price": 1, "unit_price": 1, "total_cost": 10 }
+      ]
+    },
+    {
+      "name": "성스러운 부적",
+      "name_en": "Sacred Amulet",
+      "craft_info": {
+        "craft_batch_size": 3,
+        "energy_cost": 144,
+        "craft_time_seconds": 1800,
+        "exp": 288,
+        "cost_per_sell_unit": 38.09,
+        "cost_per_craft_batch": 114.28
+      },
+      "sell_info": {
+        "sell_unit": 1,
+        "market_price": 21,
+        "tax_per_unit": 2,
+        "cost_per_unit_with_tax": 40.09,
+        "profit_per_unit": -19.1,
+        "profit_margin_pct": -47.63,
+        "energy_profit_margin_pct": -39.78
+      },
+      "materials": [
+        { "name": "단단한 철광석", "quantity": 4, "sell_unit": 100, "market_price": 1130, "unit_price": 11.3, "total_cost": 45.2 },
+        { "name": "묵직한 철광석", "quantity": 14, "sell_unit": 100, "market_price": 200, "unit_price": 2, "total_cost": 28 },
+        { "name": "철광석", "quantity": 28, "sell_unit": 100, "market_price": 111, "unit_price": 1.11, "total_cost": 31.08 },
+        { "name": "골드", "quantity": 15, "sell_unit": 1, "market_price": 1, "unit_price": 1, "total_cost": 10 }
+      ]
+    },
+    {
+      "name": "정령의 회복약",
+      "name_en": "Elemental HP Potion",
+      "craft_info": {
+        "craft_batch_size": 3,
+        "energy_cost": 288,
+        "craft_time_seconds": 3600,
+        "exp": 576,
+        "cost_per_sell_unit": 87.51,
+        "cost_per_craft_batch": 262.55
+      },
+      "sell_info": {
+        "sell_unit": 1,
+        "market_price": 111,
+        "tax_per_unit": 6,
+        "cost_per_unit_with_tax": 93.51,
+        "profit_per_unit": 17.48,
+        "profit_margin_pct": 18.69,
+        "energy_profit_margin_pct": 18.21
+      },
+      "materials": [
+        { "name": "들꽃", "quantity": 33, "sell_unit": 100, "market_price": 174, "unit_price": 1.74, "total_cost": 57.42 },
+        { "name": "수줍은 들꽃", "quantity": 25, "sell_unit": 100, "market_price": 445, "unit_price": 4.45, "total_cost": 111.25 },
+        { "name": "화사한 들꽃", "quantity": 8, "sell_unit": 100, "market_price": 911, "unit_price": 9.11, "total_cost": 72.88 },
+        { "name": "골드", "quantity": 30, "sell_unit": 1, "market_price": 1, "unit_price": 1, "total_cost": 21 }
+      ]
+    },
+    {
+      "name": "빛나는 성스러운 부적",
+      "name_en": "Shining Sacred Amulet",
+      "craft_info": {
+        "craft_batch_size": 2,
+        "energy_cost": 216,
+        "craft_time_seconds": 2700,
+        "exp": 432,
+        "cost_per_sell_unit": 59.1,
+        "cost_per_craft_batch": 118.2
+      },
+      "sell_info": {
+        "sell_unit": 1,
+        "market_price": 76,
+        "tax_per_unit": 4,
+        "cost_per_unit_with_tax": 63.1,
+        "profit_per_unit": 12.89,
+        "profit_margin_pct": 20.44,
+        "energy_profit_margin_pct": 11.94
+      },
+      "materials": [
+        { "name": "단단한 철광석", "quantity": 4, "sell_unit": 100, "market_price": 1130, "unit_price": 11.3, "total_cost": 45.2 },
+        { "name": "성스러운 부적", "quantity": 3, "sell_unit": 1, "market_price": 21, "unit_price": 21, "total_cost": 63 },
+        { "name": "골드", "quantity": 15, "sell_unit": 1, "market_price": 1, "unit_price": 1, "total_cost": 10 }
+      ]
+    },
+    {
+      "name": "회오리 수류탄",
+      "name_en": "Whirlwind Grenade",
+      "craft_info": {
+        "craft_batch_size": 3,
+        "energy_cost": 144,
+        "craft_time_seconds": 1800,
+        "exp": 288,
+        "cost_per_sell_unit": 30.28,
+        "cost_per_craft_batch": 90.84
+      },
+      "sell_info": {
+        "sell_unit": 1,
+        "market_price": 38,
+        "tax_per_unit": 2,
+        "cost_per_unit_with_tax": 32.28,
+        "profit_per_unit": 5.71,
+        "profit_margin_pct": 17.71,
+        "energy_profit_margin_pct": 11.91
+      },
+      "materials": [
+        { "name": "목재", "quantity": 17, "sell_unit": 100, "market_price": 100, "unit_price": 1, "total_cost": 17 },
+        { "name": "부드러운 목재", "quantity": 12, "sell_unit": 100, "market_price": 199, "unit_price": 1.99, "total_cost": 23.88 },
+        { "name": "튼튼한 목재", "quantity": 4, "sell_unit": 100, "market_price": 999, "unit_price": 9.99, "total_cost": 39.96 },
+        { "name": "골드", "quantity": 15, "sell_unit": 1, "market_price": 1, "unit_price": 1, "total_cost": 10 }
+      ]
     }
   ]
 }
