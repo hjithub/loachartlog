@@ -5,89 +5,174 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LoA Craft Calculator</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Segoe UI', sans-serif; background: #1a1a2e; color: #e0e0e0; padding: 16px; }
-    h1 { text-align: center; color: #e8b445; margin-bottom: 4px; font-size: 1.5em; }
-    .updated { text-align: center; color: #888; font-size: 0.8em; margin-bottom: 16px; }
-    .recommendation {
-      background: #16213e; border: 2px solid #e8b445; border-radius: 12px;
-      padding: 16px; margin-bottom: 16px; text-align: center;
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: #0c0f1a;
+      color: #c8cdd8;
+      min-height: 100vh;
     }
-    .recommendation h2 { color: #e8b445; margin-bottom: 8px; }
-    .recommendation .profit { font-size: 2em; color: #4ecca3; font-weight: bold; }
-    .recommendation .breakdown { color: #aaa; margin-top: 8px; font-size: 0.9em; }
-    .strategy-toggle { display: flex; gap: 8px; margin-bottom: 16px; justify-content: center; }
-    .strategy-toggle button {
-      padding: 8px 16px; border: 1px solid #e8b445; background: #16213e;
-      color: #e8b445; border-radius: 8px; cursor: pointer; font-size: 0.9em;
+
+    .container { max-width: 960px; margin: 0 auto; padding: 24px 16px; }
+
+    /* Header */
+    .header { text-align: center; margin-bottom: 32px; }
+    .header h1 {
+      font-size: 1.4em; font-weight: 700; color: #fff;
+      letter-spacing: -0.02em;
     }
-    .strategy-toggle button.active { background: #e8b445; color: #1a1a2e; }
-    table { width: 100%; border-collapse: collapse; margin-bottom: 16px; }
-    th { background: #16213e; color: #e8b445; padding: 8px; text-align: left; font-size: 0.85em; }
-    td { padding: 6px 8px; border-bottom: 1px solid #2a2a4a; font-size: 0.85em; }
-    tr.profitable td { color: #4ecca3; }
-    tr.loss td { color: #e74c3c; }
-    .section { background: #16213e; border-radius: 8px; padding: 12px; margin-bottom: 12px; }
-    .section h3 { color: #e8b445; margin-bottom: 8px; font-size: 1em; }
-    .mat-list { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
-    .mat-item { display: flex; justify-content: space-between; font-size: 0.85em; padding: 2px 0; }
-    .mat-item .name { color: #ccc; }
-    .mat-item .qty { color: #4ecca3; }
-    .sell-mats .qty { color: #e8b445; }
-    .config { background: #0f3460; border-radius: 8px; padding: 12px; margin-bottom: 12px; }
-    .config label { display: block; margin-bottom: 6px; font-size: 0.85em; }
-    .config input { width: 80px; background: #1a1a2e; border: 1px solid #444; color: #e0e0e0; padding: 4px; border-radius: 4px; }
-    .price-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; }
+    .header h1 span { color: #f0b232; }
+    .updated { color: #555; font-size: 0.75em; margin-top: 4px; }
+
+    /* Config bar */
+    .config-bar {
+      display: flex; gap: 16px; align-items: center; justify-content: center;
+      margin-bottom: 24px; flex-wrap: wrap;
+    }
+    .config-bar label {
+      font-size: 0.8em; color: #666; display: flex; align-items: center; gap: 6px;
+    }
+    .config-bar input {
+      width: 85px; background: #161b2e; border: 1px solid #2a3050;
+      color: #e0e0e0; padding: 6px 8px; border-radius: 6px; font-size: 0.85em;
+      font-family: inherit;
+    }
+    .config-bar input:focus { outline: none; border-color: #f0b232; }
+
+    /* Hero recommendation card */
+    .hero {
+      background: linear-gradient(135deg, #141929 0%, #1a2040 100%);
+      border: 1px solid #252d48; border-radius: 16px;
+      padding: 28px 24px; margin-bottom: 20px; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle at 50% 50%, rgba(240,178,50,0.04) 0%, transparent 60%);
+    }
+    .hero .label { font-size: 0.75em; color: #f0b232; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+    .hero .amount {
+      font-size: 2.8em; font-weight: 700; color: #4ade80;
+      margin: 4px 0; letter-spacing: -0.03em;
+    }
+    .hero .versus { font-size: 0.8em; color: #555; }
+    .hero .versus strong { color: #888; }
+
+    /* Two-column layout */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+    @media (max-width: 700px) { .grid-2 { grid-template-columns: 1fr; } }
+
+    /* Cards */
+    .card {
+      background: #141929; border: 1px solid #1e2540; border-radius: 12px;
+      padding: 16px; margin-bottom: 12px;
+    }
+    .card h3 {
+      font-size: 0.7em; text-transform: uppercase; letter-spacing: 0.08em;
+      color: #f0b232; margin-bottom: 12px; font-weight: 600;
+    }
+
+    /* Tables */
+    table { width: 100%; border-collapse: collapse; }
+    th {
+      font-size: 0.7em; text-transform: uppercase; letter-spacing: 0.05em;
+      color: #556; padding: 6px 8px; text-align: left; font-weight: 600;
+      border-bottom: 1px solid #1e2540;
+    }
+    td {
+      padding: 8px; font-size: 0.82em; border-bottom: 1px solid #151a2d;
+      font-variant-numeric: tabular-nums;
+    }
+    tr:hover td { background: rgba(240,178,50,0.03); }
+    tr.profitable td:first-child { border-left: 3px solid #4ade80; }
+    tr.loss td:first-child { border-left: 3px solid #ef4444; }
+    tr.profitable .val { color: #4ade80; }
+    tr.loss .val { color: #ef4444; }
+    td.name-cell { color: #e0e0e0; font-weight: 500; }
+
+    /* Plan table */
+    .plan-table td { color: #c8cdd8; }
+    .plan-table td:last-child { color: #4ade80; font-weight: 600; }
+    .plan-table tr:last-child td { color: #f0b232; font-weight: 600; border-top: 1px solid #2a3050; }
+
+    /* Mat lists */
+    .mat-grid { display: grid; grid-template-columns: 1fr; gap: 6px; }
+    .mat-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 6px 10px; background: #0f1322; border-radius: 8px;
+      font-size: 0.82em;
+    }
+    .mat-row .mname { color: #999; }
+    .mat-row .mval { font-weight: 600; font-variant-numeric: tabular-nums; }
+    .mat-row .mval.buy { color: #f87171; }
+    .mat-row .mval.sell { color: #4ade80; }
+
+    /* Price grid */
+    .price-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 8px; }
     .price-card {
-      background: #0f3460; border-radius: 8px; padding: 8px;
-      display: flex; align-items: center; gap: 8px;
+      background: #0f1322; border-radius: 10px; padding: 10px;
+      display: flex; align-items: center; gap: 10px;
+      border: 1px solid transparent; transition: border-color 0.2s;
     }
-    .price-card img { width: 32px; height: 32px; }
-    .price-card .info { flex: 1; }
-    .price-card .name { font-size: 0.8em; color: #aaa; }
-    .price-card .price { font-size: 1.1em; color: #e8b445; font-weight: bold; }
-    .price-card .yday { font-size: 0.7em; color: #666; }
+    .price-card:hover { border-color: #2a3050; }
+    .price-card img { width: 36px; height: 36px; border-radius: 6px; background: #1a2040; }
+    .price-card .pname { font-size: 0.75em; color: #777; }
+    .price-card .pprice { font-size: 1em; color: #f0b232; font-weight: 700; }
+    .price-card .pbundle { font-size: 0.7em; color: #444; }
+    .price-card .pavg { font-size: 0.68em; color: #444; }
+
+    /* Empty state */
+    .empty { color: #444; font-size: 0.85em; padding: 12px; text-align: center; }
   </style>
 </head>
 <body>
-  <h1>LoA Craft Calculator</h1>
-  <div class="updated" id="updated"></div>
+  <div class="container">
+    <div class="header">
+      <h1><span>LoA</span> Craft Calculator</h1>
+      <div class="updated" id="updated"></div>
+    </div>
 
-  <div class="config">
-    <label>Weekly Energy (활동력): <input type="number" id="weeklyEnergy" value="151200"></label>
-    <label>Gathering Multiplier: <input type="number" id="gatherMultiplier" value="3.024" step="0.001"></label>
-  </div>
+    <div class="config-bar">
+      <label>Weekly Energy <input type="number" id="weeklyEnergy" value="151200"></label>
+      <label>Gather Multi <input type="number" id="gatherMultiplier" value="3.024" step="0.001"></label>
+    </div>
 
-  <div class="recommendation" id="recommendation">
-    <h2>Loading...</h2>
-  </div>
+    <div class="hero" id="recommendation">
+      <div class="label">Loading...</div>
+    </div>
 
-  <div class="section" id="recipeTable">
-    <h3>Recipe Profitability (live)</h3>
-    <table>
-      <thead><tr><th>Recipe</th><th>Cost</th><th>Sell</th><th>Profit</th><th>%</th><th>g/energy</th></tr></thead>
-      <tbody id="recipeBody"></tbody>
-    </table>
-  </div>
+    <div class="card">
+      <h3>Recipe Profitability</h3>
+      <table>
+        <thead><tr><th>Recipe</th><th>Cost</th><th>Sell</th><th>Profit</th><th>%</th><th>g/energy</th></tr></thead>
+        <tbody id="recipeBody"></tbody>
+      </table>
+    </div>
 
-  <div class="section" id="planSection">
-    <h3>Optimal Craft Plan</h3>
-    <div id="planDetails"></div>
-  </div>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Craft Plan</h3>
+        <div id="planDetails"></div>
+      </div>
+      <div class="card">
+        <h3>Buy These Mats</h3>
+        <div class="mat-grid" id="buyMats"></div>
+      </div>
+    </div>
 
-  <div class="section">
-    <h3>Buy These Mats</h3>
-    <div class="mat-list" id="buyMats"></div>
-  </div>
+    <div class="card">
+      <h3>Sell Gathered Mats</h3>
+      <div class="mat-grid" id="sellMats"></div>
+    </div>
 
-  <div class="section sell-mats">
-    <h3>Sell These Gathered Mats</h3>
-    <div class="mat-list" id="sellMats"></div>
-  </div>
-
-  <div class="section">
-    <h3>Current Market Prices</h3>
-    <div class="price-grid" id="priceGrid"></div>
+    <div class="card">
+      <h3>Market Prices</h3>
+      <div class="price-grid" id="priceGrid"></div>
+    </div>
   </div>
 
   <script>
@@ -185,10 +270,8 @@
     ];
 
     const BASE_GATHERING = {
-      "고대 유물": 2784,
-      "희귀한 유물": 1641,
-      "진귀한 유물": 382,
-      "아비도스 유물": 382
+      "고대 유물": 2784, "희귀한 유물": 1641,
+      "진귀한 유물": 382, "아비도스 유물": 382
     };
 
     const TAX_RATE = 0.05;
@@ -199,16 +282,15 @@
       return p.currentMinPrice / p.bundleCount;
     }
 
-    function calcRecipe(recipe, prices, gatheredMats) {
+    function calcRecipe(recipe, prices) {
       const sellPrice = prices[recipe.product]?.currentMinPrice || 0;
       const tax = Math.ceil(sellPrice * TAX_RATE);
       const netSell = sellPrice - tax;
 
       let costPerBatch = 0;
-      let costPerBatchFree = 0; // cost when using free gathered mats
+      let costPerBatchFree = 0;
       for (const mat of recipe.materials) {
         if (mat.fixed) {
-          // Gold cost has a stronghold crafting discount applied
           const goldCost = Math.ceil(mat.qty * 0.7);
           costPerBatch += goldCost;
           costPerBatchFree += goldCost;
@@ -216,9 +298,7 @@
           const unitPrice = getUnitPrice(prices, mat.name);
           const matCost = mat.qty * unitPrice;
           costPerBatch += matCost;
-          if (!mat.gathered) {
-            costPerBatchFree += matCost;
-          }
+          if (!mat.gathered) costPerBatchFree += matCost;
         }
       }
 
@@ -227,24 +307,20 @@
       const profitPerBatch = profitPerUnit * recipe.batchSize;
       const profitPerEnergy = profitPerBatch / recipe.energy;
 
-      // With free gathered mats
       const costPerUnitFree = costPerBatchFree / recipe.batchSize;
       const profitPerUnitFree = netSell - costPerUnitFree;
       const profitPerBatchFree2 = profitPerUnitFree * recipe.batchSize;
       const profitPerEnergyFree = profitPerBatchFree2 / recipe.energy;
 
       return {
-        name: recipe.name,
-        sellPrice, tax, netSell,
+        name: recipe.name, sellPrice, tax, netSell,
         costPerUnit: costPerUnit.toFixed(1),
         profitPerUnit: profitPerUnit.toFixed(1),
         marginPct: ((profitPerUnit / costPerUnit) * 100).toFixed(1),
         profitPerEnergy: profitPerEnergy.toFixed(4),
         profitPerEnergyFree: profitPerEnergyFree.toFixed(4),
-        profitPerBatch,
-        profitPerBatchFree: profitPerBatchFree2,
-        energy: recipe.energy,
-        batchSize: recipe.batchSize,
+        profitPerBatch, profitPerBatchFree: profitPerBatchFree2,
+        energy: recipe.energy, batchSize: recipe.batchSize,
         materials: recipe.materials,
         hasGathered: recipe.materials.some(m => m.gathered)
       };
@@ -252,25 +328,19 @@
 
     function optimizePlan(recipes, prices, weeklyEnergy, multiplier) {
       const gathered = {};
-      for (const [k, v] of Object.entries(BASE_GATHERING)) {
+      for (const [k, v] of Object.entries(BASE_GATHERING))
         gathered[k] = Math.floor(v * multiplier);
-      }
 
-      // Calculate value of selling all gathered mats
       let sellGatheredValue = 0;
-      for (const [name, qty] of Object.entries(gathered)) {
-        const unitPrice = getUnitPrice(prices, name);
-        sellGatheredValue += qty * unitPrice * (1 - TAX_RATE);
-      }
+      for (const [name, qty] of Object.entries(gathered))
+        sellGatheredValue += qty * getUnitPrice(prices, name) * (1 - TAX_RATE);
 
-      // Strategy A: All energy on best non-gathered recipe + sell mats
-      const calcs = recipes.map(r => calcRecipe(r, prices, gathered));
+      const calcs = recipes.map(r => calcRecipe(r, prices));
       const bestNonGathered = calcs
         .filter(c => parseFloat(c.profitPerEnergy) > 0)
         .sort((a, b) => parseFloat(b.profitPerEnergy) - parseFloat(a.profitPerEnergy))[0];
 
-      let stratA = 0;
-      let stratAPlan = [];
+      let stratA = 0, stratAPlan = [];
       if (bestNonGathered) {
         const recipe = recipes.find(r => r.name === bestNonGathered.name);
         const batches = Math.floor(weeklyEnergy / recipe.energy);
@@ -279,31 +349,23 @@
         stratAPlan = [{ name: recipe.name, batches, units: batches * recipe.batchSize, energy: batches * recipe.energy, profit }];
       }
 
-      // Strategy B: Use gathered mats for best gathered recipe, then fill with best non-gathered
-      const gatheredRecipes = calcs.filter(c => c.hasGathered && parseFloat(c.profitPerEnergyFree) > 0);
-      gatheredRecipes.sort((a, b) => parseFloat(b.profitPerEnergyFree) - parseFloat(a.profitPerEnergyFree));
+      const gatheredRecipes = calcs.filter(c => c.hasGathered && parseFloat(c.profitPerEnergyFree) > 0)
+        .sort((a, b) => parseFloat(b.profitPerEnergyFree) - parseFloat(a.profitPerEnergyFree));
 
-      let stratB = 0;
-      let stratBPlan = [];
-      let remainEnergy = weeklyEnergy;
+      let stratB = 0, stratBPlan = [], remainEnergy = weeklyEnergy;
       const remainMats = { ...gathered };
 
       for (const gc of gatheredRecipes) {
         const recipe = recipes.find(r => r.name === gc.name);
         let maxBatches = Math.floor(remainEnergy / recipe.energy);
-
-        for (const mat of recipe.materials) {
-          if (mat.gathered && remainMats[mat.name] !== undefined) {
+        for (const mat of recipe.materials)
+          if (mat.gathered && remainMats[mat.name] !== undefined)
             maxBatches = Math.min(maxBatches, Math.floor(remainMats[mat.name] / mat.qty));
-          }
-        }
 
         if (maxBatches > 0) {
-          for (const mat of recipe.materials) {
-            if (mat.gathered && remainMats[mat.name] !== undefined) {
+          for (const mat of recipe.materials)
+            if (mat.gathered && remainMats[mat.name] !== undefined)
               remainMats[mat.name] -= maxBatches * mat.qty;
-            }
-          }
           remainEnergy -= maxBatches * recipe.energy;
           const profit = maxBatches * gc.profitPerBatchFree;
           stratB += profit;
@@ -311,33 +373,25 @@
         }
       }
 
-      // Sell leftover gathered mats
       let leftoverValue = 0;
-      for (const [name, qty] of Object.entries(remainMats)) {
-        if (qty > 0) {
-          const unitPrice = getUnitPrice(prices, name);
-          leftoverValue += qty * unitPrice * (1 - TAX_RATE);
-        }
-      }
+      for (const [name, qty] of Object.entries(remainMats))
+        if (qty > 0) leftoverValue += qty * getUnitPrice(prices, name) * (1 - TAX_RATE);
       stratB += leftoverValue;
 
-      // Fill remaining energy with best non-gathered
       if (bestNonGathered && remainEnergy > 0) {
         const recipe = recipes.find(r => r.name === bestNonGathered.name);
         const batches = Math.floor(remainEnergy / recipe.energy);
         if (batches > 0) {
-          const profit = batches * bestNonGathered.profitPerBatch;
-          stratB += profit;
+          stratB += batches * bestNonGathered.profitPerBatch;
           remainEnergy -= batches * recipe.energy;
-          stratBPlan.push({ name: recipe.name, batches, units: batches * recipe.batchSize, energy: batches * recipe.energy, profit });
+          stratBPlan.push({ name: recipe.name, batches, units: batches * recipe.batchSize, energy: batches * recipe.energy, profit: batches * bestNonGathered.profitPerBatch });
         }
       }
 
-      const winner = stratA >= stratB ? 'A' : 'B';
       return {
         stratA: { total: stratA, plan: stratAPlan, sellGathered: sellGatheredValue },
         stratB: { total: stratB, plan: stratBPlan, leftoverSell: leftoverValue },
-        winner, calcs
+        winner: stratA >= stratB ? 'A' : 'B', calcs
       };
     }
 
@@ -346,11 +400,8 @@
       for (const item of plan) {
         const recipe = recipes.find(r => r.name === item.name);
         for (const mat of recipe.materials) {
-          if (mat.fixed) continue;
-          if (mat.gathered) continue;
-          const key = mat.name;
-          const qty = mat.qty * item.batches;
-          mats[key] = (mats[key] || 0) + qty;
+          if (mat.fixed || mat.gathered) continue;
+          mats[mat.name] = (mats[mat.name] || 0) + mat.qty * item.batches;
         }
       }
       return mats;
@@ -364,35 +415,33 @@
         data = await res.json();
       } catch(e) {
         document.getElementById('recommendation').innerHTML =
-          `<h2>Error loading prices</h2><div class="breakdown">${e.message}<br>Check browser console (F12)</div>`;
-        console.error('Failed to load prices.json:', e);
+          `<div class="label">Error</div><div class="amount" style="color:#ef4444;font-size:1.2em">${e.message}</div>`;
         return;
       }
       const prices = data.prices;
       if (!prices || Object.keys(prices).length === 0) {
         document.getElementById('recommendation').innerHTML =
-          `<h2>No price data</h2><div class="breakdown">prices.json is empty. Run the GitHub Action to populate it.</div>`;
+          `<div class="label">No Data</div><div class="amount" style="color:#ef4444;font-size:1em">Run GitHub Action to populate prices</div>`;
         return;
       }
 
-      document.getElementById('updated').textContent = `Updated: ${data.updated_at}`;
+      const ts = new Date(data.updated_at);
+      const ago = Math.round((Date.now() - ts.getTime()) / 60000);
+      const agoText = ago < 60 ? `${ago}m ago` : `${Math.round(ago/60)}h ago`;
+      document.getElementById('updated').textContent = `${ts.toLocaleString('ko-KR')} (${agoText})`;
 
       const weeklyEnergy = parseInt(document.getElementById('weeklyEnergy').value) || 151200;
       const multiplier = parseFloat(document.getElementById('gatherMultiplier').value) || 3.024;
-
       const result = optimizePlan(RECIPES, prices, weeklyEnergy, multiplier);
 
-      // Recommendation
-      const rec = document.getElementById('recommendation');
-      const winPlan = result.winner === 'A' ? result.stratA : result.stratB;
-      const losePlan = result.winner === 'A' ? result.stratB : result.stratA;
-      rec.innerHTML = `
-        <h2>Strategy ${result.winner} Wins</h2>
-        <div class="profit">${Math.round(winPlan.total).toLocaleString()}g / week</div>
-        <div class="breakdown">
-          vs ${Math.round(losePlan.total).toLocaleString()}g (${result.winner === 'A' ? 'B' : 'A'})
-          &mdash; difference: ${Math.round(winPlan.total - losePlan.total).toLocaleString()}g
-        </div>
+      // Hero
+      const win = result.winner === 'A' ? result.stratA : result.stratB;
+      const lose = result.winner === 'A' ? result.stratB : result.stratA;
+      const diff = Math.round(win.total - lose.total);
+      document.getElementById('recommendation').innerHTML = `
+        <div class="label">Optimal Strategy ${result.winner}</div>
+        <div class="amount">${Math.round(win.total).toLocaleString()}g</div>
+        <div class="versus">vs <strong>${Math.round(lose.total).toLocaleString()}g</strong> (Strategy ${result.winner === 'A' ? 'B' : 'A'}) &mdash; +${diff.toLocaleString()}g difference</div>
       `;
 
       // Recipe table
@@ -402,78 +451,68 @@
       for (const c of sorted) {
         const cls = parseFloat(c.profitPerUnit) > 0 ? 'profitable' : 'loss';
         tbody.innerHTML += `<tr class="${cls}">
-          <td>${c.name}</td>
-          <td>${c.costPerUnit}</td>
-          <td>${c.netSell}</td>
-          <td>${c.profitPerUnit}</td>
-          <td>${c.marginPct}%</td>
-          <td>${c.profitPerEnergy}</td>
+          <td class="name-cell">${c.name}</td>
+          <td class="val">${c.costPerUnit}</td>
+          <td class="val">${c.netSell}</td>
+          <td class="val">${c.profitPerUnit}</td>
+          <td class="val">${c.marginPct}%</td>
+          <td class="val">${c.profitPerEnergy}</td>
         </tr>`;
       }
 
-      // Plan details
-      const plan = winPlan.plan;
-      const planDiv = document.getElementById('planDetails');
-      let planHTML = '<table><thead><tr><th>Recipe</th><th>Batches</th><th>Units</th><th>Energy</th><th>Profit</th></tr></thead><tbody>';
-      let totalEnergy = 0;
-      for (const p of plan) {
-        planHTML += `<tr><td>${p.name}</td><td>${p.batches}</td><td>${p.units}</td><td>${p.energy.toLocaleString()}</td><td>${Math.round(p.profit).toLocaleString()}g</td></tr>`;
-        totalEnergy += p.energy;
-      }
-      if (result.winner === 'A') {
-        planHTML += `<tr><td colspan="4">Sell gathered mats</td><td>${Math.round(winPlan.sellGathered).toLocaleString()}g</td></tr>`;
-      } else if (winPlan.leftoverSell > 0) {
-        planHTML += `<tr><td colspan="4">Sell leftover mats</td><td>${Math.round(winPlan.leftoverSell).toLocaleString()}g</td></tr>`;
-      }
+      // Plan
+      const plan = win.plan;
+      let planHTML = '<table class="plan-table"><thead><tr><th>Recipe</th><th>Batches</th><th>Units</th><th>Energy</th><th>Profit</th></tr></thead><tbody>';
+      for (const p of plan)
+        planHTML += `<tr><td>${p.name}</td><td>${p.batches}</td><td>${p.units.toLocaleString()}</td><td>${p.energy.toLocaleString()}</td><td>${Math.round(p.profit).toLocaleString()}g</td></tr>`;
+      if (result.winner === 'A')
+        planHTML += `<tr><td colspan="4">Sell gathered mats</td><td>${Math.round(win.sellGathered).toLocaleString()}g</td></tr>`;
+      else if (win.leftoverSell > 0)
+        planHTML += `<tr><td colspan="4">Sell leftover mats</td><td>${Math.round(win.leftoverSell).toLocaleString()}g</td></tr>`;
       planHTML += '</tbody></table>';
-      planDiv.innerHTML = planHTML;
+      document.getElementById('planDetails').innerHTML = planHTML;
 
       // Buy mats
-      const buyDiv = document.getElementById('buyMats');
       const matsNeeded = getMatsNeeded(plan, RECIPES, prices);
-      let buyHTML = '';
-      for (const [name, qty] of Object.entries(matsNeeded).sort((a, b) => a[0].localeCompare(b[0]))) {
-        const unitPrice = getUnitPrice(prices, name);
-        const totalCost = Math.round(qty * unitPrice);
-        buyHTML += `<div class="mat-item"><span class="name">${name}</span><span class="qty">${qty.toLocaleString()} (${totalCost.toLocaleString()}g)</span></div>`;
+      const buyDiv = document.getElementById('buyMats');
+      const buyEntries = Object.entries(matsNeeded).sort((a, b) => a[0].localeCompare(b[0]));
+      if (buyEntries.length === 0) {
+        buyDiv.innerHTML = '<div class="empty">No mats to buy</div>';
+      } else {
+        buyDiv.innerHTML = buyEntries.map(([name, qty]) => {
+          const cost = Math.round(qty * getUnitPrice(prices, name));
+          return `<div class="mat-row"><span class="mname">${name}</span><span class="mval buy">${qty.toLocaleString()} &middot; ${cost.toLocaleString()}g</span></div>`;
+        }).join('');
       }
-      buyDiv.innerHTML = buyHTML || '<div>No mats to buy</div>';
 
       // Sell mats
       const sellDiv = document.getElementById('sellMats');
       const gathered = {};
-      for (const [k, v] of Object.entries(BASE_GATHERING)) {
+      for (const [k, v] of Object.entries(BASE_GATHERING))
         gathered[k] = Math.floor(v * multiplier);
-      }
+
       if (result.winner === 'A') {
-        let sellHTML = '';
-        for (const [name, qty] of Object.entries(gathered)) {
-          const unitPrice = getUnitPrice(prices, name);
-          const value = Math.round(qty * unitPrice * 0.95);
-          sellHTML += `<div class="mat-item"><span class="name">${name}</span><span class="qty">${qty.toLocaleString()} (${value.toLocaleString()}g)</span></div>`;
-        }
-        sellDiv.innerHTML = sellHTML;
+        sellDiv.innerHTML = Object.entries(gathered).map(([name, qty]) => {
+          const val = Math.round(qty * getUnitPrice(prices, name) * 0.95);
+          return `<div class="mat-row"><span class="mname">${name} &times; ${qty.toLocaleString()}</span><span class="mval sell">${val.toLocaleString()}g</span></div>`;
+        }).join('');
       } else {
-        sellDiv.innerHTML = '<div>Using gathered mats for crafting (sell leftovers)</div>';
+        sellDiv.innerHTML = '<div class="empty">Using gathered mats for crafting</div>';
       }
 
       // Price grid
       const grid = document.getElementById('priceGrid');
-      let gridHTML = '';
-      for (const [name, info] of Object.entries(prices).sort((a, b) => a[0].localeCompare(b[0]))) {
-        const priceDisplay = info.bundleCount > 1
-          ? `${info.currentMinPrice}g <span style="color:#666">/ ${info.bundleCount}</span>`
-          : `${info.currentMinPrice}g`;
-        gridHTML += `<div class="price-card">
-          <img src="${info.icon}" alt="${name}">
-          <div class="info">
-            <div class="name">${name}</div>
-            <div class="price">${priceDisplay}</div>
-            <div class="yday">avg: ${info.yDayAvgPrice}g</div>
+      grid.innerHTML = Object.entries(prices).sort((a, b) => a[0].localeCompare(b[0])).map(([name, info]) => {
+        const bundle = info.bundleCount > 1 ? `<span class="pbundle">/ ${info.bundleCount}</span>` : '';
+        return `<div class="price-card">
+          <img src="${info.icon}" alt="${name}" loading="lazy">
+          <div>
+            <div class="pname">${name}</div>
+            <div class="pprice">${info.currentMinPrice}g ${bundle}</div>
+            <div class="pavg">avg ${info.yDayAvgPrice}g</div>
           </div>
         </div>`;
-      }
-      grid.innerHTML = gridHTML;
+      }).join('');
     }
 
     document.getElementById('weeklyEnergy').addEventListener('change', main);
