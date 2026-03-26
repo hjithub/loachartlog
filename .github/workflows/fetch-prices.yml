@@ -2,7 +2,7 @@ name: Fetch Market Prices
 
 on:
   schedule:
-    - cron: '0 */2 * * *'  # Every 2 hours
+    - cron: '0 */2 * * *'
   workflow_dispatch:
 
 permissions:
@@ -17,111 +17,7 @@ jobs:
       - name: Fetch prices from Lostark API
         env:
           LOSTARK_API_KEY: ${{ secrets.LOSTARK_API_KEY }}
-        run: |
-          set -e
-
-          ITEMS_JSON='[
-            {"id": 6882701, "name": "고대 유물", "category": 90700},
-            {"id": 6882704, "name": "희귀한 유물", "category": 90700},
-            {"id": 6885705, "name": "진귀한 유물", "category": 90700},
-            {"id": 6885709, "name": "아비도스 유물", "category": 90700},
-            {"id": 6882101, "name": "들꽃", "category": 90200},
-            {"id": 6882104, "name": "수줍은 들꽃", "category": 90200},
-            {"id": 6882107, "name": "화사한 들꽃", "category": 90200},
-            {"id": 6882301, "name": "목재", "category": 90300},
-            {"id": 6882304, "name": "부드러운 목재", "category": 90300},
-            {"id": 6884307, "name": "튼튼한 목재", "category": 90300},
-            {"id": 6884308, "name": "아비도스 목재", "category": 90300},
-            {"id": 6882401, "name": "철광석", "category": 90400},
-            {"id": 6882404, "name": "묵직한 철광석", "category": 90400},
-            {"id": 6884407, "name": "단단한 철광석", "category": 90400},
-            {"id": 101063, "name": "정령의 회복약", "category": 60200},
-            {"id": 101291, "name": "아드로핀 물약", "category": 60500},
-            {"id": 101151, "name": "암흑 수류탄", "category": 60300},
-            {"id": 101221, "name": "회오리 수류탄", "category": 60300},
-            {"id": 101191, "name": "성스러운 부적", "category": 60400},
-            {"id": 101938, "name": "빛나는 성스러운 부적", "category": 60400},
-            {"id": 6861012, "name": "아비도스 융화 재료", "category": 50010},
-            {"id": 6861013, "name": "상급 아비도스 융화 재료", "category": 50010}
-          ]'
-
-          # Fetch unique categories
-          CATEGORIES=$(echo "$ITEMS_JSON" | python3 -c "
-          import json, sys
-          items = json.load(sys.stdin)
-          print(' '.join(str(c) for c in sorted(set(i['category'] for i in items))))
-          ")
-
-          # Fetch all items by category
-          ALL_RESULTS="[]"
-          for CAT in $CATEGORIES; do
-            RESULT=$(curl -s -X POST "https://developer-lostark.game.onstove.com/markets/items" \
-              -H "accept: application/json" \
-              -H "authorization: bearer $LOSTARK_API_KEY" \
-              -H "content-type: application/json" \
-              -d "{\"CategoryCode\": $CAT}")
-
-            ALL_RESULTS=$(echo "$ALL_RESULTS" "$RESULT" | python3 -c "
-            import json, sys
-            lines = sys.stdin.read().strip().split('\n', 1)
-            existing = json.loads(lines[0]) if lines[0] != '[]' else []
-            if len(lines) > 1:
-              new_data = json.loads(lines[1])
-              existing.extend(new_data.get('Items', []))
-            print(json.dumps(existing))
-            ")
-            sleep 0.5
-          done
-
-          # Fusion mats need name search (category 50010 is paginated)
-          FUSION_RESULT=$(curl -s -X POST "https://developer-lostark.game.onstove.com/markets/items" \
-            -H "accept: application/json" \
-            -H "authorization: bearer $LOSTARK_API_KEY" \
-            -H "content-type: application/json" \
-            -d '{"CategoryCode": 50010, "ItemName": "융화"}')
-
-          ALL_RESULTS=$(echo "$ALL_RESULTS" "$FUSION_RESULT" | python3 -c "
-          import json, sys
-          lines = sys.stdin.read().strip().split('\n', 1)
-          existing = json.loads(lines[0]) if lines[0] != '[]' else []
-          if len(lines) > 1:
-            new_data = json.loads(lines[1])
-            existing.extend(new_data.get('Items', []))
-          print(json.dumps(existing))
-          ")
-
-          # Build prices.json with only the items we care about
-          echo "$ITEMS_JSON" | python3 -c "
-          import json, sys, datetime
-
-          wanted = json.load(sys.stdin)
-          wanted_ids = {item['id'] for item in wanted}
-
-          all_items_raw = '''$ALL_RESULTS'''
-          all_items = json.loads(all_items_raw)
-
-          prices = {}
-          for item in all_items:
-              if item['Id'] in wanted_ids:
-                  prices[item['Name']] = {
-                      'id': item['Id'],
-                      'currentMinPrice': item['CurrentMinPrice'],
-                      'yDayAvgPrice': item['YDayAvgPrice'],
-                      'recentPrice': item['RecentPrice'],
-                      'bundleCount': item['BundleCount'],
-                      'icon': item['Icon']
-                  }
-
-          output = {
-              'updated_at': datetime.datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ'),
-              'prices': prices
-          }
-
-          with open('docs/prices.json', 'w', encoding='utf-8') as f:
-              json.dump(output, f, ensure_ascii=False, indent=2)
-
-          print(f'Wrote {len(prices)} items to docs/prices.json')
-          "
+        run: python3 scripts/fetch_prices.py
 
       - name: Commit and push
         run: |
