@@ -1,0 +1,29 @@
+name: Fetch Auction Data
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch auction data from Lostark API
+        env:
+          LOSTARK_API_KEY: ${{ secrets.LOSTARK_API_KEY }}
+        run: python3 scripts/fetch_auctions.py
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/auctions.json
+          git diff --staged --quiet && echo "No changes" && exit 0
+          git commit -m "Update auction data $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git push
