@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-03-31T08:17:02Z",
+  "updated_at": "2026-03-31T09:01:52Z",
   "searches": [
     {
       "name": "서폿 1 (생명력/공강/피강)",
@@ -42,8 +42,42 @@
           "max": 8.0
         }
       ],
-      "totalCount": 4,
+      "totalCount": 5,
       "items": [
+        {
+          "name": "도래한 결전의 목걸이",
+          "grade": "고대",
+          "tier": 4,
+          "quality": 79,
+          "buyPrice": 2300000,
+          "startPrice": 2300000,
+          "endDate": "2026-04-01T17:53:29.453",
+          "tradeAllowCount": 1,
+          "stats": {
+            "힘": 15688.0,
+            "민첩": 15688.0,
+            "지능": 15688.0,
+            "체력": 3946.0
+          },
+          "upgrades": [
+            {
+              "name": "세레나데, 신앙, 조화 게이지 획득량 증가",
+              "value": 6.0
+            },
+            {
+              "name": "최대 생명력",
+              "value": 6500.0
+            },
+            {
+              "name": "낙인력",
+              "value": 8.0
+            }
+          ],
+          "arkPassive": {
+            "name": "깨달음",
+            "value": 13.0
+          }
+        },
         {
           "name": "마주한 종언의 목걸이",
           "grade": "고대",
@@ -183,7 +217,7 @@
       ]
     },
     {
-      "name": "목걸이 (공강/피강 + any)",
+      "name": "반지 (공강/피강 + any)",
       "filters": [
         {
           "name": "아군 공격력 강화 효과",
@@ -196,12 +230,149 @@
           "max": 7.5
         }
       ],
-      "totalCount": 0,
-      "items": [],
+      "totalCount": 4,
+      "items": [
+        {
+          "name": "도래한 결전의 반지",
+          "grade": "고대",
+          "tier": 4,
+          "quality": 85,
+          "buyPrice": 1400000,
+          "startPrice": 1300000,
+          "endDate": "2026-03-31T20:15:48.39",
+          "tradeAllowCount": 2,
+          "stats": {
+            "힘": 11543.0,
+            "민첩": 11543.0,
+            "지능": 11543.0,
+            "체력": 2314.0
+          },
+          "upgrades": [
+            {
+              "name": "치명타 피해",
+              "value": 4.0
+            },
+            {
+              "name": "아군 공격력 강화 효과",
+              "value": 5.0
+            },
+            {
+              "name": "아군 피해량 강화 효과",
+              "value": 7.5
+            }
+          ],
+          "arkPassive": {
+            "name": "깨달음",
+            "value": 12.0
+          }
+        },
+        {
+          "name": "도래한 결전의 반지",
+          "grade": "고대",
+          "tier": 4,
+          "quality": 83,
+          "buyPrice": 1450000,
+          "startPrice": 1450000,
+          "endDate": "2026-03-31T19:24:54.09",
+          "tradeAllowCount": 2,
+          "stats": {
+            "힘": 11853.0,
+            "민첩": 11853.0,
+            "지능": 11853.0,
+            "체력": 2252.0
+          },
+          "upgrades": [
+            {
+              "name": "아군 공격력 강화 효과",
+              "value": 5.0
+            },
+            {
+              "name": "전투 중 생명력 회복량",
+              "value": 50.0
+            },
+            {
+              "name": "아군 피해량 강화 효과",
+              "value": 7.5
+            }
+          ],
+          "arkPassive": {
+            "name": "깨달음",
+            "value": 12.0
+          }
+        },
+        {
+          "name": "도래한 결전의 반지",
+          "grade": "고대",
+          "tier": 4,
+          "quality": 91,
+          "buyPrice": 1450000,
+          "startPrice": 1450000,
+          "endDate": "2026-04-01T11:08:31.977",
+          "tradeAllowCount": 2,
+          "stats": {
+            "힘": 12240.0,
+            "민첩": 12240.0,
+            "지능": 12240.0,
+            "체력": 2316.0
+          },
+          "upgrades": [
+            {
+              "name": "치명타 적중률",
+              "value": 1.55
+            },
+            {
+              "name": "아군 피해량 강화 효과",
+              "value": 7.5
+            },
+            {
+              "name": "아군 공격력 강화 효과",
+              "value": 5.0
+            }
+          ],
+          "arkPassive": {
+            "name": "깨달음",
+            "value": 12.0
+          }
+        },
+        {
+          "name": "도래한 결전의 반지",
+          "grade": "고대",
+          "tier": 4,
+          "quality": 92,
+          "buyPrice": 1900000,
+          "startPrice": 1900000,
+          "endDate": "2026-04-01T01:08:14.1",
+          "tradeAllowCount": 2,
+          "stats": {
+            "힘": 12123.0,
+            "민첩": 12123.0,
+            "지능": 12123.0,
+            "체력": 2338.0
+          },
+          "upgrades": [
+            {
+              "name": "치명타 피해",
+              "value": 4.0
+            },
+            {
+              "name": "아군 공격력 강화 효과",
+              "value": 5.0
+            },
+            {
+              "name": "아군 피해량 강화 효과",
+              "value": 7.5
+            }
+          ],
+          "arkPassive": {
+            "name": "깨달음",
+            "value": 12.0
+          }
+        }
+      ],
       "excludeFrom": "서폿 1 (생명력/공강/피강)"
     },
     {
-      "name": "반지 (게이지/낙인력 + any)",
+      "name": "목걸이 (게이지/낙인력 + any)",
       "filters": [
         {
           "name": "세레나데, 신앙, 조화 게이지 획득량 증가",
@@ -214,8 +385,77 @@
           "max": 8.0
         }
       ],
-      "totalCount": 0,
-      "items": [],
+      "totalCount": 2,
+      "items": [
+        {
+          "name": "도래한 결전의 목걸이",
+          "grade": "고대",
+          "tier": 4,
+          "quality": 86,
+          "buyPrice": 1300000,
+          "startPrice": 1100000,
+          "endDate": "2026-04-01T17:54:52.513",
+          "tradeAllowCount": 1,
+          "stats": {
+            "힘": 16839.0,
+            "민첩": 16839.0,
+            "지능": 16839.0,
+            "체력": 3950.0
+          },
+          "upgrades": [
+            {
+              "name": "세레나데, 신앙, 조화 게이지 획득량 증가",
+              "value": 6.0
+            },
+            {
+              "name": "적에게 주는 피해 증가",
+              "value": 2.0
+            },
+            {
+              "name": "낙인력",
+              "value": 8.0
+            }
+          ],
+          "arkPassive": {
+            "name": "깨달음",
+            "value": 13.0
+          }
+        },
+        {
+          "name": "도래한 결전의 목걸이",
+          "grade": "고대",
+          "tier": 4,
+          "quality": 86,
+          "buyPrice": 1300000,
+          "startPrice": 1100000,
+          "endDate": "2026-04-01T17:54:52.513",
+          "tradeAllowCount": 1,
+          "stats": {
+            "힘": 16839.0,
+            "민첩": 16839.0,
+            "지능": 16839.0,
+            "체력": 3950.0
+          },
+          "upgrades": [
+            {
+              "name": "세레나데, 신앙, 조화 게이지 획득량 증가",
+              "value": 6.0
+            },
+            {
+              "name": "적에게 주는 피해 증가",
+              "value": 2.0
+            },
+            {
+              "name": "낙인력",
+              "value": 8.0
+            }
+          ],
+          "arkPassive": {
+            "name": "깨달음",
+            "value": 13.0
+          }
+        }
+      ],
       "excludeFrom": "서폿 2 (게이지/생명력/낙인력)"
     }
   ]
