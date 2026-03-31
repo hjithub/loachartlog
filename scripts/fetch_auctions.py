@@ -57,6 +57,24 @@ SEARCHES = [
             ("낙인력", 8.0, 8.0),
         ],
     },
+    {
+        "name": "목걸이 (공강/피강 + any)",
+        "category": 200010,
+        "filters": [
+            ("아군 공격력 강화 효과", 5.0, 5.0),
+            ("아군 피해량 강화 효과", 7.5, 7.5),
+        ],
+        "excludeFrom": "서폿 1 (생명력/공강/피강)",
+    },
+    {
+        "name": "반지 (게이지/낙인력 + any)",
+        "category": 200030,
+        "filters": [
+            ("세레나데, 신앙, 조화 게이지 획득량 증가", 6.0, 6.0),
+            ("낙인력", 8.0, 8.0),
+        ],
+        "excludeFrom": "서폿 2 (게이지/생명력/낙인력)",
+    },
 ]
 
 MAX_RETRIES = 3
@@ -171,7 +189,7 @@ def main():
         items = [extract_item(i) for i in (raw.get("Items") or [])]
         total = raw.get("TotalCount", 0)
 
-        results.append({
+        entry = {
             "name": search["name"],
             "filters": [
                 {"name": f[0], "min": f[1], "max": f[2]}
@@ -179,7 +197,10 @@ def main():
             ],
             "totalCount": total,
             "items": items,
-        })
+        }
+        if "excludeFrom" in search:
+            entry["excludeFrom"] = search["excludeFrom"]
+        results.append(entry)
         print(f"  Found {total} items")
         time.sleep(1)
 
