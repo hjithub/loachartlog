@@ -58,8 +58,8 @@ SEARCHES = [
         ],
     },
     {
-        "name": "목걸이 (공강/피강 + any)",
-        "category": 200010,
+        "name": "반지 (공강/피강 + any)",
+        "category": 200030,
         "filters": [
             ("아군 공격력 강화 효과", 5.0, 5.0),
             ("아군 피해량 강화 효과", 7.5, 7.5),
@@ -67,8 +67,8 @@ SEARCHES = [
         "excludeFrom": "서폿 1 (생명력/공강/피강)",
     },
     {
-        "name": "반지 (게이지/낙인력 + any)",
-        "category": 200030,
+        "name": "목걸이 (게이지/낙인력 + any)",
+        "category": 200010,
         "filters": [
             ("세레나데, 신앙, 조화 게이지 획득량 증가", 6.0, 6.0),
             ("낙인력", 8.0, 8.0),
@@ -136,7 +136,7 @@ def is_all_max_rolls(item, accessory_type):
             return False
         if not any(abs(value - mv) < 0.01 for mv in valid_maxes):
             return False
-    return len(item["upgrades"]) > 0
+    return len(item["upgrades"]) >= 3
 
 
 MAX_RETRIES = 3
@@ -158,7 +158,7 @@ def build_etc_options(filters):
     return opts
 
 
-def fetch_auction(api_key, category_code, etc_options):
+def fetch_auction(api_key, category_code, etc_options, page=0):
     body = {
         "ItemLevelMin": 0,
         "ItemLevelMax": 0,
@@ -173,7 +173,7 @@ def fetch_auction(api_key, category_code, etc_options):
         "ItemTier": 4,
         "ItemGrade": "고대",
         "ItemName": "",
-        "PageNo": 0,
+        "PageNo": page,
         "SortCondition": "ASC",
     }
 
@@ -247,15 +247,28 @@ def main():
         etc_opts = build_etc_options(search["filters"])
         print(f"Searching: {search['name']}")
 
-        raw = fetch_auction(api_key, search["category"], etc_opts)
-        items = [extract_item(i) for i in (raw.get("Items") or [])]
-
-        # For partial-filter searches, keep only items where ALL upgrades are max
+        # For partial-filter searches, paginate and filter for all-max rolls
         acc_type = CATEGORY_TO_TYPE.get(search["category"])
         if "excludeFrom" in search and acc_type:
-            before = len(items)
-            items = [i for i in items if is_all_max_rolls(i, acc_type)]
-            print(f"  Filtered {before} -> {len(items)} (all max rolls only)")
+            all_items = []
+            page = 0
+            while True:
+                raw = fetch_auction(api_key, search["category"], etc_opts,
+                                    page=page)
+                page_items = raw.get("Items") or []
+                if not page_items:
+                    break
+                all_items.extend(extract_item(i) for i in page_items)
+                total_count = raw.get("TotalCount", 0)
+                if len(all_items) >= total_count:
+                    break
+                page += 1
+                time.sleep(0.5)
+            items = [i for i in all_items if is_all_max_rolls(i, acc_type)]
+            print(f"  Fetched {len(all_items)}, filtered to {len(items)} (all max rolls)")
+        else:
+            raw = fetch_auction(api_key, search["category"], etc_opts)
+            items = [extract_item(i) for i in (raw.get("Items") or [])]
 
         total = len(items)
 
