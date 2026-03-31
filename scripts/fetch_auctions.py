@@ -57,7 +57,87 @@ SEARCHES = [
             ("낙인력", 8.0, 8.0),
         ],
     },
+    {
+        "name": "목걸이 (공강/피강 + any)",
+        "category": 200010,
+        "filters": [
+            ("아군 공격력 강화 효과", 5.0, 5.0),
+            ("아군 피해량 강화 효과", 7.5, 7.5),
+        ],
+        "excludeFrom": "서폿 1 (생명력/공강/피강)",
+    },
+    {
+        "name": "반지 (게이지/낙인력 + any)",
+        "category": 200030,
+        "filters": [
+            ("세레나데, 신앙, 조화 게이지 획득량 증가", 6.0, 6.0),
+            ("낙인력", 8.0, 8.0),
+        ],
+        "excludeFrom": "서폿 2 (게이지/생명력/낙인력)",
+    },
 ]
+
+# T4 max roll values per accessory type.
+# API uses same name "공격력"/"무기 공격력" for both % and flat variants,
+# so we list all valid max values per name.
+# Source: in-game 연마 확률 정보 공개 table (T4 상 column)
+T4_MAX = {
+    "목걸이": {
+        "추가 피해": {2.6},
+        "적에게 주는 피해 증가": {2.0},
+        "공격력": {390.0},
+        "무기 공격력": {960.0},
+        "세레나데, 신앙, 조화 게이지 획득량 증가": {6.0},
+        "낙인력": {8.0},
+        "최대 생명력": {6500.0},
+        "최대 마나": {30.0},
+        "상태이상 공격 지속시간": {1.0},
+        "전투 중 생명력 회복량": {28.0},
+    },
+    "귀걸이": {
+        "공격력": {1.55, 390.0},
+        "무기 공격력": {3.0, 960.0},
+        "파티원 회복 효과": {3.5},
+        "파티원 보호막 효과": {3.5},
+        "최대 생명력": {6500.0},
+        "최대 마나": {30.0},
+        "상태이상 공격 지속시간": {1.0},
+        "전투 중 생명력 회복량": {28.0},
+    },
+    "반지": {
+        "치명타 적중률": {1.55},
+        "치명타 피해": {4.0},
+        "공격력": {390.0},
+        "무기 공격력": {960.0},
+        "아군 공격력 강화 효과": {5.0},
+        "아군 피해량 강화 효과": {7.5},
+        "최대 생명력": {6500.0},
+        "최대 마나": {30.0},
+        "상태이상 공격 지속시간": {1.0},
+        "전투 중 생명력 회복량": {50.0},
+    },
+}
+
+CATEGORY_TO_TYPE = {
+    200010: "목걸이",
+    200020: "귀걸이",
+    200030: "반지",
+}
+
+
+def is_all_max_rolls(item, accessory_type):
+    """Check if every 연마 upgrade on the item is a T4 max roll."""
+    max_table = T4_MAX.get(accessory_type, {})
+    for upgrade in item["upgrades"]:
+        name = upgrade["name"]
+        value = upgrade["value"]
+        valid_maxes = max_table.get(name)
+        if valid_maxes is None:
+            return False
+        if not any(abs(value - mv) < 0.01 for mv in valid_maxes):
+            return False
+    return len(item["upgrades"]) > 0
+
 
 MAX_RETRIES = 3
 RETRY_DELAY = 2
@@ -169,9 +249,17 @@ def main():
 
         raw = fetch_auction(api_key, search["category"], etc_opts)
         items = [extract_item(i) for i in (raw.get("Items") or [])]
-        total = raw.get("TotalCount", 0)
 
-        results.append({
+        # For partial-filter searches, keep only items where ALL upgrades are max
+        acc_type = CATEGORY_TO_TYPE.get(search["category"])
+        if "excludeFrom" in search and acc_type:
+            before = len(items)
+            items = [i for i in items if is_all_max_rolls(i, acc_type)]
+            print(f"  Filtered {before} -> {len(items)} (all max rolls only)")
+
+        total = len(items)
+
+        entry = {
             "name": search["name"],
             "filters": [
                 {"name": f[0], "min": f[1], "max": f[2]}
@@ -179,7 +267,10 @@ def main():
             ],
             "totalCount": total,
             "items": items,
-        })
+        }
+        if "excludeFrom" in search:
+            entry["excludeFrom"] = search["excludeFrom"]
+        results.append(entry)
         print(f"  Found {total} items")
         time.sleep(1)
 
