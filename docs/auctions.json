@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-03-31T16:34:44Z",
+  "updated_at": "2026-03-31T17:58:27Z",
   "searches": [
     {
       "name": "서폿 1 (생명력/공강/피강)",
@@ -419,8 +419,42 @@
           "max": 8.0
         }
       ],
-      "totalCount": 1,
+      "totalCount": 2,
       "items": [
+        {
+          "name": "도래한 결전의 목걸이",
+          "grade": "고대",
+          "tier": 4,
+          "quality": 86,
+          "buyPrice": 1300000,
+          "startPrice": 1100000,
+          "endDate": "2026-04-01T17:54:52.513",
+          "tradeAllowCount": 1,
+          "stats": {
+            "힘": 16839.0,
+            "민첩": 16839.0,
+            "지능": 16839.0,
+            "체력": 3950.0
+          },
+          "upgrades": [
+            {
+              "name": "세레나데, 신앙, 조화 게이지 획득량 증가",
+              "value": 6.0
+            },
+            {
+              "name": "적에게 주는 피해 증가",
+              "value": 2.0
+            },
+            {
+              "name": "낙인력",
+              "value": 8.0
+            }
+          ],
+          "arkPassive": {
+            "name": "깨달음",
+            "value": 13.0
+          }
+        },
         {
           "name": "도래한 결전의 목걸이",
           "grade": "고대",
