@@ -16,25 +16,27 @@ import time
 API_URL = "https://developer-lostark.game.onstove.com/auctions/items"
 
 # === 연마 효과 codes (FirstOption=7) ===
+# API quirk: percentage-based values must be sent as x100 (e.g. 8.00% -> 800)
+# Flat values like 최대 생명력 are sent as-is (e.g. 6500)
 YEONMA = {
-    "추가 피해": 41,
-    "적에게 주는 피해 증가": 42,
-    "세레나데, 신앙, 조화 게이지 획득량 증가": 43,
-    "낙인력": 44,
-    "공격력 %": 45,
-    "무기 공격력 %": 46,
-    "파티원 회복 효과": 47,
-    "파티원 보호막 효과": 48,
-    "치명타 적중률": 49,
-    "치명타 피해": 50,
-    "아군 공격력 강화 효과": 51,
-    "아군 피해량 강화 효과": 52,
-    "공격력 +": 53,
-    "무기 공격력 +": 54,
-    "최대 생명력": 55,
-    "최대 마나": 56,
-    "상태이상 공격 지속시간": 57,
-    "전투 중 생명력 회복량": 58,
+    "추가 피해": (41, True),        # percentage
+    "적에게 주는 피해 증가": (42, True),
+    "세레나데, 신앙, 조화 게이지 획득량 증가": (43, True),
+    "낙인력": (44, True),
+    "공격력 %": (45, True),
+    "무기 공격력 %": (46, True),
+    "파티원 회복 효과": (47, True),
+    "파티원 보호막 효과": (48, True),
+    "치명타 적중률": (49, True),
+    "치명타 피해": (50, True),
+    "아군 공격력 강화 효과": (51, True),
+    "아군 피해량 강화 효과": (52, True),
+    "공격력 +": (53, False),        # flat
+    "무기 공격력 +": (54, False),
+    "최대 생명력": (55, False),
+    "최대 마나": (56, True),
+    "상태이상 공격 지속시간": (57, True),
+    "전투 중 생명력 회복량": (58, False),
 }
 
 # === Accessory categories ===
@@ -46,21 +48,24 @@ ACCESSORY_CATS = {
 }
 
 # === Search presets ===
+# === Search presets ===
+# Values use in-game display format (e.g. 5.00% -> 5.0, 6500 -> 6500)
+# The build_etc_options function auto-converts percentages to x100 for the API.
 SEARCHES = {
     "서폿 1 (생명력/공강/피강)": {
         "category": "all",
         "filters": [
             ("최대 생명력", 6500, 6500),
-            ("아군 공격력 강화 효과", 5, 5),
-            ("아군 피해량 강화 효과", 7, 7),
+            ("아군 공격력 강화 효과", 5.0, 5.0),
+            ("아군 피해량 강화 효과", 7.5, 7.5),
         ],
     },
     "서폿 2 (게이지/생명력/낙인력)": {
         "category": "all",
         "filters": [
-            ("세레나데, 신앙, 조화 게이지 획득량 증가", 6, 6),
+            ("세레나데, 신앙, 조화 게이지 획득량 증가", 6.0, 6.0),
             ("최대 생명력", 6500, 6500),
-            ("낙인력", 8, 8),
+            ("낙인력", 8.0, 8.0),
         ],
     },
 }
@@ -105,15 +110,18 @@ def search_auction(api_key, category_code, etc_options, item_tier=4,
 def build_etc_options(filters):
     opts = []
     for name, min_val, max_val in filters:
-        code = YEONMA.get(name)
-        if code is None:
+        entry = YEONMA.get(name)
+        if entry is None:
             print(f"  WARNING: unknown 연마 효과 '{name}', skipping")
             continue
+        code, is_pct = entry
+        api_min = int(min_val * 100) if is_pct else min_val
+        api_max = int(max_val * 100) if is_pct else max_val
         opts.append({
             "FirstOption": 7,
             "SecondOption": code,
-            "MinValue": min_val,
-            "MaxValue": max_val,
+            "MinValue": api_min,
+            "MaxValue": api_max,
         })
     return opts
 
