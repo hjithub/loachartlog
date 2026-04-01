@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-01T09:13:00Z",
+  "updated_at": "2026-04-01T10:35:07Z",
   "searches": [
     {
       "name": "서폿 1 (생명력/공강/피강)",
@@ -265,42 +265,8 @@
           "max": 7.5
         }
       ],
-      "totalCount": 6,
+      "totalCount": 4,
       "items": [
-        {
-          "name": "도래한 결전의 반지",
-          "grade": "고대",
-          "tier": 4,
-          "quality": 76,
-          "buyPrice": 1090000,
-          "startPrice": 1090000,
-          "endDate": "2026-04-02T16:56:49.28",
-          "tradeAllowCount": 1,
-          "stats": {
-            "힘": 11156.0,
-            "민첩": 11156.0,
-            "지능": 11156.0,
-            "체력": 2246.0
-          },
-          "upgrades": [
-            {
-              "name": "아군 피해량 강화 효과",
-              "value": 7.5
-            },
-            {
-              "name": "상태이상 공격 지속시간",
-              "value": 1.0
-            },
-            {
-              "name": "아군 공격력 강화 효과",
-              "value": 5.0
-            }
-          ],
-          "arkPassive": {
-            "name": "깨달음",
-            "value": 12.0
-          }
-        },
         {
           "name": "도래한 결전의 반지",
           "grade": "고대",
@@ -328,40 +294,6 @@
             {
               "name": "아군 피해량 강화 효과",
               "value": 7.5
-            }
-          ],
-          "arkPassive": {
-            "name": "깨달음",
-            "value": 12.0
-          }
-        },
-        {
-          "name": "도래한 결전의 반지",
-          "grade": "고대",
-          "tier": 4,
-          "quality": 76,
-          "buyPrice": 1090000,
-          "startPrice": 1090000,
-          "endDate": "2026-04-02T16:56:49.28",
-          "tradeAllowCount": 1,
-          "stats": {
-            "힘": 11156.0,
-            "민첩": 11156.0,
-            "지능": 11156.0,
-            "체력": 2246.0
-          },
-          "upgrades": [
-            {
-              "name": "아군 피해량 강화 효과",
-              "value": 7.5
-            },
-            {
-              "name": "상태이상 공격 지속시간",
-              "value": 1.0
-            },
-            {
-              "name": "아군 공격력 강화 효과",
-              "value": 5.0
             }
           ],
           "arkPassive": {
@@ -410,7 +342,7 @@
           "quality": 83,
           "buyPrice": 1450000,
           "startPrice": 1450000,
-          "endDate": "2026-04-01T20:20:33.383",
+          "endDate": "2026-04-02T18:38:36.5",
           "tradeAllowCount": 2,
           "stats": {
             "힘": 11853.0,
