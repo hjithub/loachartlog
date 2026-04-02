@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-02T18:10:38Z",
+  "updated_at": "2026-04-02T19:30:22Z",
   "searches": [
     {
       "name": "서폿 1 (생명력/공강/피강)",
@@ -271,6 +271,40 @@
           "name": "도래한 결전의 반지",
           "grade": "고대",
           "tier": 4,
+          "quality": 83,
+          "buyPrice": 1450000,
+          "startPrice": 1450000,
+          "endDate": "2026-04-04T03:23:20.023",
+          "tradeAllowCount": 2,
+          "stats": {
+            "힘": 11853.0,
+            "민첩": 11853.0,
+            "지능": 11853.0,
+            "체력": 2252.0
+          },
+          "upgrades": [
+            {
+              "name": "아군 공격력 강화 효과",
+              "value": 5.0
+            },
+            {
+              "name": "전투 중 생명력 회복량",
+              "value": 50.0
+            },
+            {
+              "name": "아군 피해량 강화 효과",
+              "value": 7.5
+            }
+          ],
+          "arkPassive": {
+            "name": "깨달음",
+            "value": 12.0
+          }
+        },
+        {
+          "name": "도래한 결전의 반지",
+          "grade": "고대",
+          "tier": 4,
           "quality": 91,
           "buyPrice": 1600000,
           "startPrice": 1600000,
@@ -300,40 +334,6 @@
             "name": "깨달음",
             "value": 12.0
           }
-        },
-        {
-          "name": "도래한 결전의 반지",
-          "grade": "고대",
-          "tier": 4,
-          "quality": 91,
-          "buyPrice": 2950000,
-          "startPrice": 2800000,
-          "endDate": "2026-04-04T18:05:09.227",
-          "tradeAllowCount": 1,
-          "stats": {
-            "힘": 12007.0,
-            "민첩": 12007.0,
-            "지능": 12007.0,
-            "체력": 2340.0
-          },
-          "upgrades": [
-            {
-              "name": "아군 피해량 강화 효과",
-              "value": 7.5
-            },
-            {
-              "name": "아군 공격력 강화 효과",
-              "value": 5.0
-            },
-            {
-              "name": "최대 생명력",
-              "value": 6500.0
-            }
-          ],
-          "arkPassive": {
-            "name": "깨달음",
-            "value": 12.0
-          }
         }
       ],
       "excludeFrom": "서폿 1 (생명력/공강/피강)"
@@ -352,8 +352,42 @@
           "max": 8.0
         }
       ],
-      "totalCount": 4,
+      "totalCount": 3,
       "items": [
+        {
+          "name": "도래한 결전의 목걸이",
+          "grade": "고대",
+          "tier": 4,
+          "quality": 94,
+          "buyPrice": 1650000,
+          "startPrice": 1600000,
+          "endDate": "2026-04-04T03:28:46.123",
+          "tradeAllowCount": 2,
+          "stats": {
+            "힘": 17831.0,
+            "민첩": 17831.0,
+            "지능": 17831.0,
+            "체력": 3995.0
+          },
+          "upgrades": [
+            {
+              "name": "낙인력",
+              "value": 8.0
+            },
+            {
+              "name": "최대 마나",
+              "value": 30.0
+            },
+            {
+              "name": "세레나데, 신앙, 조화 게이지 획득량 증가",
+              "value": 6.0
+            }
+          ],
+          "arkPassive": {
+            "name": "깨달음",
+            "value": 13.0
+          }
+        },
         {
           "name": "도래한 결전의 목걸이",
           "grade": "고대",
@@ -415,74 +449,6 @@
             {
               "name": "세레나데, 신앙, 조화 게이지 획득량 증가",
               "value": 6.0
-            }
-          ],
-          "arkPassive": {
-            "name": "깨달음",
-            "value": 13.0
-          }
-        },
-        {
-          "name": "도래한 결전의 목걸이",
-          "grade": "고대",
-          "tier": 4,
-          "quality": 82,
-          "buyPrice": 3700000,
-          "startPrice": 3700000,
-          "endDate": "2026-04-03T22:27:55.12",
-          "tradeAllowCount": 2,
-          "stats": {
-            "힘": 17643.0,
-            "민첩": 17643.0,
-            "지능": 17643.0,
-            "체력": 3761.0
-          },
-          "upgrades": [
-            {
-              "name": "낙인력",
-              "value": 8.0
-            },
-            {
-              "name": "세레나데, 신앙, 조화 게이지 획득량 증가",
-              "value": 6.0
-            },
-            {
-              "name": "최대 생명력",
-              "value": 6500.0
-            }
-          ],
-          "arkPassive": {
-            "name": "깨달음",
-            "value": 13.0
-          }
-        },
-        {
-          "name": "도래한 결전의 목걸이",
-          "grade": "고대",
-          "tier": 4,
-          "quality": 91,
-          "buyPrice": 3800000,
-          "startPrice": 3800000,
-          "endDate": "2026-04-04T17:47:38.37",
-          "tradeAllowCount": 2,
-          "stats": {
-            "힘": 16652.0,
-            "민첩": 16652.0,
-            "지능": 16652.0,
-            "체력": 4090.0
-          },
-          "upgrades": [
-            {
-              "name": "낙인력",
-              "value": 8.0
-            },
-            {
-              "name": "세레나데, 신앙, 조화 게이지 획득량 증가",
-              "value": 6.0
-            },
-            {
-              "name": "최대 생명력",
-              "value": 6500.0
             }
           ],
           "arkPassive": {
