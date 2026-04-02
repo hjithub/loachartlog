@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-01T23:58:37Z",
+  "updated_at": "2026-04-02T03:19:52Z",
   "searches": [
     {
       "name": "서폿 1 (생명력/공강/피강)",
@@ -77,7 +77,7 @@
           "max": 8.0
         }
       ],
-      "totalCount": 4,
+      "totalCount": 5,
       "items": [
         {
           "name": "도래한 결전의 목걸이",
@@ -106,6 +106,40 @@
             {
               "name": "낙인력",
               "value": 8.0
+            }
+          ],
+          "arkPassive": {
+            "name": "깨달음",
+            "value": 13.0
+          }
+        },
+        {
+          "name": "도래한 결전의 목걸이",
+          "grade": "고대",
+          "tier": 4,
+          "quality": 85,
+          "buyPrice": 2000000,
+          "startPrice": 2000000,
+          "endDate": "2026-04-03T09:56:42.983",
+          "tradeAllowCount": 1,
+          "stats": {
+            "힘": 15661.0,
+            "민첩": 15661.0,
+            "지능": 15661.0,
+            "체력": 4079.0
+          },
+          "upgrades": [
+            {
+              "name": "세레나데, 신앙, 조화 게이지 획득량 증가",
+              "value": 6.0
+            },
+            {
+              "name": "낙인력",
+              "value": 8.0
+            },
+            {
+              "name": "최대 생명력",
+              "value": 6500.0
             }
           ],
           "arkPassive": {
@@ -454,7 +488,7 @@
           "max": 8.0
         }
       ],
-      "totalCount": 1,
+      "totalCount": 2,
       "items": [
         {
           "name": "도래한 결전의 목걸이",
@@ -483,6 +517,40 @@
             {
               "name": "낙인력",
               "value": 8.0
+            }
+          ],
+          "arkPassive": {
+            "name": "깨달음",
+            "value": 13.0
+          }
+        },
+        {
+          "name": "도래한 결전의 목걸이",
+          "grade": "고대",
+          "tier": 4,
+          "quality": 85,
+          "buyPrice": 2000000,
+          "startPrice": 2000000,
+          "endDate": "2026-04-03T09:56:42.983",
+          "tradeAllowCount": 1,
+          "stats": {
+            "힘": 15661.0,
+            "민첩": 15661.0,
+            "지능": 15661.0,
+            "체력": 4079.0
+          },
+          "upgrades": [
+            {
+              "name": "세레나데, 신앙, 조화 게이지 획득량 증가",
+              "value": 6.0
+            },
+            {
+              "name": "낙인력",
+              "value": 8.0
+            },
+            {
+              "name": "최대 생명력",
+              "value": 6500.0
             }
           ],
           "arkPassive": {
