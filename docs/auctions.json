@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-05T14:06:58Z",
+  "updated_at": "2026-04-05T15:02:41Z",
   "searches": [
     {
       "name": "서폿 1 (생명력/공강/피강)",
@@ -20,50 +20,16 @@
           "max": 7.5
         }
       ],
-      "totalCount": 3,
+      "totalCount": 1,
       "items": [
-        {
-          "name": "마주한 종언의 반지",
-          "grade": "고대",
-          "tier": 4,
-          "quality": 91,
-          "buyPrice": 2800000,
-          "startPrice": 2800000,
-          "endDate": "2026-04-05T23:12:52.3",
-          "tradeAllowCount": 1,
-          "stats": {
-            "힘": 11872.0,
-            "민첩": 11872.0,
-            "지능": 11872.0,
-            "체력": 2345.0
-          },
-          "upgrades": [
-            {
-              "name": "아군 피해량 강화 효과",
-              "value": 7.5
-            },
-            {
-              "name": "최대 생명력",
-              "value": 6500.0
-            },
-            {
-              "name": "아군 공격력 강화 효과",
-              "value": 5.0
-            }
-          ],
-          "arkPassive": {
-            "name": "깨달음",
-            "value": 12.0
-          }
-        },
         {
           "name": "도래한 결전의 반지",
           "grade": "고대",
           "tier": 4,
           "quality": 84,
-          "buyPrice": 3000000,
+          "buyPrice": 3100000,
           "startPrice": 3000000,
-          "endDate": "2026-04-05T23:12:10.947",
+          "endDate": "2026-04-06T23:06:50.28",
           "tradeAllowCount": 2,
           "stats": {
             "힘": 12394.0,
@@ -79,40 +45,6 @@
             {
               "name": "아군 공격력 강화 효과",
               "value": 5.0
-            },
-            {
-              "name": "최대 생명력",
-              "value": 6500.0
-            }
-          ],
-          "arkPassive": {
-            "name": "깨달음",
-            "value": 12.0
-          }
-        },
-        {
-          "name": "도래한 결전의 반지",
-          "grade": "고대",
-          "tier": 4,
-          "quality": 85,
-          "buyPrice": 3000000,
-          "startPrice": 2950000,
-          "endDate": "2026-04-05T23:52:16.353",
-          "tradeAllowCount": 1,
-          "stats": {
-            "힘": 12162.0,
-            "민첩": 12162.0,
-            "지능": 12162.0,
-            "체력": 2244.0
-          },
-          "upgrades": [
-            {
-              "name": "아군 공격력 강화 효과",
-              "value": 5.0
-            },
-            {
-              "name": "아군 피해량 강화 효과",
-              "value": 7.5
             },
             {
               "name": "최대 생명력",
@@ -140,7 +72,7 @@
           "max": 7.5
         }
       ],
-      "totalCount": 6,
+      "totalCount": 3,
       "items": [
         {
           "name": "마주한 종언의 반지",
@@ -237,108 +169,6 @@
             {
               "name": "상태이상 공격 지속시간",
               "value": 1.0
-            }
-          ],
-          "arkPassive": {
-            "name": "깨달음",
-            "value": 12.0
-          }
-        },
-        {
-          "name": "마주한 종언의 반지",
-          "grade": "고대",
-          "tier": 4,
-          "quality": 91,
-          "buyPrice": 2800000,
-          "startPrice": 2800000,
-          "endDate": "2026-04-05T23:12:52.3",
-          "tradeAllowCount": 1,
-          "stats": {
-            "힘": 11872.0,
-            "민첩": 11872.0,
-            "지능": 11872.0,
-            "체력": 2345.0
-          },
-          "upgrades": [
-            {
-              "name": "아군 피해량 강화 효과",
-              "value": 7.5
-            },
-            {
-              "name": "최대 생명력",
-              "value": 6500.0
-            },
-            {
-              "name": "아군 공격력 강화 효과",
-              "value": 5.0
-            }
-          ],
-          "arkPassive": {
-            "name": "깨달음",
-            "value": 12.0
-          }
-        },
-        {
-          "name": "도래한 결전의 반지",
-          "grade": "고대",
-          "tier": 4,
-          "quality": 85,
-          "buyPrice": 3000000,
-          "startPrice": 2950000,
-          "endDate": "2026-04-05T23:52:16.353",
-          "tradeAllowCount": 1,
-          "stats": {
-            "힘": 12162.0,
-            "민첩": 12162.0,
-            "지능": 12162.0,
-            "체력": 2244.0
-          },
-          "upgrades": [
-            {
-              "name": "아군 공격력 강화 효과",
-              "value": 5.0
-            },
-            {
-              "name": "아군 피해량 강화 효과",
-              "value": 7.5
-            },
-            {
-              "name": "최대 생명력",
-              "value": 6500.0
-            }
-          ],
-          "arkPassive": {
-            "name": "깨달음",
-            "value": 12.0
-          }
-        },
-        {
-          "name": "도래한 결전의 반지",
-          "grade": "고대",
-          "tier": 4,
-          "quality": 84,
-          "buyPrice": 3100000,
-          "startPrice": 3000000,
-          "endDate": "2026-04-06T23:06:50.28",
-          "tradeAllowCount": 2,
-          "stats": {
-            "힘": 12394.0,
-            "민첩": 12394.0,
-            "지능": 12394.0,
-            "체력": 2216.0
-          },
-          "upgrades": [
-            {
-              "name": "아군 피해량 강화 효과",
-              "value": 7.5
-            },
-            {
-              "name": "아군 공격력 강화 효과",
-              "value": 5.0
-            },
-            {
-              "name": "최대 생명력",
-              "value": 6500.0
             }
           ],
           "arkPassive": {
