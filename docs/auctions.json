@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-07T10:10:44Z",
+  "updated_at": "2026-04-07T11:30:34Z",
   "searches": [
     {
       "name": "서폿 1 (생명력/공강/피강)",
@@ -22,40 +22,6 @@
       ],
       "totalCount": 3,
       "items": [
-        {
-          "name": "마주한 종언의 반지",
-          "grade": "고대",
-          "tier": 4,
-          "quality": 91,
-          "buyPrice": 2800000,
-          "startPrice": 2800000,
-          "endDate": "2026-04-07T19:43:08.157",
-          "tradeAllowCount": 1,
-          "stats": {
-            "힘": 11872.0,
-            "민첩": 11872.0,
-            "지능": 11872.0,
-            "체력": 2345.0
-          },
-          "upgrades": [
-            {
-              "name": "아군 피해량 강화 효과",
-              "value": 7.5
-            },
-            {
-              "name": "최대 생명력",
-              "value": 6500.0
-            },
-            {
-              "name": "아군 공격력 강화 효과",
-              "value": 5.0
-            }
-          ],
-          "arkPassive": {
-            "name": "깨달음",
-            "value": 12.0
-          }
-        },
         {
           "name": "도래한 결전의 반지",
           "grade": "고대",
@@ -123,33 +89,15 @@
             "name": "깨달음",
             "value": 12.0
           }
-        }
-      ]
-    },
-    {
-      "name": "반지 (공강/피강 + any)",
-      "filters": [
-        {
-          "name": "아군 공격력 강화 효과",
-          "min": 5.0,
-          "max": 5.0
         },
-        {
-          "name": "아군 피해량 강화 효과",
-          "min": 7.5,
-          "max": 7.5
-        }
-      ],
-      "totalCount": 2,
-      "items": [
         {
           "name": "마주한 종언의 반지",
           "grade": "고대",
           "tier": 4,
           "quality": 91,
-          "buyPrice": 2800000,
-          "startPrice": 2800000,
-          "endDate": "2026-04-07T19:43:08.157",
+          "buyPrice": 3300000,
+          "startPrice": 3300000,
+          "endDate": "2026-04-08T19:45:36.177",
           "tradeAllowCount": 1,
           "stats": {
             "힘": 11872.0,
@@ -175,7 +123,25 @@
             "name": "깨달음",
             "value": 12.0
           }
+        }
+      ]
+    },
+    {
+      "name": "반지 (공강/피강 + any)",
+      "filters": [
+        {
+          "name": "아군 공격력 강화 효과",
+          "min": 5.0,
+          "max": 5.0
         },
+        {
+          "name": "아군 피해량 강화 효과",
+          "min": 7.5,
+          "max": 7.5
+        }
+      ],
+      "totalCount": 3,
+      "items": [
         {
           "name": "도래한 결전의 반지",
           "grade": "고대",
@@ -203,6 +169,74 @@
             {
               "name": "최대 생명력",
               "value": 6500.0
+            }
+          ],
+          "arkPassive": {
+            "name": "깨달음",
+            "value": 12.0
+          }
+        },
+        {
+          "name": "도래한 결전의 반지",
+          "grade": "고대",
+          "tier": 4,
+          "quality": 82,
+          "buyPrice": 3100000,
+          "startPrice": 3000000,
+          "endDate": "2026-04-08T00:36:58.643",
+          "tradeAllowCount": 1,
+          "stats": {
+            "힘": 12414.0,
+            "민첩": 12414.0,
+            "지능": 12414.0,
+            "체력": 2182.0
+          },
+          "upgrades": [
+            {
+              "name": "아군 공격력 강화 효과",
+              "value": 5.0
+            },
+            {
+              "name": "아군 피해량 강화 효과",
+              "value": 7.5
+            },
+            {
+              "name": "최대 생명력",
+              "value": 6500.0
+            }
+          ],
+          "arkPassive": {
+            "name": "깨달음",
+            "value": 12.0
+          }
+        },
+        {
+          "name": "마주한 종언의 반지",
+          "grade": "고대",
+          "tier": 4,
+          "quality": 91,
+          "buyPrice": 3300000,
+          "startPrice": 3300000,
+          "endDate": "2026-04-08T19:45:36.177",
+          "tradeAllowCount": 1,
+          "stats": {
+            "힘": 11872.0,
+            "민첩": 11872.0,
+            "지능": 11872.0,
+            "체력": 2345.0
+          },
+          "upgrades": [
+            {
+              "name": "아군 피해량 강화 효과",
+              "value": 7.5
+            },
+            {
+              "name": "최대 생명력",
+              "value": 6500.0
+            },
+            {
+              "name": "아군 공격력 강화 효과",
+              "value": 5.0
             }
           ],
           "arkPassive": {
