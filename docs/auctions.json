@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-12T15:06:39Z",
+  "updated_at": "2026-04-12T16:01:45Z",
   "searches": [
     {
       "name": "서폿 1 (생명력/공강/피강)",
@@ -140,76 +140,8 @@
           "max": 7.5
         }
       ],
-      "totalCount": 6,
+      "totalCount": 4,
       "items": [
-        {
-          "name": "도래한 결전의 반지",
-          "grade": "고대",
-          "tier": 4,
-          "quality": 91,
-          "buyPrice": 1490000,
-          "startPrice": 1490000,
-          "endDate": "2026-04-13T21:06:38.187",
-          "tradeAllowCount": 2,
-          "stats": {
-            "힘": 12201.0,
-            "민첩": 12201.0,
-            "지능": 12201.0,
-            "체력": 2320.0
-          },
-          "upgrades": [
-            {
-              "name": "아군 피해량 강화 효과",
-              "value": 7.5
-            },
-            {
-              "name": "치명타 적중률",
-              "value": 1.55
-            },
-            {
-              "name": "아군 공격력 강화 효과",
-              "value": 5.0
-            }
-          ],
-          "arkPassive": {
-            "name": "깨달음",
-            "value": 12.0
-          }
-        },
-        {
-          "name": "도래한 결전의 반지",
-          "grade": "고대",
-          "tier": 4,
-          "quality": 91,
-          "buyPrice": 1490000,
-          "startPrice": 1490000,
-          "endDate": "2026-04-13T21:06:38.187",
-          "tradeAllowCount": 2,
-          "stats": {
-            "힘": 12201.0,
-            "민첩": 12201.0,
-            "지능": 12201.0,
-            "체력": 2320.0
-          },
-          "upgrades": [
-            {
-              "name": "아군 피해량 강화 효과",
-              "value": 7.5
-            },
-            {
-              "name": "치명타 적중률",
-              "value": 1.55
-            },
-            {
-              "name": "아군 공격력 강화 효과",
-              "value": 5.0
-            }
-          ],
-          "arkPassive": {
-            "name": "깨달음",
-            "value": 12.0
-          }
-        },
         {
           "name": "도래한 결전의 반지",
           "grade": "고대",
