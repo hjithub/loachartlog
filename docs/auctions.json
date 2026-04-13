@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-13T03:25:56Z",
+  "updated_at": "2026-04-13T05:54:17Z",
   "searches": [
     {
       "name": "서폿 1 (생명력/공강/피강)",
@@ -20,7 +20,7 @@
           "max": 7.5
         }
       ],
-      "totalCount": 2,
+      "totalCount": 3,
       "items": [
         {
           "name": "마주한 종언의 반지",
@@ -49,6 +49,40 @@
             {
               "name": "아군 공격력 강화 효과",
               "value": 5.0
+            }
+          ],
+          "arkPassive": {
+            "name": "깨달음",
+            "value": 12.0
+          }
+        },
+        {
+          "name": "도래한 결전의 반지",
+          "grade": "고대",
+          "tier": 4,
+          "quality": 85,
+          "buyPrice": 2750000,
+          "startPrice": 2750000,
+          "endDate": "2026-04-14T14:23:01.093",
+          "tradeAllowCount": 1,
+          "stats": {
+            "힘": 12162.0,
+            "민첩": 12162.0,
+            "지능": 12162.0,
+            "체력": 2244.0
+          },
+          "upgrades": [
+            {
+              "name": "아군 공격력 강화 효과",
+              "value": 5.0
+            },
+            {
+              "name": "아군 피해량 강화 효과",
+              "value": 7.5
+            },
+            {
+              "name": "최대 생명력",
+              "value": 6500.0
             }
           ],
           "arkPassive": {
@@ -106,7 +140,7 @@
           "max": 7.5
         }
       ],
-      "totalCount": 4,
+      "totalCount": 5,
       "items": [
         {
           "name": "도래한 결전의 반지",
@@ -203,6 +237,40 @@
             {
               "name": "아군 공격력 강화 효과",
               "value": 5.0
+            }
+          ],
+          "arkPassive": {
+            "name": "깨달음",
+            "value": 12.0
+          }
+        },
+        {
+          "name": "도래한 결전의 반지",
+          "grade": "고대",
+          "tier": 4,
+          "quality": 85,
+          "buyPrice": 2750000,
+          "startPrice": 2750000,
+          "endDate": "2026-04-14T14:23:01.093",
+          "tradeAllowCount": 1,
+          "stats": {
+            "힘": 12162.0,
+            "민첩": 12162.0,
+            "지능": 12162.0,
+            "체력": 2244.0
+          },
+          "upgrades": [
+            {
+              "name": "아군 공격력 강화 효과",
+              "value": 5.0
+            },
+            {
+              "name": "아군 피해량 강화 효과",
+              "value": 7.5
+            },
+            {
+              "name": "최대 생명력",
+              "value": 6500.0
             }
           ],
           "arkPassive": {
