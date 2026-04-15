@@ -39,7 +39,7 @@
       white-space: nowrap;
     }
     .upgrade-pill .uval { color: #4ecca3; }
-    .ark-passive { color: #888; font-size: 0.75em; }
+    .ark-inline { color: #888; font-size: 0.8em; margin-left: 6px; white-space: nowrap; }
     .no-results { color: #666; font-style: italic; padding: 12px 0; }
     .end-date { color: #888; font-size: 0.8em; white-space: nowrap; }
     .trade-count { color: #888; font-size: 0.8em; text-align: center; }
@@ -142,33 +142,42 @@
         return html;
       }
 
+      // Only render the upgrades column if at least one row has a variable upgrade.
+      const showUpgradesCol = items.some(i =>
+        i.upgrades.some(u => !fixedUpgrades.has(u.name))
+      );
+
       html += `<div class="search-count" style="color:#888;font-size:0.85em;margin-bottom:8px">${items.length}건</div>`;
 
       html += '<table>';
       html += '<thead><tr>';
-      html += '<th>이름</th><th>힘/민/지</th><th>연마 효과</th>';
+      html += '<th>이름</th><th>힘/민/지</th>';
+      if (showUpgradesCol) html += '<th>연마 효과</th>';
       html += '<th>즉시구매</th><th class="hide-mobile">마감</th><th>거래</th>';
       html += '</tr></thead><tbody>';
 
       for (const item of items) {
         const stat = item.stats['힘'] ? Math.floor(item.stats['힘']).toLocaleString() : '-';
         const gradeClass = item.grade === '고대' ? 'grade-ancient' : '';
-
-        let upgradesHtml = '<div class="upgrades">';
-        for (const u of item.upgrades) {
-          if (fixedUpgrades.has(u.name)) continue;
-          const shortName = u.name.replace('세레나데, 신앙, 조화 게이지 획득량 증가', '게이지');
-          upgradesHtml += `<span class="upgrade-pill">${shortName} <span class="uval">${u.value}</span></span>`;
-        }
-        if (item.arkPassive) {
-          upgradesHtml += `<span class="ark-passive">${item.arkPassive.name} ${item.arkPassive.value}</span>`;
-        }
-        upgradesHtml += '</div>';
+        const arkInline = item.arkPassive
+          ? ` <span class="ark-inline">${item.arkPassive.name} ${item.arkPassive.value}</span>`
+          : '';
 
         html += '<tr>';
-        html += `<td><span class="${gradeClass}">${item.name}</span></td>`;
+        html += `<td><span class="${gradeClass}">${item.name}</span>${arkInline}</td>`;
         html += `<td class="stat-val">${stat}</td>`;
-        html += `<td>${upgradesHtml}</td>`;
+
+        if (showUpgradesCol) {
+          let upgradesHtml = '<div class="upgrades">';
+          for (const u of item.upgrades) {
+            if (fixedUpgrades.has(u.name)) continue;
+            const shortName = u.name.replace('세레나데, 신앙, 조화 게이지 획득량 증가', '게이지');
+            upgradesHtml += `<span class="upgrade-pill">${shortName} <span class="uval">${u.value}</span></span>`;
+          }
+          upgradesHtml += '</div>';
+          html += `<td>${upgradesHtml}</td>`;
+        }
+
         html += `<td class="price">${formatGold(item.buyPrice)}</td>`;
         html += `<td class="end-date hide-mobile">${formatEndDate(item.endDate)}</td>`;
         html += `<td class="trade-count">${item.tradeAllowCount}회</td>`;
