@@ -129,6 +129,13 @@
 
       const items = (search.items || []).filter(i => !excludeKeys.has(itemKey(i)));
 
+      // Hide upgrades whose value is locked by a fixed filter (min === max),
+      // since they are redundant with the filter tag shown above.
+      const fixedUpgrades = new Set();
+      for (const f of search.filters) {
+        if (f.min === f.max) fixedUpgrades.add(f.name);
+      }
+
       if (items.length === 0) {
         html += '<div class="no-results">결과 없음</div>';
         html += '</div>';
@@ -149,6 +156,7 @@
 
         let upgradesHtml = '<div class="upgrades">';
         for (const u of item.upgrades) {
+          if (fixedUpgrades.has(u.name)) continue;
           const shortName = u.name.replace('세레나데, 신앙, 조화 게이지 획득량 증가', '게이지');
           upgradesHtml += `<span class="upgrade-pill">${shortName} <span class="uval">${u.value}</span></span>`;
         }
