@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-18T23:40:21Z",
+  "updated_at": "2026-04-19T03:23:52Z",
   "searches": [
     {
       "name": "서폿 1 (생명력/공강/피강)",
@@ -106,42 +106,8 @@
           "max": 7.5
         }
       ],
-      "totalCount": 5,
+      "totalCount": 3,
       "items": [
-        {
-          "name": "도래한 결전의 반지",
-          "grade": "고대",
-          "tier": 4,
-          "quality": 91,
-          "buyPrice": 1770000,
-          "startPrice": 1770000,
-          "endDate": "2026-04-21T09:07:21.68",
-          "tradeAllowCount": 2,
-          "stats": {
-            "힘": 11911.0,
-            "민첩": 11911.0,
-            "지능": 11911.0,
-            "체력": 2340.0
-          },
-          "upgrades": [
-            {
-              "name": "아군 공격력 강화 효과",
-              "value": 5.0
-            },
-            {
-              "name": "아군 피해량 강화 효과",
-              "value": 7.5
-            },
-            {
-              "name": "최대 마나",
-              "value": 30.0
-            }
-          ],
-          "arkPassive": {
-            "name": "깨달음",
-            "value": 12.0
-          }
-        },
         {
           "name": "도래한 결전의 반지",
           "grade": "고대",
@@ -169,40 +135,6 @@
             {
               "name": "아군 피해량 강화 효과",
               "value": 7.5
-            }
-          ],
-          "arkPassive": {
-            "name": "깨달음",
-            "value": 12.0
-          }
-        },
-        {
-          "name": "도래한 결전의 반지",
-          "grade": "고대",
-          "tier": 4,
-          "quality": 91,
-          "buyPrice": 1770000,
-          "startPrice": 1770000,
-          "endDate": "2026-04-21T09:07:21.68",
-          "tradeAllowCount": 2,
-          "stats": {
-            "힘": 11911.0,
-            "민첩": 11911.0,
-            "지능": 11911.0,
-            "체력": 2340.0
-          },
-          "upgrades": [
-            {
-              "name": "아군 공격력 강화 효과",
-              "value": 5.0
-            },
-            {
-              "name": "아군 피해량 강화 효과",
-              "value": 7.5
-            },
-            {
-              "name": "최대 마나",
-              "value": 30.0
             }
           ],
           "arkPassive": {
