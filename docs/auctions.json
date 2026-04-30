@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-30T13:06:50Z",
+  "updated_at": "2026-04-30T15:28:01Z",
   "searches": [
     {
       "name": "서폿 1 (생명력/공강/피강)",
@@ -37,76 +37,8 @@
           "max": 7.5
         }
       ],
-      "totalCount": 3,
+      "totalCount": 1,
       "items": [
-        {
-          "name": "도래한 결전의 반지",
-          "grade": "고대",
-          "tier": 4,
-          "quality": 83,
-          "buyPrice": 1600000,
-          "startPrice": 1600000,
-          "endDate": "2026-04-30T22:23:16.883",
-          "tradeAllowCount": 0,
-          "stats": {
-            "힘": 11098.0,
-            "민첩": 11098.0,
-            "지능": 11098.0,
-            "체력": 2336.0
-          },
-          "upgrades": [
-            {
-              "name": "아군 피해량 강화 효과",
-              "value": 7.5
-            },
-            {
-              "name": "상태이상 공격 지속시간",
-              "value": 1.0
-            },
-            {
-              "name": "아군 공격력 강화 효과",
-              "value": 5.0
-            }
-          ],
-          "arkPassive": {
-            "name": "깨달음",
-            "value": 12.0
-          }
-        },
-        {
-          "name": "도래한 결전의 반지",
-          "grade": "고대",
-          "tier": 4,
-          "quality": 83,
-          "buyPrice": 1600000,
-          "startPrice": 1600000,
-          "endDate": "2026-04-30T22:23:16.883",
-          "tradeAllowCount": 0,
-          "stats": {
-            "힘": 11098.0,
-            "민첩": 11098.0,
-            "지능": 11098.0,
-            "체력": 2336.0
-          },
-          "upgrades": [
-            {
-              "name": "아군 피해량 강화 효과",
-              "value": 7.5
-            },
-            {
-              "name": "상태이상 공격 지속시간",
-              "value": 1.0
-            },
-            {
-              "name": "아군 공격력 강화 효과",
-              "value": 5.0
-            }
-          ],
-          "arkPassive": {
-            "name": "깨달음",
-            "value": 12.0
-          }
-        },
         {
           "name": "도래한 결전의 반지",
           "grade": "고대",
