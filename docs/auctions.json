@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-07T01:18:03Z",
+  "updated_at": "2026-05-07T04:59:20Z",
   "searches": [
     {
       "name": "서폿 1 (생명력/공강/피강)",
@@ -20,8 +20,43 @@
           "max": 7.5
         }
       ],
-      "totalCount": 0,
-      "items": []
+      "totalCount": 1,
+      "items": [
+        {
+          "name": "도래한 결전의 반지",
+          "grade": "고대",
+          "tier": 4,
+          "quality": 94,
+          "buyPrice": 3380000,
+          "startPrice": 3380000,
+          "endDate": "2026-05-08T13:12:29.857",
+          "tradeAllowCount": 2,
+          "stats": {
+            "힘": 12665.0,
+            "민첩": 12665.0,
+            "지능": 12665.0,
+            "체력": 2300.0
+          },
+          "upgrades": [
+            {
+              "name": "아군 피해량 강화 효과",
+              "value": 7.5
+            },
+            {
+              "name": "최대 생명력",
+              "value": 6500.0
+            },
+            {
+              "name": "아군 공격력 강화 효과",
+              "value": 5.0
+            }
+          ],
+          "arkPassive": {
+            "name": "깨달음",
+            "value": 12.0
+          }
+        }
+      ]
     },
     {
       "name": "반지 (공강/피강 + any)",
@@ -44,9 +79,9 @@
           "grade": "고대",
           "tier": 4,
           "quality": 70,
-          "buyPrice": 1700000,
-          "startPrice": 1700000,
-          "endDate": "2026-05-07T13:37:34.107",
+          "buyPrice": 1650000,
+          "startPrice": 1650000,
+          "endDate": "2026-05-08T11:26:08.28",
           "tradeAllowCount": 1,
           "stats": {
             "힘": 11098.0,
@@ -78,9 +113,9 @@
           "grade": "고대",
           "tier": 4,
           "quality": 70,
-          "buyPrice": 1700000,
-          "startPrice": 1700000,
-          "endDate": "2026-05-07T13:37:34.107",
+          "buyPrice": 1650000,
+          "startPrice": 1650000,
+          "endDate": "2026-05-08T11:26:08.28",
           "tradeAllowCount": 1,
           "stats": {
             "힘": 11098.0,
