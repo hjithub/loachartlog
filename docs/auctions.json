@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-21T08:08:03Z",
+  "updated_at": "2026-05-21T11:47:43Z",
   "searches": [
     {
       "name": "서폿 1 (생명력/공강/피강)",
@@ -37,76 +37,8 @@
           "max": 7.5
         }
       ],
-      "totalCount": 3,
+      "totalCount": 1,
       "items": [
-        {
-          "name": "도래한 결전의 반지",
-          "grade": "고대",
-          "tier": 4,
-          "quality": 80,
-          "buyPrice": 2111111,
-          "startPrice": 2111111,
-          "endDate": "2026-05-21T23:01:34.49",
-          "tradeAllowCount": 2,
-          "stats": {
-            "힘": 11930.0,
-            "민첩": 11930.0,
-            "지능": 11930.0,
-            "체력": 2210.0
-          },
-          "upgrades": [
-            {
-              "name": "아군 피해량 강화 효과",
-              "value": 7.5
-            },
-            {
-              "name": "아군 공격력 강화 효과",
-              "value": 5.0
-            },
-            {
-              "name": "상태이상 공격 지속시간",
-              "value": 1.0
-            }
-          ],
-          "arkPassive": {
-            "name": "깨달음",
-            "value": 12.0
-          }
-        },
-        {
-          "name": "도래한 결전의 반지",
-          "grade": "고대",
-          "tier": 4,
-          "quality": 80,
-          "buyPrice": 2111111,
-          "startPrice": 2111111,
-          "endDate": "2026-05-21T23:01:34.49",
-          "tradeAllowCount": 2,
-          "stats": {
-            "힘": 11930.0,
-            "민첩": 11930.0,
-            "지능": 11930.0,
-            "체력": 2210.0
-          },
-          "upgrades": [
-            {
-              "name": "아군 피해량 강화 효과",
-              "value": 7.5
-            },
-            {
-              "name": "아군 공격력 강화 효과",
-              "value": 5.0
-            },
-            {
-              "name": "상태이상 공격 지속시간",
-              "value": 1.0
-            }
-          ],
-          "arkPassive": {
-            "name": "깨달음",
-            "value": 12.0
-          }
-        },
         {
           "name": "도래한 결전의 반지",
           "grade": "고대",
