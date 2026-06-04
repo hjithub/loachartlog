@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-04T02:06:39Z",
+  "updated_at": "2026-06-04T07:06:21Z",
   "searches": [
     {
       "name": "서폿 1 (생명력/공강/피강)",
@@ -72,7 +72,7 @@
           "max": 7.5
         }
       ],
-      "totalCount": 6,
+      "totalCount": 7,
       "items": [
         {
           "name": "도래한 결전의 반지",
@@ -135,6 +135,40 @@
             {
               "name": "아군 피해량 강화 효과",
               "value": 7.5
+            }
+          ],
+          "arkPassive": {
+            "name": "깨달음",
+            "value": 12.0
+          }
+        },
+        {
+          "name": "도래한 결전의 반지",
+          "grade": "고대",
+          "tier": 4,
+          "quality": 86,
+          "buyPrice": 1990000,
+          "startPrice": 1990000,
+          "endDate": "2026-06-05T14:56:59.37",
+          "tradeAllowCount": 2,
+          "stats": {
+            "힘": 12065.0,
+            "민첩": 12065.0,
+            "지능": 12065.0,
+            "체력": 2270.0
+          },
+          "upgrades": [
+            {
+              "name": "아군 공격력 강화 효과",
+              "value": 5.0
+            },
+            {
+              "name": "아군 피해량 강화 효과",
+              "value": 7.5
+            },
+            {
+              "name": "치명타 피해",
+              "value": 4.0
             }
           ],
           "arkPassive": {
