@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-13T13:06:35Z",
+  "updated_at": "2026-06-13T15:17:48Z",
   "searches": [
     {
       "name": "서폿 1 (생명력/공강/피강)",
@@ -27,9 +27,9 @@
           "grade": "고대",
           "tier": 4,
           "quality": 84,
-          "buyPrice": 3200000,
-          "startPrice": 3200000,
-          "endDate": "2026-06-14T01:36:53.237",
+          "buyPrice": 3000000,
+          "startPrice": 3000000,
+          "endDate": "2026-06-14T22:55:47.35",
           "tradeAllowCount": 1,
           "stats": {
             "힘": 12394.0,
@@ -113,9 +113,9 @@
           "grade": "고대",
           "tier": 4,
           "quality": 84,
-          "buyPrice": 2000000,
-          "startPrice": 2000000,
-          "endDate": "2026-06-13T23:36:19.817",
+          "buyPrice": 1900000,
+          "startPrice": 1900000,
+          "endDate": "2026-06-14T23:28:25.507",
           "tradeAllowCount": 2,
           "stats": {
             "힘": 11891.0,
@@ -135,6 +135,40 @@
             {
               "name": "치명타 적중률",
               "value": 1.55
+            }
+          ],
+          "arkPassive": {
+            "name": "깨달음",
+            "value": 12.0
+          }
+        },
+        {
+          "name": "도래한 결전의 반지",
+          "grade": "고대",
+          "tier": 4,
+          "quality": 94,
+          "buyPrice": 2200000,
+          "startPrice": 2200000,
+          "endDate": "2026-06-14T23:00:37.517",
+          "tradeAllowCount": 2,
+          "stats": {
+            "힘": 12510.0,
+            "민첩": 12510.0,
+            "지능": 12510.0,
+            "체력": 2324.0
+          },
+          "upgrades": [
+            {
+              "name": "치명타 적중률",
+              "value": 1.55
+            },
+            {
+              "name": "아군 피해량 강화 효과",
+              "value": 7.5
+            },
+            {
+              "name": "아군 공격력 강화 효과",
+              "value": 5.0
             }
           ],
           "arkPassive": {
@@ -169,40 +203,6 @@
             {
               "name": "치명타 적중률",
               "value": 1.55
-            }
-          ],
-          "arkPassive": {
-            "name": "깨달음",
-            "value": 12.0
-          }
-        },
-        {
-          "name": "도래한 결전의 반지",
-          "grade": "고대",
-          "tier": 4,
-          "quality": 94,
-          "buyPrice": 2350000,
-          "startPrice": 2350000,
-          "endDate": "2026-06-13T22:47:14.213",
-          "tradeAllowCount": 2,
-          "stats": {
-            "힘": 12510.0,
-            "민첩": 12510.0,
-            "지능": 12510.0,
-            "체력": 2324.0
-          },
-          "upgrades": [
-            {
-              "name": "치명타 적중률",
-              "value": 1.55
-            },
-            {
-              "name": "아군 피해량 강화 효과",
-              "value": 7.5
-            },
-            {
-              "name": "아군 공격력 강화 효과",
-              "value": 5.0
             }
           ],
           "arkPassive": {
@@ -249,9 +249,9 @@
           "grade": "고대",
           "tier": 4,
           "quality": 84,
-          "buyPrice": 3200000,
-          "startPrice": 3200000,
-          "endDate": "2026-06-14T01:36:53.237",
+          "buyPrice": 3000000,
+          "startPrice": 3000000,
+          "endDate": "2026-06-14T22:55:47.35",
           "tradeAllowCount": 1,
           "stats": {
             "힘": 12394.0,
