@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-19T12:11:25Z",
+  "updated_at": "2026-06-19T15:49:13Z",
   "searches": [
     {
       "name": "서폿 1 (생명력/공강/피강)",
@@ -106,43 +106,8 @@
           "max": 7.5
         }
       ],
-      "totalCount": 1,
-      "items": [
-        {
-          "name": "마주한 종언의 반지",
-          "grade": "고대",
-          "tier": 4,
-          "quality": 94,
-          "buyPrice": 3400000,
-          "startPrice": 3400000,
-          "endDate": "2026-06-20T20:23:03.11",
-          "tradeAllowCount": 2,
-          "stats": {
-            "힘": 12510.0,
-            "민첩": 12510.0,
-            "지능": 12510.0,
-            "체력": 2318.0
-          },
-          "upgrades": [
-            {
-              "name": "최대 생명력",
-              "value": 6500.0
-            },
-            {
-              "name": "아군 피해량 강화 효과",
-              "value": 7.5
-            },
-            {
-              "name": "아군 공격력 강화 효과",
-              "value": 5.0
-            }
-          ],
-          "arkPassive": {
-            "name": "깨달음",
-            "value": 12.0
-          }
-        }
-      ],
+      "totalCount": 0,
+      "items": [],
       "excludeFrom": "서폿 1 (생명력/공강/피강)"
     }
   ]
