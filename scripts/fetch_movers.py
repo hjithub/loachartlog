@@ -89,8 +89,12 @@ def get_item_detail(item_id, api_key):
 
 
 def most_recent_trade_count(detail):
-    """Pull today's/most-recent trade count out of an item detail response."""
-    stats = detail.get('Stats') or []
+    """Pull today's/most-recent trade count out of an item detail response.
+
+    The endpoint returns the daily stats as a bare JSON list (not wrapped in
+    a 'Stats' key), each entry like {"Date": ..., "AvgPrice": ..., "TradeCount": ...}.
+    """
+    stats = detail if isinstance(detail, list) else (detail.get('Stats') or [])
     if not stats:
         return None
     latest = max(stats, key=lambda s: s.get('Date', ''))
