@@ -1,12 +1,14 @@
 """
-Fetch top price-gaining market items, ranked by recent trade count.
+Fetch top market movers by % price change, ranked by recent trade count.
 
 Two-stage approach to stay within API rate limits:
   1. Scan broad item categories via the market search endpoint (cheap: one
      call per category, returns every item in it) and compute % change from
      yesterday's average price to the current price for all of them.
-  2. Only for the top N gainers, call the per-item detail endpoint to pull
-     real daily trade counts (판매 건수) and use that to order the final list.
+  2. Only for the top N by % change (gainers first, backfilled by decliners
+     if fewer than N items are actually up), call the per-item detail
+     endpoint to pull real daily trade counts (판매 건수) and use that to
+     order the final list.
 
 Writes docs/movers.json for the landing page.
 
@@ -152,7 +154,10 @@ def main():
         print(f'Search {search}: {len(items)} items ({len(all_items)} total so far)')
         time.sleep(0.5)
 
-    # Stage 1: compute % change for everything we scanned, for free.
+    # Stage 1: compute % change for everything we scanned, for free. Not
+    # filtered to gainers only — always fills up to TOP_N_CANDIDATES rows
+    # regardless of direction, so the table stays at a consistent size even
+    # if fewer than TOP_N_CANDIDATES items are actually up today.
     movers = []
     for item in all_items.values():
         yday = item.get('YDayAvgPrice')
@@ -160,8 +165,6 @@ def main():
         if not yday or yday < MIN_YDAY_PRICE or current is None:
             continue
         pct_change = (current - yday) / yday * 100
-        if pct_change <= 0:
-            continue
         movers.append({
             'id': item['Id'],
             'name': item['Name'],
@@ -175,7 +178,7 @@ def main():
 
     movers.sort(key=lambda m: m['pctChange'], reverse=True)
     candidates = movers[:TOP_N_CANDIDATES]
-    print(f'{len(movers)} items rose in price; fetching trade counts for top {len(candidates)}')
+    print(f'{len(movers)} items scanned; fetching trade counts for top {len(candidates)} by % change')
 
     write_craft_prices(all_items)
 
@@ -189,7 +192,7 @@ def main():
             m['tradeCount'] = None
         time.sleep(0.3)
 
-    # Final ordering: among the top gainers, most-traded first. Items whose
+    # Final ordering: among the top movers, most-traded first. Items whose
     # trade count we couldn't fetch sink to the bottom rather than disappear.
     candidates.sort(key=lambda m: (m['tradeCount'] is None, -(m['tradeCount'] or 0)))
 
@@ -206,7 +209,8 @@ def main():
     for m in candidates:
         tc = m['tradeCount']
         tc_str = f'{tc:,}' if tc is not None else '?'
-        print(f"  {m['name']}: +{m['pctChange']}%  ({tc_str} traded)")
+        sign = '+' if m['pctChange'] >= 0 else ''
+        print(f"  {m['name']}: {sign}{m['pctChange']}%  ({tc_str} traded)")
 
 
 if __name__ == '__main__':

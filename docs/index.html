@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>가격 급등 아이템</title>
+  <title>가격 변동 아이템</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Segoe UI', sans-serif; background: #1a1a2e; color: #e0e0e0; padding: 16px; max-width: 720px; margin: 0 auto; }
@@ -32,6 +32,8 @@
     .grade-영웅 { color: #b06fd6; }
     .price { color: #ccc; white-space: nowrap; }
     .pct-up { color: #4ecca3; font-weight: bold; white-space: nowrap; }
+    .pct-down { color: #e05c5c; font-weight: bold; white-space: nowrap; }
+    .pct-flat { color: #999; font-weight: bold; white-space: nowrap; }
     .trade-count { color: #e0e0e0; text-align: right; white-space: nowrap; }
     .trade-count .unit { color: #888; font-size: 0.8em; }
     .no-results { color: #666; font-style: italic; padding: 12px 0; text-align: center; }
@@ -45,12 +47,12 @@
 <body>
   <div class="header">
     <div class="header-left">
-      <h1>가격 급등 아이템</h1>
+      <h1>가격 변동 아이템</h1>
       <span class="updated" id="updated"></span>
     </div>
     <button class="refresh-btn" id="refreshBtn" onclick="loadData()" title="Reload cached data">&#x21bb; Refresh</button>
   </div>
-  <div class="subtitle">전일 대비 상승률 상위 종목 &middot; 거래 건수 순 정렬</div>
+  <div class="subtitle">전일 대비 등락률 상위 종목 &middot; 거래 건수 순 정렬</div>
 
   <div id="content"><div class="loading">Loading...</div></div>
 
@@ -78,13 +80,15 @@
       const tradeCount = item.tradeCount != null
         ? `${item.tradeCount.toLocaleString()}<span class="unit">건</span>`
         : '<span class="unit">-</span>';
+      const pctClass = item.pctChange > 0 ? 'pct-up' : item.pctChange < 0 ? 'pct-down' : 'pct-flat';
+      const pctSign = item.pctChange > 0 ? '+' : '';
 
       return `<tr>
         <td class="rank">${rank}</td>
         <td><div class="item-cell">${icon}<span class="item-name ${gradeClass}">${item.name}</span></div></td>
         <td class="price hide-mobile">${formatGold(item.yDayAvgPrice)}</td>
         <td class="price">${formatGold(item.currentPrice)}</td>
-        <td class="pct-up">+${item.pctChange}%</td>
+        <td class="${pctClass}">${pctSign}${item.pctChange}%</td>
         <td class="trade-count">${tradeCount}</td>
       </tr>`;
     }
@@ -104,7 +108,7 @@
 
         const items = data.items || [];
         if (items.length === 0) {
-          document.getElementById('content').innerHTML = '<div class="no-results">상승 종목 없음</div>';
+          document.getElementById('content').innerHTML = '<div class="no-results">데이터 없음</div>';
           return;
         }
 
