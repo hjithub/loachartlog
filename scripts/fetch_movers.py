@@ -91,10 +91,15 @@ def get_item_detail(item_id, api_key):
 def most_recent_trade_count(detail):
     """Pull today's/most-recent trade count out of an item detail response.
 
-    The endpoint returns the daily stats as a bare JSON list (not wrapped in
-    a 'Stats' key), each entry like {"Date": ..., "AvgPrice": ..., "TradeCount": ...}.
+    The endpoint returns a JSON list containing a single object for the item;
+    that object has a 'Stats' list of daily entries like
+    {"Date": "2026-07-16", "AvgPrice": ..., "TradeCount": ...}.
     """
-    stats = detail if isinstance(detail, list) else (detail.get('Stats') or [])
+    if isinstance(detail, list):
+        if not detail:
+            return None
+        detail = detail[0]
+    stats = detail.get('Stats') or []
     if not stats:
         return None
     latest = max(stats, key=lambda s: s.get('Date', ''))
@@ -175,11 +180,9 @@ def main():
     write_craft_prices(all_items)
 
     # Stage 2: only the top gainers get an expensive per-item detail call.
-    for i, m in enumerate(candidates):
+    for m in candidates:
         try:
             detail = get_item_detail(m['id'], api_key)
-            if i == 0:
-                print(f"DEBUG raw detail for {m['name']}: {json.dumps(detail, ensure_ascii=False)[:2000]}")
             m['tradeCount'] = most_recent_trade_count(detail)
         except Exception as e:
             print(f"  Error fetching detail for {m['name']}: {e}")
