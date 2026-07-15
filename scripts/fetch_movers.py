@@ -175,9 +175,11 @@ def main():
     write_craft_prices(all_items)
 
     # Stage 2: only the top gainers get an expensive per-item detail call.
-    for m in candidates:
+    for i, m in enumerate(candidates):
         try:
             detail = get_item_detail(m['id'], api_key)
+            if i == 0:
+                print(f"DEBUG raw detail for {m['name']}: {json.dumps(detail, ensure_ascii=False)[:2000]}")
             m['tradeCount'] = most_recent_trade_count(detail)
         except Exception as e:
             print(f"  Error fetching detail for {m['name']}: {e}")
