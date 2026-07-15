@@ -43,7 +43,7 @@ CRAFT_WANTED_IDS = {
 
 # How many top gainers to fetch real trade-count history for. Bounds the
 # number of (more expensive, one-call-per-item) detail requests per run.
-TOP_N_CANDIDATES = 30
+TOP_N_CANDIDATES = 60
 
 MIN_YDAY_PRICE = 1  # avoid division by ~0 on brand-new/degenerate listings
 
