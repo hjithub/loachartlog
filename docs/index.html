@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>경매장 연마 검색</title>
+  <title>가격 급등 아이템</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Segoe UI', sans-serif; background: #1a1a2e; color: #e0e0e0; padding: 16px; max-width: 960px; margin: 0 auto; }
+    body { font-family: 'Segoe UI', sans-serif; background: #1a1a2e; color: #e0e0e0; padding: 16px; max-width: 720px; margin: 0 auto; }
     h1 { color: #e8b445; margin-bottom: 4px; font-size: 1.5em; }
-    .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 8px; }
+    .subtitle { color: #888; font-size: 0.8em; margin-bottom: 16px; }
+    .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; flex-wrap: wrap; gap: 8px; }
     .header-left { display: flex; align-items: center; gap: 12px; }
     .updated { color: #888; font-size: 0.8em; }
     .refresh-btn {
@@ -17,62 +18,46 @@
     }
     .refresh-btn:hover { background: #e8b445; color: #1a1a2e; }
     .refresh-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-    .search-block { background: #16213e; border-radius: 10px; padding: 16px; margin-bottom: 16px; }
-    .search-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 4px; }
-    .search-name { color: #e8b445; font-size: 1.1em; font-weight: bold; }
-    .search-count { color: #888; font-size: 0.85em; }
-    .filter-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
-    .filter-tag {
-      background: #0f3460; color: #aaa; font-size: 0.75em; padding: 3px 8px;
-      border-radius: 4px; white-space: nowrap;
-    }
-    .filter-tag .val { color: #4ecca3; }
-    table { width: 100%; border-collapse: collapse; }
-    th { text-align: left; color: #e8b445; padding: 6px 8px; font-size: 0.8em; border-bottom: 1px solid #2a2a4a; }
-    td { padding: 8px; font-size: 0.85em; border-bottom: 1px solid #1a1a2e; }
+    table { width: 100%; border-collapse: collapse; background: #16213e; border-radius: 10px; overflow: hidden; }
+    th { text-align: left; color: #e8b445; padding: 8px; font-size: 0.8em; border-bottom: 1px solid #2a2a4a; }
+    td { padding: 10px 8px; font-size: 0.9em; border-bottom: 1px solid #1a1a2e; }
     tr:hover td { background: #0f3460; }
-    .grade-ancient { color: #dba64b; }
-    .price { color: #4ecca3; font-weight: bold; white-space: nowrap; }
-    .upgrades { display: flex; flex-wrap: wrap; gap: 4px; }
-    .upgrade-pill {
-      background: #2a2a4a; padding: 2px 6px; border-radius: 3px; font-size: 0.75em;
-      white-space: nowrap;
-    }
-    .upgrade-pill .uval { color: #4ecca3; }
-    .ark-inline { color: #888; font-size: 0.8em; margin-left: 6px; white-space: nowrap; }
-    .no-results { color: #666; font-style: italic; padding: 12px 0; }
-    .end-date { color: #888; font-size: 0.8em; white-space: nowrap; }
-    .trade-count { color: #888; font-size: 0.8em; text-align: center; }
-    .stat-val { white-space: nowrap; }
-    .nav-link { text-align: center; margin-top: 16px; }
-    .nav-link a { color: #e8b445; text-decoration: none; font-size: 0.9em; }
-    .nav-link a:hover { text-decoration: underline; }
+    .rank { color: #888; width: 2em; }
+    .item-cell { display: flex; align-items: center; gap: 8px; }
+    .item-icon { width: 28px; height: 28px; border-radius: 4px; background: #0f3460; flex-shrink: 0; }
+    .item-name { white-space: nowrap; }
+    .grade-고대 { color: #dba64b; }
+    .grade-유물 { color: #d2523d; }
+    .grade-전설 { color: #e8b445; }
+    .grade-영웅 { color: #b06fd6; }
+    .price { color: #ccc; white-space: nowrap; }
+    .pct-up { color: #4ecca3; font-weight: bold; white-space: nowrap; }
+    .trade-count { color: #e0e0e0; text-align: right; white-space: nowrap; }
+    .trade-count .unit { color: #888; font-size: 0.8em; }
+    .no-results { color: #666; font-style: italic; padding: 12px 0; text-align: center; }
     .loading { text-align: center; color: #888; padding: 40px 0; }
     @media (max-width: 600px) {
       .hide-mobile { display: none; }
-      td, th { padding: 4px 4px; font-size: 0.8em; }
+      td, th { padding: 6px 4px; font-size: 0.82em; }
     }
   </style>
 </head>
 <body>
   <div class="header">
     <div class="header-left">
-      <h1>경매장 연마 검색</h1>
+      <h1>가격 급등 아이템</h1>
       <span class="updated" id="updated"></span>
     </div>
     <button class="refresh-btn" id="refreshBtn" onclick="loadData()" title="Reload cached data">&#x21bb; Refresh</button>
   </div>
+  <div class="subtitle">전일 대비 상승률 상위 종목 &middot; 거래 건수 순 정렬</div>
 
   <div id="content"><div class="loading">Loading...</div></div>
-
-  <div class="nav-link">
-    <a href="craft.html">영지 제작 계산기 &rarr;</a>
-  </div>
 
   <script>
     function formatGold(n) {
       if (n == null) return '-';
-      return n.toLocaleString() + 'g';
+      return Math.round(n).toLocaleString() + 'g';
     }
 
     function timeAgo(isoStr) {
@@ -85,107 +70,23 @@
       return Math.floor(hrs / 24) + '일 전';
     }
 
-    function formatEndDate(dateStr) {
-      if (!dateStr) return '';
-      const d = new Date(dateStr);
-      const mon = d.getMonth() + 1;
-      const day = d.getDate();
-      const hr = String(d.getHours()).padStart(2, '0');
-      const min = String(d.getMinutes()).padStart(2, '0');
-      return `${mon}/${day} ${hr}:${min}`;
-    }
+    function renderRow(item, rank) {
+      const gradeClass = 'grade-' + (item.grade || '');
+      const icon = item.icon
+        ? `<img class="item-icon" src="${item.icon}" alt="">`
+        : '<span class="item-icon"></span>';
+      const tradeCount = item.tradeCount != null
+        ? `${item.tradeCount.toLocaleString()}<span class="unit">건</span>`
+        : '<span class="unit">-</span>';
 
-    function formatFilterVal(name, min, max) {
-      const pctNames = [
-        '아군 공격력 강화 효과', '아군 피해량 강화 효과', '낙인력',
-        '세레나데, 신앙, 조화 게이지 획득량 증가',
-        '추가 피해', '적에게 주는 피해 증가', '공격력 %', '무기 공격력 %',
-        '파티원 회복 효과', '파티원 보호막 효과', '치명타 적중률', '치명타 피해',
-        '최대 마나', '상태이상 공격 지속시간'
-      ];
-      const isPct = pctNames.includes(name);
-      const suffix = isPct ? '%' : '';
-      const display = min === max ? `${min}${suffix}` : `${min}${suffix}~${max}${suffix}`;
-      return display;
-    }
-
-    function itemKey(item) {
-      return item.name + '|' + item.buyPrice + '|' + item.endDate;
-    }
-
-    function renderSearch(search, excludeKeys) {
-      let html = '<div class="search-block">';
-      html += '<div class="search-header">';
-      html += `<span class="search-name">${search.name}</span>`;
-      html += '</div>';
-
-      html += '<div class="filter-tags">';
-      for (const f of search.filters) {
-        const shortName = f.name.replace('세레나데, 신앙, 조화 게이지 획득량 증가', '게이지 획득량');
-        const val = formatFilterVal(f.name, f.min, f.max);
-        html += `<span class="filter-tag">${shortName} <span class="val">${val}</span></span>`;
-      }
-      html += '</div>';
-
-      const items = (search.items || []).filter(i => !excludeKeys.has(itemKey(i)));
-
-      // Hide upgrades whose value is locked by a fixed filter (min === max),
-      // since they are redundant with the filter tag shown above.
-      const fixedUpgrades = new Set();
-      for (const f of search.filters) {
-        if (f.min === f.max) fixedUpgrades.add(f.name);
-      }
-
-      if (items.length === 0) {
-        html += '<div class="no-results">결과 없음</div>';
-        html += '</div>';
-        return html;
-      }
-
-      // Only render the upgrades column if at least one row has a variable upgrade.
-      const showUpgradesCol = items.some(i =>
-        i.upgrades.some(u => !fixedUpgrades.has(u.name))
-      );
-
-      html += `<div class="search-count" style="color:#888;font-size:0.85em;margin-bottom:8px">${items.length}건</div>`;
-
-      html += '<table>';
-      html += '<thead><tr>';
-      html += '<th>이름</th><th>힘/민/지</th>';
-      if (showUpgradesCol) html += '<th>연마 효과</th>';
-      html += '<th>즉시구매</th><th class="hide-mobile">마감</th><th>거래</th>';
-      html += '</tr></thead><tbody>';
-
-      for (const item of items) {
-        const stat = item.stats['힘'] ? Math.floor(item.stats['힘']).toLocaleString() : '-';
-        const gradeClass = item.grade === '고대' ? 'grade-ancient' : '';
-        const arkInline = item.arkPassive
-          ? ` <span class="ark-inline">${item.arkPassive.name} ${item.arkPassive.value}</span>`
-          : '';
-
-        html += '<tr>';
-        html += `<td><span class="${gradeClass}">${item.name}</span>${arkInline}</td>`;
-        html += `<td class="stat-val">${stat}</td>`;
-
-        if (showUpgradesCol) {
-          let upgradesHtml = '<div class="upgrades">';
-          for (const u of item.upgrades) {
-            if (fixedUpgrades.has(u.name)) continue;
-            const shortName = u.name.replace('세레나데, 신앙, 조화 게이지 획득량 증가', '게이지');
-            upgradesHtml += `<span class="upgrade-pill">${shortName} <span class="uval">${u.value}</span></span>`;
-          }
-          upgradesHtml += '</div>';
-          html += `<td>${upgradesHtml}</td>`;
-        }
-
-        html += `<td class="price">${formatGold(item.buyPrice)}</td>`;
-        html += `<td class="end-date hide-mobile">${formatEndDate(item.endDate)}</td>`;
-        html += `<td class="trade-count">${item.tradeAllowCount}회</td>`;
-        html += '</tr>';
-      }
-
-      html += '</tbody></table></div>';
-      return html;
+      return `<tr>
+        <td class="rank">${rank}</td>
+        <td><div class="item-cell">${icon}<span class="item-name ${gradeClass}">${item.name}</span></div></td>
+        <td class="price hide-mobile">${formatGold(item.yDayAvgPrice)}</td>
+        <td class="price">${formatGold(item.currentPrice)}</td>
+        <td class="pct-up">+${item.pctChange}%</td>
+        <td class="trade-count">${tradeCount}</td>
+      </tr>`;
     }
 
     async function loadData() {
@@ -194,35 +95,32 @@
       btn.textContent = '...';
 
       try {
-        const res = await fetch('auctions.json?t=' + Date.now());
+        const res = await fetch('movers.json?t=' + Date.now());
         if (!res.ok) throw new Error('HTTP ' + res.status);
         const data = await res.json();
 
         document.getElementById('updated').textContent = timeAgo(data.updated_at);
         document.getElementById('updated').title = data.updated_at;
 
-        // Build key sets per search name for deduplication
-        const keySets = {};
-        for (const search of data.searches) {
-          const keys = new Set((search.items || []).map(itemKey));
-          keySets[search.name] = keys;
+        const items = data.items || [];
+        if (items.length === 0) {
+          document.getElementById('content').innerHTML = '<div class="no-results">상승 종목 없음</div>';
+          return;
         }
 
-        let html = '';
-        for (const search of data.searches) {
-          let excludeKeys = new Set();
-          if (search.excludeFrom && keySets[search.excludeFrom]) {
-            excludeKeys = keySets[search.excludeFrom];
-          }
-          html += renderSearch(search, excludeKeys);
-        }
+        let html = '<table><thead><tr>';
+        html += '<th></th><th>아이템</th><th class="hide-mobile">어제 평균가</th><th>현재가</th><th>등락률</th><th>거래 건수</th>';
+        html += '</tr></thead><tbody>';
+        items.forEach((item, i) => { html += renderRow(item, i + 1); });
+        html += '</tbody></table>';
+
         document.getElementById('content').innerHTML = html;
       } catch (e) {
         document.getElementById('content').innerHTML =
-          `<div class="search-block"><div class="no-results">Error: ${e.message}</div></div>`;
+          `<div class="no-results">Error: ${e.message}</div>`;
       } finally {
         btn.disabled = false;
-        btn.textContent = '\u21bb Refresh';
+        btn.textContent = '↻ Refresh';
       }
     }
 
