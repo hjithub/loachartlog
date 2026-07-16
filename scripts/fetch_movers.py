@@ -170,10 +170,12 @@ def main():
     # regardless of direction, so the table stays at a consistent size even
     # if fewer than TOP_N_CANDIDATES items are actually up today.
     movers = []
+    skipped = []
     for item in all_items.values():
         yday = item.get('YDayAvgPrice')
         current = item.get('CurrentMinPrice')
         if not yday or yday < MIN_YDAY_PRICE or current is None:
+            skipped.append(f"{item['Name']} (YDayAvgPrice={yday!r}, CurrentMinPrice={current!r})")
             continue
         pct_change = (current - yday) / yday * 100
         movers.append({
@@ -189,7 +191,17 @@ def main():
 
     movers.sort(key=lambda m: m['pctChange'], reverse=True)
     candidates = movers[:TOP_N_CANDIDATES]
-    print(f'{len(movers)} items scanned; fetching trade counts for top {len(candidates)} by % change')
+    print(f'{len(all_items)} items scanned total; {len(movers)} had valid price data; '
+          f'fetching trade counts for top {len(candidates)} by % change')
+    if skipped:
+        print(f'Skipped {len(skipped)} items (invalid/missing yesterday price):')
+        for s in skipped:
+            print(f'  - {s}')
+    if len(movers) > TOP_N_CANDIDATES:
+        dropped = movers[TOP_N_CANDIDATES:]
+        print(f'Dropped {len(dropped)} items beyond the top-{TOP_N_CANDIDATES} cap:')
+        for m in dropped:
+            print(f"  - {m['name']} ({m['pctChange']}%)")
 
     write_craft_prices(all_items)
 
