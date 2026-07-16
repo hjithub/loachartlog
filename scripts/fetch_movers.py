@@ -7,8 +7,10 @@ Two-stage approach to stay within API rate limits:
      yesterday's average price to the current price for all of them.
   2. Only for the top N by % change (gainers first, backfilled by decliners
      if fewer than N items are actually up), call the per-item detail
-     endpoint to pull real daily trade counts (판매 건수) and use that to
-     order the final list.
+     endpoint to pull the last FULLY COMPLETED day's trade count (판매 건수)
+     — not today's, which is a partial/still-accumulating count that reads
+     as near-zero for everything right after the day rolls over — and use
+     that to order the final list.
 
 Writes docs/movers.json for the landing page.
 
@@ -90,12 +92,16 @@ def get_item_detail(item_id, api_key):
     return _request(DETAIL_API_URL.format(item_id), api_key)
 
 
-def most_recent_trade_count(detail):
-    """Pull today's/most-recent trade count out of an item detail response.
+def last_complete_day_trade_count(detail):
+    """Pull the trade count for the last FULLY COMPLETED day, not today.
 
     The endpoint returns a JSON list containing a single object for the item;
     that object has a 'Stats' list of daily entries like
-    {"Date": "2026-07-16", "AvgPrice": ..., "TradeCount": ...}.
+    {"Date": "2026-07-16", "AvgPrice": ..., "TradeCount": ...}, with today's
+    entry included as a still-accumulating, partial count. Using today's
+    count directly is misleading: it reads as ~0 for every item right after
+    the day rolls over regardless of how actively traded it actually is, so
+    we skip today and use the most recent date strictly before it instead.
     """
     if isinstance(detail, list):
         if not detail:
@@ -104,8 +110,13 @@ def most_recent_trade_count(detail):
     stats = detail.get('Stats') or []
     if not stats:
         return None
-    latest = max(stats, key=lambda s: s.get('Date', ''))
-    return latest.get('TradeCount')
+    stats_sorted = sorted(stats, key=lambda s: s.get('Date', ''), reverse=True)
+    today = stats_sorted[0].get('Date')
+    for s in stats_sorted:
+        if s.get('Date') != today:
+            return s.get('TradeCount')
+    # Only one distinct date present (e.g. brand-new listing) — best we have.
+    return stats_sorted[0].get('TradeCount')
 
 
 def write_craft_prices(all_items):
@@ -186,7 +197,7 @@ def main():
     for m in candidates:
         try:
             detail = get_item_detail(m['id'], api_key)
-            m['tradeCount'] = most_recent_trade_count(detail)
+            m['tradeCount'] = last_complete_day_trade_count(detail)
         except Exception as e:
             print(f"  Error fetching detail for {m['name']}: {e}")
             m['tradeCount'] = None
