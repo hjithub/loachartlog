@@ -31,7 +31,6 @@ DETAIL_API_URL = 'https://developer-lostark.game.onstove.com/markets/items/{}'
 
 CATEGORIES = [
     90200, 90300, 90400, 90700, 60200, 60300, 60400, 60500,
-    100000,  # quest/collectible materials (기타) - verified all 140 items have real price data
     230000,  # gems (보석) - some variants are dead (never traded); the yesterday-price filter below handles that
     50000,   # enhancement/honing materials (강화 재료) - 수호석/파괴석/야금술/재봉술 etc.,
              # 23 of 100 are dead common-tier variants; same yesterday-price filter handles those too
@@ -39,6 +38,16 @@ CATEGORIES = [
 EXTRA_SEARCHES = [
     {"CategoryCode": 50010, "ItemName": "융화"},
 ]
+
+# Manually flagged as noise: quest fluff, or items whose ~1-2g yesterday price
+# turns any small absolute move into a meaningless huge percentage swing.
+EXCLUDED_NAME_SUBSTRINGS = ['오레하']
+EXCLUDED_ITEM_IDS = {
+    66130133,  # 명예의 파편 주머니(대)
+    66110223,  # 경이로운 명예의 돌파석
+    66110204,  # 조화의 돌파석
+    66112523,  # 야금술 : 마수 [11-15]
+}
 
 # Items craft.html's cost calculator depends on. Kept separately so that page
 # stays working even though this script no longer only tracks a whitelist.
@@ -198,6 +207,10 @@ def main():
     movers = []
     skipped = []
     for item in all_items.values():
+        if item['Id'] in EXCLUDED_ITEM_IDS:
+            continue
+        if any(s in item['Name'] for s in EXCLUDED_NAME_SUBSTRINGS):
+            continue
         yday = item.get('YDayAvgPrice')
         current = item.get('CurrentMinPrice')
         if not yday or yday < MIN_YDAY_PRICE or current is None:
