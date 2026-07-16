@@ -33,6 +33,8 @@ CATEGORIES = [
     90200, 90300, 90400, 90700, 60200, 60300, 60400, 60500,
     100000,  # quest/collectible materials (기타) - verified all 140 items have real price data
     230000,  # gems (보석) - some variants are dead (never traded); the yesterday-price filter below handles that
+    50000,   # enhancement/honing materials (강화 재료) - 수호석/파괴석/야금술/재봉술 etc.,
+             # 23 of 100 are dead common-tier variants; same yesterday-price filter handles those too
 ]
 EXTRA_SEARCHES = [
     {"CategoryCode": 50010, "ItemName": "융화"},
