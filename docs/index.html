@@ -38,6 +38,14 @@
     .trade-count .unit { color: #888; font-size: 0.8em; }
     .no-results { color: #666; font-style: italic; padding: 12px 0; text-align: center; }
     .loading { text-align: center; color: #888; padding: 40px 0; }
+    .plain-section { margin-bottom: 20px; }
+    .plain-title { color: #888; font-size: 0.8em; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.03em; }
+    .plain-table { width: 100%; border-collapse: collapse; background: #16213e; border-radius: 10px; overflow: hidden; }
+    .plain-table td { padding: 6px 8px; font-size: 0.85em; border-bottom: 1px solid #1a1a2e; color: #ccc; }
+    .plain-table .rank { color: #666; width: 2em; }
+    .plain-table .name { white-space: nowrap; }
+    .plain-table .count { text-align: right; white-space: nowrap; color: #e0e0e0; }
+    .plain-table .count .unit { color: #666; font-size: 0.8em; }
     @media (max-width: 600px) {
       .hide-mobile { display: none; }
       td, th { padding: 6px 4px; font-size: 0.82em; }
@@ -93,6 +101,27 @@
       </tr>`;
     }
 
+    function renderTradeVolumeTop10(items) {
+      // Plain, unstyled ranking by trade count alone - no % change, no color.
+      // items[] is already sorted by tradeCount descending, so this is just the head.
+      const top10 = items.slice(0, 10);
+      let html = '<div class="plain-section">';
+      html += '<div class="plain-title">거래량 TOP 10</div>';
+      html += '<table class="plain-table"><tbody>';
+      top10.forEach((item, i) => {
+        const count = item.tradeCount != null
+          ? `${item.tradeCount.toLocaleString()}<span class="unit">건</span>`
+          : '-';
+        html += `<tr>
+          <td class="rank">${i + 1}</td>
+          <td class="name">${item.name}</td>
+          <td class="count">${count}</td>
+        </tr>`;
+      });
+      html += '</tbody></table></div>';
+      return html;
+    }
+
     async function loadData() {
       const btn = document.getElementById('refreshBtn');
       btn.disabled = true;
@@ -112,7 +141,8 @@
           return;
         }
 
-        let html = '<table><thead><tr>';
+        let html = renderTradeVolumeTop10(items);
+        html += '<table><thead><tr>';
         html += '<th></th><th>아이템</th><th class="hide-mobile">어제 평균가</th><th>현재가</th><th>등락률</th><th>거래 건수</th>';
         html += '</tr></thead><tbody>';
         items.forEach((item, i) => { html += renderRow(item, i + 1); });
