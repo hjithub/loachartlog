@@ -23,6 +23,10 @@ SEARCH_API_URL = 'https://developer-lostark.game.onstove.com/markets/items'
 # pattern. Probing broadly to see what's actually valid.
 CANDIDATE_CATEGORIES = list(range(10000, 250000, 10000))
 
+# Our currently-tracked leaf categories — checking whether TotalCount exceeds
+# what a single page returns (found broader categories default to ~10/page).
+TRACKED_CATEGORIES = [90200, 90300, 90400, 90700, 60200, 60300, 60400, 60500]
+
 MAX_RETRIES = 3
 RETRY_DELAY = 2
 
@@ -83,6 +87,19 @@ def main():
         total = result.get('TotalCount', len(items))
         names = [i.get('Name', '?') for i in items[:8]]
         print(f'Category {cat}: TotalCount={total}, page has {len(items)} items, sample: {names}')
+        time.sleep(0.3)
+
+    print('\n=== TRACKED CATEGORY TRUNCATION CHECK ===')
+    for cat in TRACKED_CATEGORIES:
+        try:
+            result = search_raw({"CategoryCode": cat}, api_key)
+        except Exception as e:
+            print(f'Category {cat}: ERROR {e}')
+            continue
+        items = result.get('Items') or [] if result else []
+        total = result.get('TotalCount', len(items)) if result else 0
+        flag = ' <-- TRUNCATED, more exist than we fetch!' if total > len(items) else ''
+        print(f'Category {cat}: TotalCount={total}, page has {len(items)} items{flag}')
         time.sleep(0.3)
 
 
