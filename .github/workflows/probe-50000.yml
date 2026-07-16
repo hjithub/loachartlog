@@ -1,0 +1,15 @@
+name: Probe Category 50000 (one-off)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Probe 50000 for alive vs dead items
+        env:
+          LOSTARK_API_KEY: ${{ secrets.LOSTARK_API_KEY }}
+        run: python3 scripts/probe_50000.py
