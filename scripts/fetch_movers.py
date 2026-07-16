@@ -54,6 +54,8 @@ MIN_YDAY_PRICE = 1  # avoid division by ~0 on brand-new/degenerate listings
 MAX_RETRIES = 3
 RETRY_DELAY = 2  # seconds, doubles each retry
 
+MAX_PAGES = 20  # safety cap; the API defaults to ~10 items/page
+
 
 def _request(url, api_key, body=None):
     data = json.dumps(body).encode('utf-8') if body is not None else None
@@ -82,9 +84,27 @@ def _request(url, api_key, body=None):
 
 
 def search_items(body, api_key):
-    """Fetch all items matching a category/name search."""
-    result = _request(SEARCH_API_URL, api_key, body)
-    return result.get('Items', [])
+    """Fetch all items matching a category/name search, paginating as needed.
+
+    The API defaults to ~10 items per page regardless of TotalCount, so a
+    single call silently truncates any category with more than that (found
+    via live probing: our own tracked categories 60300/60400 were losing
+    14 and 3 items respectively before this fix).
+    """
+    all_items = []
+    page = 0
+    while page < MAX_PAGES:
+        result = _request(SEARCH_API_URL, api_key, {**body, 'PageNo': page})
+        page_items = result.get('Items') or []
+        all_items.extend(page_items)
+        total = result.get('TotalCount', len(all_items))
+        if not page_items or len(all_items) >= total:
+            break
+        page += 1
+        time.sleep(0.3)
+    else:
+        print(f'  Warning: hit MAX_PAGES={MAX_PAGES} for {body}, results may be incomplete')
+    return all_items
 
 
 def get_item_detail(item_id, api_key):
