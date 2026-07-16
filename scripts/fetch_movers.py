@@ -29,7 +29,11 @@ import urllib.error
 SEARCH_API_URL = 'https://developer-lostark.game.onstove.com/markets/items'
 DETAIL_API_URL = 'https://developer-lostark.game.onstove.com/markets/items/{}'
 
-CATEGORIES = [90200, 90300, 90400, 90700, 60200, 60300, 60400, 60500]
+CATEGORIES = [
+    90200, 90300, 90400, 90700, 60200, 60300, 60400, 60500,
+    100000,  # quest/collectible materials (기타) - verified all 140 items have real price data
+    230000,  # gems (보석) - some variants are dead (never traded); the yesterday-price filter below handles that
+]
 EXTRA_SEARCHES = [
     {"CategoryCode": 50010, "ItemName": "융화"},
 ]
