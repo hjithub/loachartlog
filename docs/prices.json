@@ -1,81 +1,81 @@
 {
-  "updated_at": "2026-08-11T12:41:46Z",
+  "updated_at": "2026-08-11T14:12:47Z",
   "prices": {
     "들꽃": {
       "id": 6882101,
-      "currentMinPrice": 141,
+      "currentMinPrice": 140,
       "yDayAvgPrice": 139.2,
-      "recentPrice": 141,
+      "recentPrice": 142,
       "bundleCount": 100,
       "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_8_46.png"
     },
     "수줍은 들꽃": {
       "id": 6882104,
-      "currentMinPrice": 384,
+      "currentMinPrice": 382,
       "yDayAvgPrice": 381.9,
-      "recentPrice": 384,
+      "recentPrice": 385,
       "bundleCount": 100,
       "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_4_14.png"
     },
     "화사한 들꽃": {
       "id": 6882107,
-      "currentMinPrice": 1220,
+      "currentMinPrice": 1230,
       "yDayAvgPrice": 1272.0,
-      "recentPrice": 1200,
+      "recentPrice": 1232,
       "bundleCount": 100,
       "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_8_47.png"
     },
     "목재": {
       "id": 6882301,
-      "currentMinPrice": 138,
+      "currentMinPrice": 140,
       "yDayAvgPrice": 138.4,
-      "recentPrice": 138,
+      "recentPrice": 140,
       "bundleCount": 100,
       "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_3_252.png"
     },
     "부드러운 목재": {
       "id": 6882304,
-      "currentMinPrice": 278,
+      "currentMinPrice": 280,
       "yDayAvgPrice": 276.8,
-      "recentPrice": 270,
+      "recentPrice": 280,
       "bundleCount": 100,
       "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_3_253.png"
     },
     "튼튼한 목재": {
       "id": 6884307,
-      "currentMinPrice": 1403,
+      "currentMinPrice": 1400,
       "yDayAvgPrice": 1394.5,
-      "recentPrice": 1403,
+      "recentPrice": 1401,
       "bundleCount": 100,
       "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_4_4.png"
     },
     "아비도스 목재": {
       "id": 6884308,
-      "currentMinPrice": 1789,
+      "currentMinPrice": 1765,
       "yDayAvgPrice": 1773.1,
-      "recentPrice": 1790,
+      "recentPrice": 1765,
       "bundleCount": 100,
       "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/lifelevel/lifelevel_02_48.png"
     },
     "철광석": {
       "id": 6882401,
-      "currentMinPrice": 141,
+      "currentMinPrice": 139,
       "yDayAvgPrice": 147.8,
-      "recentPrice": 141,
+      "recentPrice": 139,
       "bundleCount": 100,
       "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_3_243.png"
     },
     "묵직한 철광석": {
       "id": 6882404,
-      "currentMinPrice": 279,
+      "currentMinPrice": 280,
       "yDayAvgPrice": 284.6,
-      "recentPrice": 279,
+      "recentPrice": 280,
       "bundleCount": 100,
       "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_3_239.png"
     },
     "단단한 철광석": {
       "id": 6884407,
-      "currentMinPrice": 1438,
+      "currentMinPrice": 1429,
       "yDayAvgPrice": 1438.5,
       "recentPrice": 1430,
       "bundleCount": 100,
@@ -83,9 +83,9 @@
     },
     "고대 유물": {
       "id": 6882701,
-      "currentMinPrice": 140,
+      "currentMinPrice": 141,
       "yDayAvgPrice": 143.2,
-      "recentPrice": 140,
+      "recentPrice": 141,
       "bundleCount": 100,
       "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_9_3.png"
     },
@@ -99,17 +99,17 @@
     },
     "진귀한 유물": {
       "id": 6885705,
-      "currentMinPrice": 8,
+      "currentMinPrice": 9,
       "yDayAvgPrice": 8.7,
-      "recentPrice": 8,
+      "recentPrice": 9,
       "bundleCount": 100,
       "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/lifelevel/lifelevel_02_54.png"
     },
     "아비도스 유물": {
       "id": 6885709,
-      "currentMinPrice": 1798,
+      "currentMinPrice": 1789,
       "yDayAvgPrice": 1788.7,
-      "recentPrice": 1798,
+      "recentPrice": 1789,
       "bundleCount": 100,
       "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/lifelevel/lifelevel_02_55.png"
     },
@@ -139,25 +139,25 @@
     },
     "성스러운 부적": {
       "id": 101191,
-      "currentMinPrice": 49,
+      "currentMinPrice": 52,
       "yDayAvgPrice": 38.9,
-      "recentPrice": 48,
+      "recentPrice": 52,
       "bundleCount": 1,
       "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/battle_item/battle_item_01_51.png"
     },
     "빛나는 성스러운 부적": {
       "id": 101938,
-      "currentMinPrice": 139,
+      "currentMinPrice": 135,
       "yDayAvgPrice": 117.4,
-      "recentPrice": 139,
+      "recentPrice": 130,
       "bundleCount": 1,
       "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/battle_item/battle_item_01_101.png"
     },
     "아드로핀 물약": {
       "id": 101291,
-      "currentMinPrice": 100,
+      "currentMinPrice": 98,
       "yDayAvgPrice": 113.7,
-      "recentPrice": 101,
+      "recentPrice": 98,
       "bundleCount": 1,
       "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/battle_item/battle_item_01_72.png"
     },
@@ -165,15 +165,15 @@
       "id": 6861012,
       "currentMinPrice": 125,
       "yDayAvgPrice": 124.3,
-      "recentPrice": 125,
+      "recentPrice": 126,
       "bundleCount": 1,
       "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_12_86.png"
     },
     "상급 아비도스 융화 재료": {
       "id": 6861013,
-      "currentMinPrice": 173,
+      "currentMinPrice": 174,
       "yDayAvgPrice": 169.0,
-      "recentPrice": 173,
+      "recentPrice": 174,
       "bundleCount": 1,
       "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_252.png"
     }
