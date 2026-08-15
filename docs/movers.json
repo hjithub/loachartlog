@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-15T18:15:47Z",
+  "updated_at": "2026-08-15T19:15:39Z",
   "items": [
     {
       "id": 6861013,
@@ -11,17 +11,6 @@
       "yDayAvgPrice": 180.0,
       "pctChange": 2.78,
       "tradeCount": 7757660
-    },
-    {
-      "id": 6861012,
-      "name": "아비도스 융화 재료",
-      "grade": "희귀",
-      "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_12_86.png",
-      "bundleCount": 1,
-      "currentPrice": 133,
-      "yDayAvgPrice": 132.1,
-      "pctChange": 0.68,
-      "tradeCount": 3399185
     },
     {
       "id": 66102106,
@@ -40,9 +29,9 @@
       "grade": "희귀",
       "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_251.png",
       "bundleCount": 1,
-      "currentPrice": 13,
+      "currentPrice": 12,
       "yDayAvgPrice": 11.1,
-      "pctChange": 17.12,
+      "pctChange": 8.11,
       "tradeCount": 1552247
     },
     {
@@ -62,10 +51,21 @@
       "grade": "일반",
       "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_250.png",
       "bundleCount": 100,
-      "currentPrice": 122,
+      "currentPrice": 124,
       "yDayAvgPrice": 115.8,
-      "pctChange": 5.35,
+      "pctChange": 7.08,
       "tradeCount": 960126
+    },
+    {
+      "id": 6882301,
+      "name": "목재",
+      "grade": "일반",
+      "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_3_252.png",
+      "bundleCount": 100,
+      "currentPrice": 152,
+      "yDayAvgPrice": 151.7,
+      "pctChange": 0.2,
+      "tradeCount": 562233
     },
     {
       "id": 66130143,
@@ -73,9 +73,9 @@
       "grade": "영웅",
       "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_12_93.png",
       "bundleCount": 1,
-      "currentPrice": 120,
+      "currentPrice": 119,
       "yDayAvgPrice": 114.1,
-      "pctChange": 5.17,
+      "pctChange": 4.29,
       "tradeCount": 527894
     },
     {
@@ -84,9 +84,9 @@
       "grade": "영웅",
       "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_12_171.png",
       "bundleCount": 1,
-      "currentPrice": 262,
+      "currentPrice": 268,
       "yDayAvgPrice": 256.4,
-      "pctChange": 2.18,
+      "pctChange": 4.52,
       "tradeCount": 519889
     },
     {
@@ -95,10 +95,21 @@
       "grade": "영웅",
       "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_12_172.png",
       "bundleCount": 1,
-      "currentPrice": 265,
+      "currentPrice": 256,
       "yDayAvgPrice": 254.6,
-      "pctChange": 4.08,
+      "pctChange": 0.55,
       "tradeCount": 488700
+    },
+    {
+      "id": 66102006,
+      "name": "운명의 파괴석",
+      "grade": "일반",
+      "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_12_88.png",
+      "bundleCount": 100,
+      "currentPrice": 254,
+      "yDayAvgPrice": 253.1,
+      "pctChange": 0.36,
+      "tradeCount": 440076
     },
     {
       "id": 6882304,
@@ -128,9 +139,9 @@
       "grade": "일반",
       "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_9_3.png",
       "bundleCount": 100,
-      "currentPrice": 152,
+      "currentPrice": 153,
       "yDayAvgPrice": 151.9,
-      "pctChange": 0.07,
+      "pctChange": 0.72,
       "tradeCount": 114048
     },
     {
@@ -139,9 +150,9 @@
       "grade": "희귀",
       "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/lifelevel/lifelevel_02_48.png",
       "bundleCount": 100,
-      "currentPrice": 1898,
+      "currentPrice": 1895,
       "yDayAvgPrice": 1892.7,
-      "pctChange": 0.28,
+      "pctChange": 0.12,
       "tradeCount": 91284
     },
     {
@@ -154,6 +165,17 @@
       "yDayAvgPrice": 1520.3,
       "pctChange": 0.24,
       "tradeCount": 87374
+    },
+    {
+      "id": 66112718,
+      "name": "장인의 재봉술 : 4단계",
+      "grade": "고대",
+      "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_224.png",
+      "bundleCount": 1,
+      "currentPrice": 280,
+      "yDayAvgPrice": 260.0,
+      "pctChange": 7.69,
+      "tradeCount": 74039
     },
     {
       "id": 101151,
@@ -178,15 +200,37 @@
       "tradeCount": 70794
     },
     {
+      "id": 66112552,
+      "name": "재봉술 : 업화 [15-18]",
+      "grade": "유물",
+      "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_12_219.png",
+      "bundleCount": 1,
+      "currentPrice": 15,
+      "yDayAvgPrice": 13.4,
+      "pctChange": 11.94,
+      "tradeCount": 45889
+    },
+    {
       "id": 66112716,
       "name": "장인의 재봉술 : 3단계",
       "grade": "유물",
       "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_222.png",
       "bundleCount": 1,
-      "currentPrice": 298,
+      "currentPrice": 280,
       "yDayAvgPrice": 252.4,
-      "pctChange": 18.07,
+      "pctChange": 10.94,
       "tradeCount": 31531
+    },
+    {
+      "id": 66112714,
+      "name": "장인의 재봉술 : 2단계",
+      "grade": "전설",
+      "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_12_245.png",
+      "bundleCount": 1,
+      "currentPrice": 47,
+      "yDayAvgPrice": 43.1,
+      "pctChange": 9.05,
+      "tradeCount": 19278
     },
     {
       "id": 66102105,
@@ -194,9 +238,9 @@
       "grade": "일반",
       "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_11_16.png",
       "bundleCount": 100,
-      "currentPrice": 4,
+      "currentPrice": 3,
       "yDayAvgPrice": 2.9,
-      "pctChange": 37.93,
+      "pctChange": 3.45,
       "tradeCount": 17857
     },
     {
@@ -216,21 +260,10 @@
       "grade": "고대",
       "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_223.png",
       "bundleCount": 1,
-      "currentPrice": 220,
+      "currentPrice": 218,
       "yDayAvgPrice": 184.0,
-      "pctChange": 19.57,
+      "pctChange": 18.48,
       "tradeCount": 15284
-    },
-    {
-      "id": 6885709,
-      "name": "아비도스 유물",
-      "grade": "희귀",
-      "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/lifelevel/lifelevel_02_55.png",
-      "bundleCount": 100,
-      "currentPrice": 1905,
-      "yDayAvgPrice": 1904.5,
-      "pctChange": 0.03,
-      "tradeCount": 14934
     },
     {
       "id": 66112564,
@@ -238,21 +271,10 @@
       "grade": "고대",
       "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_12_219.png",
       "bundleCount": 1,
-      "currentPrice": 3989,
+      "currentPrice": 4155,
       "yDayAvgPrice": 3522.1,
-      "pctChange": 13.26,
+      "pctChange": 17.97,
       "tradeCount": 10859
-    },
-    {
-      "id": 66102005,
-      "name": "정제된 파괴강석",
-      "grade": "일반",
-      "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_11_15.png",
-      "bundleCount": 100,
-      "currentPrice": 49,
-      "yDayAvgPrice": 48.2,
-      "pctChange": 1.66,
-      "tradeCount": 10592
     },
     {
       "id": 66130142,
@@ -264,6 +286,17 @@
       "yDayAvgPrice": 147.1,
       "pctChange": 1.97,
       "tradeCount": 10381
+    },
+    {
+      "id": 66112551,
+      "name": "야금술 : 업화 [15-18]",
+      "grade": "유물",
+      "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_12_218.png",
+      "bundleCount": 1,
+      "currentPrice": 62,
+      "yDayAvgPrice": 46.0,
+      "pctChange": 34.78,
+      "tradeCount": 9301
     },
     {
       "id": 66110224,
@@ -282,21 +315,10 @@
       "grade": "고급",
       "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_12_91.png",
       "bundleCount": 1,
-      "currentPrice": 54,
+      "currentPrice": 53,
       "yDayAvgPrice": 50.4,
-      "pctChange": 7.14,
+      "pctChange": 5.16,
       "tradeCount": 7566
-    },
-    {
-      "id": 66112715,
-      "name": "장인의 야금술 : 3단계",
-      "grade": "유물",
-      "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_221.png",
-      "bundleCount": 1,
-      "currentPrice": 268,
-      "yDayAvgPrice": 262.8,
-      "pctChange": 1.98,
-      "tradeCount": 7367
     },
     {
       "id": 66112712,
@@ -304,10 +326,21 @@
       "grade": "영웅",
       "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_12_243.png",
       "bundleCount": 1,
-      "currentPrice": 130,
+      "currentPrice": 140,
       "yDayAvgPrice": 117.6,
-      "pctChange": 10.54,
+      "pctChange": 19.05,
       "tradeCount": 7326
+    },
+    {
+      "id": 66112565,
+      "name": "재봉술 : 전율 [16-19]",
+      "grade": "고대",
+      "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_12_219.png",
+      "bundleCount": 1,
+      "currentPrice": 4410,
+      "yDayAvgPrice": 4269.2,
+      "pctChange": 3.3,
+      "tradeCount": 4567
     },
     {
       "id": 66130132,
@@ -321,25 +354,14 @@
       "tradeCount": 1745
     },
     {
-      "id": 66112546,
-      "name": "재봉술 : 업화 [11-14]",
-      "grade": "유물",
-      "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_12_219.png",
-      "bundleCount": 1,
-      "currentPrice": 774,
-      "yDayAvgPrice": 765.5,
-      "pctChange": 1.11,
-      "tradeCount": 1632
-    },
-    {
       "id": 66112542,
       "name": "야금술 : 쇠락 [16-19]",
       "grade": "고대",
       "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_7_69.png",
       "bundleCount": 1,
-      "currentPrice": 10,
+      "currentPrice": 9,
       "yDayAvgPrice": 6.3,
-      "pctChange": 58.73,
+      "pctChange": 42.86,
       "tradeCount": 1483
     },
     {
@@ -365,17 +387,6 @@
       "tradeCount": 915
     },
     {
-      "id": 66110222,
-      "name": "위대한 명예의 돌파석",
-      "grade": "희귀",
-      "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_7_156.png",
-      "bundleCount": 1,
-      "currentPrice": 1,
-      "yDayAvgPrice": 1.0,
-      "pctChange": 0.0,
-      "tradeCount": 785
-    },
-    {
       "id": 66102001,
       "name": "파괴석 조각",
       "grade": "일반",
@@ -392,9 +403,9 @@
       "grade": "유물",
       "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_12_218.png",
       "bundleCount": 1,
-      "currentPrice": 998,
+      "currentPrice": 989,
       "yDayAvgPrice": 859.4,
-      "pctChange": 16.13,
+      "pctChange": 15.08,
       "tradeCount": 560
     },
     {
@@ -513,10 +524,21 @@
       "grade": "유물",
       "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_12_218.png",
       "bundleCount": 1,
-      "currentPrice": 14500,
+      "currentPrice": 14300,
       "yDayAvgPrice": 13099.1,
-      "pctChange": 10.69,
+      "pctChange": 9.17,
       "tradeCount": 43
+    },
+    {
+      "id": 66112534,
+      "name": "재봉술 : 몽환 [13-15]",
+      "grade": "유물",
+      "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_7_70.png",
+      "bundleCount": 1,
+      "currentPrice": 2,
+      "yDayAvgPrice": 1.0,
+      "pctChange": 100.0,
+      "tradeCount": 40
     },
     {
       "id": 66112541,
@@ -528,17 +550,6 @@
       "yDayAvgPrice": 7.9,
       "pctChange": 13.92,
       "tradeCount": 35
-    },
-    {
-      "id": 66102104,
-      "name": "수호강석",
-      "grade": "일반",
-      "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_10_59.png",
-      "bundleCount": 100,
-      "currentPrice": 1,
-      "yDayAvgPrice": 1.0,
-      "pctChange": 0.0,
-      "tradeCount": 29
     },
     {
       "id": 101211,
@@ -574,25 +585,25 @@
       "tradeCount": 9
     },
     {
-      "id": 67410403,
-      "name": "혼돈의 젬 : 왜곡",
-      "grade": "영웅",
-      "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_114.png",
-      "bundleCount": 1,
-      "currentPrice": 32777,
-      "yDayAvgPrice": 27833.9,
-      "pctChange": 17.76,
-      "tradeCount": 0
-    },
-    {
       "id": 67400103,
       "name": "질서의 젬 : 견고",
       "grade": "영웅",
       "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_111.png",
       "bundleCount": 1,
-      "currentPrice": 30100,
+      "currentPrice": 31990,
       "yDayAvgPrice": 25850.0,
-      "pctChange": 16.44,
+      "pctChange": 23.75,
+      "tradeCount": 0
+    },
+    {
+      "id": 67410403,
+      "name": "혼돈의 젬 : 왜곡",
+      "grade": "영웅",
+      "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_114.png",
+      "bundleCount": 1,
+      "currentPrice": 32000,
+      "yDayAvgPrice": 27833.9,
+      "pctChange": 14.97,
       "tradeCount": 0
     },
     {
@@ -601,31 +612,9 @@
       "grade": "영웅",
       "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_112.png",
       "bundleCount": 1,
-      "currentPrice": 27000,
+      "currentPrice": 24740,
       "yDayAvgPrice": 23346.0,
-      "pctChange": 15.65,
-      "tradeCount": 0
-    },
-    {
-      "id": 67410303,
-      "name": "혼돈의 젬 : 침식",
-      "grade": "영웅",
-      "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_113.png",
-      "bundleCount": 1,
-      "currentPrice": 11700,
-      "yDayAvgPrice": 11319.7,
-      "pctChange": 3.36,
-      "tradeCount": 0
-    },
-    {
-      "id": 67400003,
-      "name": "질서의 젬 : 안정",
-      "grade": "영웅",
-      "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_110.png",
-      "bundleCount": 1,
-      "currentPrice": 10999,
-      "yDayAvgPrice": 10946.4,
-      "pctChange": 0.48,
+      "pctChange": 5.97,
       "tradeCount": 0
     },
     {
@@ -634,9 +623,20 @@
       "grade": "희귀",
       "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_110.png",
       "bundleCount": 1,
-      "currentPrice": 259,
+      "currentPrice": 266,
       "yDayAvgPrice": 258.5,
-      "pctChange": 0.19,
+      "pctChange": 2.9,
+      "tradeCount": 0
+    },
+    {
+      "id": 67410303,
+      "name": "혼돈의 젬 : 침식",
+      "grade": "영웅",
+      "icon": "https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_13_113.png",
+      "bundleCount": 1,
+      "currentPrice": 11500,
+      "yDayAvgPrice": 11319.7,
+      "pctChange": 1.59,
       "tradeCount": 0
     },
     {
